@@ -126,6 +126,27 @@ def extract_iocs(hex_string):
     if paths: out.append(f"Paths ({len(paths)}):"); [out.append(f"  - {p}") for p in paths[:3]]
     return "\n".join(out) if len(out) > 1 else "No IOCs found"
 
+
+def xor_bruteforce(hex_string):
+    try: data = bytes.fromhex(hex_string)
+    except: return "Invalid hex"
+    if len(data) < 4: return "Data too small"
+    def score(decoded):
+        printable = sum(1 for b in decoded if 32 <= b < 127)
+        return printable / len(decoded) if decoded else 0
+    results = []
+    for key in range(1, 256):
+        dec = bytes(b ^ key for b in data)
+        s = score(dec)
+        if s > 0.85:
+            results.append((s, key, dec.decode('ascii', errors='ignore')))
+    results.sort(reverse=True)
+    out = ["XOR Brute Force v1 - Top 5 (basic):"]
+    for s, k, t in results[:5]:
+        out.append(f"  Key 0x{k:02x} (score {s:.2%})")
+        out.append(f"    {t[:60]}")
+    return "\n".join(out) if len(out) > 1 else "No readable decodings"
+
 def xor_bruteforce_v2(hex_string):
     try: data = bytes.fromhex(hex_string)
     except: return "Invalid hex"
