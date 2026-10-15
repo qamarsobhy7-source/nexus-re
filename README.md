@@ -312,7 +312,7 @@ Output includes:
 
     NEXUS-RE FULL ANALYSIS REPORT
     Size: 12536 bytes
-    SHA256: 37de0dad1a1ce967fec6a594886ccbdf
+    SHA256: 37de0dad1a1ce967fec6a594886ccbdf7c2623b14c46abef537ddd03ee94521b
     MD5:    3424748c3ed1afd604734dd0512bc813
 
     [1] FILE TYPE     : PE (Windows) - HIGH
@@ -380,7 +380,7 @@ The fastest way to see NEXUS-RE in action:
     NEXUS-RE FULL ANALYSIS REPORT
     =======================================================
     Size: 12536 bytes
-    SHA256: 37de0dad1a1ce967fec6a594886ccbdf7c2623b14c46abef
+    SHA256: 37de0dad1a1ce967fec6a594886ccbdf7c2623b14c46abef537ddd03ee94521b
     MD5:    3424748c3ed1afd604734dd0512bc813
 
     [1] FILE TYPE     : PE (Windows) - HIGH
