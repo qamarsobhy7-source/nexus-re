@@ -19,7 +19,7 @@
 [![Status](https://img.shields.io/badge/Status-Active-orange?style=for-the-badge)]()
 [![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Android-black?style=for-the-badge)]()
 
-[📖 Overview](#-what-is-nexus-re) · [⚡ Quick Start](#-quick-start) · [🔧 Tools](#-features) · [🏗️ Architecture](#️-architecture) · [🗺️ Roadmap](#️-roadmap) · [📄 Proposal](proposal.md) · [🤝 Contributing](#-contributing)
+[📖 Overview](#-what-is-nexus-re) · [⚡ Quick Start](#-quick-start) · [🔧 Tools](#-features) · [🏗️ Architecture](#️-architecture) · [🗺️ Roadmap](#️-roadmap) · [🎯 Showcases](#showcases) · [❓ FAQ](#faq) · [📚 Docs](#documentation) · [📄 Proposal](proposal.md) · [🤝 Contributing](#-contributing)
 
 </div>
 
@@ -44,8 +44,10 @@
 - [Ethics](#ethics)
 - [License](#license)
 - [Author](#author)
+- [Acknowledgments](#acknowledgments)
 - [Star History](#star-history)
 - [Translations](#translations)
+- [Contact](#contact)
 
 ---
 
@@ -127,7 +129,7 @@ A pure-Python toolkit with **zero external dependencies** — runs on Linux, mac
 
 | Feature | Status | Description |
 |---------|:------:|-------------|
-| **Multi-Agent Orchestration** | 🚧 In Progress | LangGraph + ReAct — Static, Dynamic, Security, Code-Gen, Report agents |
+| **Multi-Agent Orchestration** | 📅 Planned | LangGraph + ReAct — Static, Dynamic, Security, Code-Gen, Report agents |
 | **RAG Grounding** | 📅 Planned | FAISS / Chroma over NVD/CVE, Ghidra docs, MITRE ATT&CK |
 | **Explainable AI** | 📅 Planned | SHAP / LIME + tool traces for every claim |
 | **Bilingual UI** | 📅 Planned | Arabic (RTL) + English (LTR) with a single toggle |
