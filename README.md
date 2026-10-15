@@ -28,23 +28,35 @@
 ## Table of Contents
 
 - [What is NEXUS-RE?](#what-is-nexus-re)
+- [How NEXUS-RE Works](#how-nexus-re-works)
+- [What You Can Analyze](#what-you-can-analyze)
 - [Features](#features)
-  - [Core Analysis Engine (16 Tools)](#core-analysis-engine-16-tools)
-  - [AI Layer (Roadmap)](#ai-layer-roadmap)
 - [Quick Start](#quick-start)
 - [Usage Examples](#usage-examples)
+- [Demo](#demo)
+- [Supported Formats](#supported-formats)
+- [Setup & Configuration](#setup--configuration)
+- [Testing](#testing)
+- [Benchmarks](#benchmarks)
+- [Docker Deployment](#docker-deployment)
+- [Project Structure](#project-structure)
 - [Architecture](#architecture)
 - [Roadmap](#roadmap)
-- [Benchmarks (Planned)](#benchmarks-planned)
 - [Tech Stack](#tech-stack)
 - [Showcases](#showcases)
 - [FAQ](#faq)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
+- [Contributors](#contributors)
+- [Support](#support)
 - [Ethics](#ethics)
 - [License](#license)
 - [Author](#author)
 - [Acknowledgments](#acknowledgments)
+- [Citation](#citation)
+- [Related Projects](#related-projects)
+- [Filesystem & Sessions](#filesystem--sessions)
+- [Disclaimer](#disclaimer)
 - [Star History](#star-history)
 - [Translations](#translations)
 - [Contact](#contact)
@@ -53,9 +65,9 @@
 
 ## 🌐 What is NEXUS-RE?
 
-**NEXUS-RE** is an open-source platform that lets AI agents perform **end-to-end reverse engineering** on binaries, applications, and runtime behavior — without access to source code.
+**NEXUS-RE** is an open-source platform for **AI-assisted reverse engineering** of binaries, applications, and runtime behavior — without access to source code.
 
-It exposes **16 deterministic binary analysis tools** through a **Model Context Protocol (MCP)** server, and orchestrates them via a **multi-agent LLM layer** built on LangGraph and the ReAct pattern. Every result comes with **evidence, confidence scores, and traceable citations** — making AI-assisted reverse engineering **auditable, reproducible, and trustworthy**.
+It currently ships **16 deterministic binary analysis tools** through a **Model Context Protocol (MCP)** server. The roadmap adds a **multi-agent LLM orchestration layer** built on LangGraph and the ReAct pattern, designed to plan and execute complex analyses automatically. Every tool result already carries **evidence, confidence scores, and traceable artifacts** — making analysis **auditable, reproducible, and trustworthy**.
 
 ### The Problem
 
@@ -73,28 +85,29 @@ A single malware sample can consume **8–40 hours** of senior analyst time. Wit
 
 > **Traditional RE:** Load into Ghidra → navigate → cross-reference → document.
 >
-> **NEXUS-RE:** Ask a question. Agents plan, execute, and explain — with evidence for every claim.
+> **NEXUS-RE:** Ask a question. Tools run automatically, and results come with evidence for every claim.
 
 ### Why NEXUS-RE?
 
 | Feature | What It Means |
 |---------|---------------|
 | 🔍 **Evidence-First** | Every claim is backed by a cryptographic hash, a tool trace, and a confidence level. No black-box answers. |
-| 🤖 **Multi-Agent** | Static, Dynamic, Security, Code-Gen, and Report agents collaborate under a LangGraph orchestrator. |
-| 📚 **RAG-Grounded** | Every LLM decision is anchored in official Ghidra/Frida docs and the NVD/CVE database. |
-| 🌍 **Bilingual** | Native Arabic (RTL) and English (LTR) UI — a first for RE tooling. |
+| 🧰 **16 Working Tools** | A pure-Python toolkit covering basic, format, threat, and crypto analysis — works offline today. |
+| 🤖 **Multi-Agent (Planned)** | Static, Dynamic, Security, Code-Gen, and Report agents will collaborate under a LangGraph orchestrator. |
+| 📚 **RAG-Grounded (Planned)** | Every LLM decision will be anchored in official Ghidra/Frida docs and the NVD/CVE database. |
+| 🌍 **Bilingual (Planned)** | Native Arabic (RTL) and English (LTR) UI — a first for RE tooling. |
 | 🔒 **Local-First** | Analysis runs on your machine. No binaries leave your host unless you opt in. |
-| 📦 **Open & Reproducible** | MIT License. Docker images. Model cards. Benchmarked against public datasets. |
+| 📦 **Open & Reproducible** | MIT License. Benchmarked against public datasets. |
 
 ### What Makes NEXUS-RE Different?
 
 | Feature | NEXUS-RE | REA | DecompAI | GhidraMCP |
 |---------|:--------:|:---:|:--------:|:---------:|
-| Multi-agent orchestration | ✅ | ❌ | ❌ | ❌ |
+| 16-tool pure-Python core (ready) | ✅ | ❌ | ❌ | ❌ |
 | Evidence + confidence scores | ✅ | ✅ | ⚠️ | ❌ |
-| Bilingual UI (AR/EN) | ✅ | ❌ | ❌ | ❌ |
-| 16-tool pure-Python core | ✅ | ❌ | ❌ | ❌ |
-| RAG over CVE + docs | ✅ | ❌ | ❌ | ❌ |
+| Multi-agent orchestration (planned) | ✅ | ❌ | ❌ | ❌ |
+| RAG over CVE + docs (planned) | ✅ | ❌ | ❌ | ❌ |
+| Bilingual UI (AR/EN) (planned) | ✅ | ❌ | ❌ | ❌ |
 | Open research proposal | ✅ | ❌ | ❌ | ❌ |
 | Full benchmark plan | ✅ | ❌ | ⚠️ | ❌ |
 
@@ -346,6 +359,46 @@ Output:
     python nexus_re_server.py
 
 Register with any MCP-compatible agent (Claude Code, Cursor) via mcp.json.
+
+---
+
+## Demo
+
+### Live Demo (Coming Soon)
+
+A public web demo is planned for **Phase 4 (Month 6)**. It will be deployed on Hugging Face Spaces with rate limiting.
+
+### Quick Terminal Demo
+
+The fastest way to see NEXUS-RE in action:
+
+    $ python nexus_re_v2.py
+    Choose (0-16): 16
+    Enter file path: /samples/suspicious.exe
+
+    =======================================================
+    NEXUS-RE FULL ANALYSIS REPORT
+    =======================================================
+    Size: 12536 bytes
+    SHA256: 37de0dad1a1ce967fec6a594886ccbdf7c2623b14c46abef
+    MD5:    3424748c3ed1afd604734dd0512bc813
+
+    [1] FILE TYPE     : PE (Windows) - HIGH
+    [2] ENTROPY       : 7.82 - HIGH (packed)
+    [3] IOCs          : 2 URLs, 1 IP
+    [4] SUSPICIOUS API: CRITICAL (CreateRemoteThread, VirtualAllocEx)
+    [5] PACKER        : UPX, VMProtect
+    [6] YARA          : MALICIOUS (3 rules)
+
+    Analysis complete in 1.2 seconds.
+
+### Screenshots
+
+Coming soon: dashboard screenshots after Phase 4.
+
+### Video Walkthrough
+
+A 3-minute walkthrough video will be published alongside the v1.0 release (Phase 8).
 
 ---
 
@@ -616,6 +669,78 @@ Recommended for production:
         memory: 8G
       reservations:
         memory: 2G
+
+---
+
+## Project Structure
+
+    nexus-re/
+    ├── README.md                    # Main documentation (this file)
+    ├── LICENSE                      # MIT License
+    ├── proposal.md                  # Full research proposal (837 lines)
+    ├── requirements.txt             # Python dependencies (optional)
+    ├── nexus_re_v2.py               # Main toolkit (16 tools)
+    ├── nexus_re_v1.py               # Earlier version (11 tools)
+    ├── nexus_re_server.py           # MCP server for AI agents
+    │
+    ├── docs/                        # Documentation
+    │   ├── architecture.md          # 5-layer design
+    │   ├── benchmarks.md            # Evaluation details
+    │   └── api.md                   # API reference
+    │
+    ├── tests/                       # Test suite
+    │   ├── test_basic_tools.py
+    │   ├── test_format_parsers.py
+    │   ├── test_threat_detection.py
+    │   └── test_crypto.py
+    │
+    ├── samples/                     # Test binaries (safe, synthetic)
+    │   ├── sample.elf
+    │   ├── sample.exe
+    │   └── sample_xor.bin
+    │
+    ├── datasets/                    # Benchmark data (gitignored)
+    │   └── README.md                # How to download
+    │
+    ├── docker/                      # Docker configuration
+    │   ├── Dockerfile
+    │   └── docker-compose.yml
+    │
+    └── .github/                     # GitHub automation
+        └── workflows/
+            ├── ci.yml               # Run tests on push
+            └── release.yml          # Publish on tag
+
+### File Descriptions
+
+| File / Folder | Purpose |
+|---------------|---------|
+| `README.md` | Complete project documentation |
+| `proposal.md` | Research proposal (problem, objectives, methodology) |
+| `nexus_re_v2.py` | Main toolkit — 16 analysis tools |
+| `nexus_re_server.py` | MCP server exposing tools to AI agents |
+| `docs/` | Extended documentation |
+| `tests/` | Unit and integration tests |
+| `samples/` | Safe synthetic binaries for testing |
+| `datasets/` | Benchmark data (downloaded separately) |
+| `docker/` | Container configuration |
+| `.github/workflows/` | CI/CD pipelines |
+
+### What Gets Committed
+
+- **Source code** (`*.py`)
+- **Documentation** (`*.md`)
+- **Tests** (`tests/**`)
+- **Synthetic samples** (`samples/**`, safe)
+- **Configuration** (`docker/`, `.github/`)
+
+### What Gets Gitignored
+
+- **Real malware samples** (never committed)
+- **Large datasets** (`datasets/`, download separately)
+- **Local reports** (`reports/`, `*.pdf`)
+- **Virtual environments** (`venv/`, `__pycache__/`)
+- **User configs** (`nexus-re.yaml`, `.env`)
 
 ---
 
@@ -892,6 +1017,158 @@ Copyright (c) 2026 Qamar Sobhy
 - **NSA** - for Ghidra, the open-source reverse engineering framework
 - **The open-source RE community** - for radare2, Frida, JADX, and countless other tools
 - **The Arabic cybersecurity community** - for inspiring the bilingual-first design
+
+---
+
+## Citation
+
+If you use NEXUS-RE in academic work, please cite it as:
+
+### BibTeX
+
+    @software{sobhy2026nexusre,
+      title  = {NEXUS-RE: An AI-Powered Multi-Agent Platform for 
+                Automated Reverse Engineering and Security Analysis},
+      author = {Sobhy, Qamar},
+      year   = {2026},
+      url    = {https://github.com/qamarsobhy7-source/nexus-re},
+      note   = {Open-source, MIT License}
+    }
+
+### APA
+
+Sobhy, Q. (2026). *NEXUS-RE: An AI-Powered Multi-Agent Platform for Automated Reverse Engineering and Security Analysis* [Computer software]. https://github.com/qamarsobhy7-source/nexus-re
+
+### IEEE
+
+Q. Sobhy, "NEXUS-RE: An AI-Powered Multi-Agent Platform for Automated Reverse Engineering and Security Analysis," 2026. [Online]. Available: https://github.com/qamarsobhy7-source/nexus-re
+
+### Plain Text
+
+Sobhy, Qamar. "NEXUS-RE: An AI-Powered Multi-Agent Platform for Automated Reverse Engineering and Security Analysis." GitHub, 2026. https://github.com/qamarsobhy7-source/nexus-re.
+
+---
+
+## Related Projects
+
+NEXUS-RE builds on and complements several excellent open-source projects. We recommend checking them out:
+
+### Reverse Engineering Tools
+
+- **[REA](https://github.com/morluto/rea)** — One MCP for reverse engineering across binaries, applications, and runtime behavior.
+- **[DecompAI](https://github.com/louisgthier/decompai)** — LangGraph & Gradio-based LLM agent for automated decompilation.
+- **[OGhidra](https://github.com/LLNL/OGhidra)** — AI-driven binary analysis by Lawrence Livermore National Laboratory.
+- **[Ghidra](https://ghidra-sre.org)** — NSA's open-source software reverse engineering suite.
+- **[radare2](https://rada.re)** — Advanced command-line hexadecimal editor and binary analysis framework.
+- **[Frida](https://frida.re)** — Dynamic instrumentation toolkit for developers and reverse engineers.
+- **[JADX](https://github.com/skylot/jadx)** — Dex to Java decompiler.
+
+### AI Frameworks
+
+- **[Model Context Protocol](https://modelcontextprotocol.io)** — Open standard for connecting LLMs to external tools.
+- **[LangGraph](https://github.com/langchain-ai/langgraph)** — Library for building stateful, multi-actor applications with LLMs.
+- **[LangChain](https://github.com/langchain-ai/langchain)** — Framework for developing LLM-powered applications.
+- **[FAISS](https://github.com/facebookresearch/faiss)** — Library for efficient similarity search.
+- **[Chroma](https://github.com/chroma-core/chroma)** — AI-native open-source embedding database.
+
+### Benchmarks & Datasets
+
+- **[Decompile-Bench](https://huggingface.co/datasets)** — 2M binary-source pairs for decompilation evaluation.
+- **[R3-Bench](https://github.com)** — Reverse engineering benchmark for variable-name recovery.
+- **[BinMetric](https://github.com)** — Comprehensive benchmark for binary analysis with LLMs.
+
+### LLMs
+
+- **[Llama 3](https://llama.meta.com)** — Meta's open-weight LLM family.
+- **[Mistral](https://mistral.ai)** — Open and commercial LLMs.
+- **[Jais](https://www.jais.ai)** — Arabic-first LLM by Inception (G42).
+
+### Contributions to These Projects
+
+If you contribute to any of the above projects and would like NEXUS-RE listed there, please open an issue.
+
+---
+
+## Contributors
+
+NEXUS-RE is currently maintained by a single author. Contributions are welcome!
+
+### Core Team
+
+| Name | Role | GitHub |
+|------|------|--------|
+| **Qamar Sobhy** | Founder, Lead Developer | [@qamarsobhy7-source](https://github.com/qamarsobhy7-source) |
+
+### How to Become a Contributor
+
+We recognize all contributors, not just those who write code. You can contribute by:
+
+- 💻 **Code** — new tools, bug fixes, performance improvements
+- 📖 **Documentation** — tutorials, translations, examples
+- 🎨 **Design** — UI mockups, logos, diagrams
+- 🧪 **Testing** — writing tests, reporting bugs
+- 🌍 **Translation** — Arabic, French, Spanish, and more
+- 💬 **Community** — answering questions, mentoring
+
+### Recognition Levels
+
+| Level | Requirement | Badge |
+|-------|-------------|-------|
+| 🌱 Newcomer | 1 merged PR | Listed here |
+| 🌿 Contributor | 5 merged PRs | + Special mention in release notes |
+| 🌳 Core Contributor | 20 merged PRs | + Write access to repo |
+| 🏆 Maintainer | Sustained contributions | + Listed in Core Team |
+
+### Hall of Fame
+
+*This section will be updated as contributions come in.*
+
+*Be the first! Open your first pull request today.*
+
+### How to Get Started
+
+1. Read the [Contributing](#contributing) section.
+2. Pick a "good first issue" from the issue tracker.
+3. Open a pull request.
+4. We'll review and merge within 7 days.
+
+Every contribution, no matter how small, makes a difference.
+
+---
+
+## Support
+
+### Getting Help
+
+- 📖 **Documentation**: Start with [README.md](README.md) and [proposal.md](proposal.md)
+- 💬 **Discussions**: [github.com/qamarsobhy7-source/nexus-re/discussions](https://github.com/qamarsobhy7-source/nexus-re/discussions)
+- 🐛 **Bug Reports**: [github.com/qamarsobhy7-source/nexus-re/issues](https://github.com/qamarsobhy7-source/nexus-re/issues)
+- 📧 **Email**: Open an issue first (no direct email yet)
+
+### Reporting Bugs
+
+When reporting a bug, please include:
+
+- **NEXUS-RE version** (e.g., v0.1)
+- **Operating system** (Linux / macOS / Windows / Android)
+- **Python version** (`python --version`)
+- **Steps to reproduce**
+- **Expected behavior**
+- **Actual behavior**
+- **Sample input** (if safe to share)
+
+### Feature Requests
+
+We welcome feature requests. Please:
+
+1. Check existing issues first.
+2. Describe the use case clearly.
+3. Explain why it would benefit the community.
+4. If possible, suggest an implementation approach.
+
+### Security Issues
+
+**Do not open public issues for security bugs.** See the Disclaimer section for responsible disclosure.
 
 ---
 
