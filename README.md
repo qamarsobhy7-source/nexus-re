@@ -1,7 +1,7 @@
 <div align="center">
 
 **🌍 Languages:**
-[English](README.md) | [العربية](README.ar.md) | [Français](README.fr.md) | [Español](README.es.md) | [Deutsch](README.de.md) | [中文](README.zh.md) | [日本語](README.ja.md) | [Русский](README.ru.md)
+[English](README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · [Español](README.es.md) · [Deutsch](README.de.md) · [中文](README.zh.md) · [日本語](README.ja.md) · [Русский](README.ru.md) · [Português](README.pt.md) · [Italiano](README.it.md) · [한국어](README.ko.md) · [Türkçe](README.tr.md) · [Nederlands](README.nl.md) · [Polski](README.pl.md) · [हिन्दी](README.hi.md)
 
 </div>
 
@@ -75,8 +75,9 @@ A single malware sample can consume **8–40 hours** of senior analyst time. Wit
 
 ### Why NEXUS-RE?
 
+| Feature | What It Means |
+|---------|---------------|
 | 🔍 **Evidence-First** | Every claim is backed by a cryptographic hash, a tool trace, and a confidence level. No black-box answers. |
-|---|---|
 | 🤖 **Multi-Agent** | Static, Dynamic, Security, Code-Gen, and Report agents collaborate under a LangGraph orchestrator. |
 | 📚 **RAG-Grounded** | Every LLM decision is anchored in official Ghidra/Frida docs and the NVD/CVE database. |
 | 🌍 **Bilingual** | Native Arabic (RTL) and English (LTR) UI — a first for RE tooling. |
@@ -103,24 +104,24 @@ A single malware sample can consume **8–40 hours** of senior analyst time. Wit
 
 A pure-Python toolkit with **zero external dependencies** — runs on Linux, macOS, Windows, and Android (via Termux or Pydroid 3).
 
-| # | Tool | Category | Description |
-|---|------|----------|-------------|
-| 1 | `hex_dump` | Basic | Convert any text or binary to hex representation |
-| 2 | `extract_strings` | Basic | Extract readable ASCII strings (≥ 4 chars) |
-| 3 | `calculate_hash` | Basic | Compute SHA-256 and MD5 digests |
-| 4 | `calculate_entropy` | Basic | Shannon entropy — detects packed/encrypted data |
-| 5 | `file_info` | Basic | Metadata about the target file |
-| 6 | `detect_file_type` | Format | Identify file type from magic numbers (text) |
-| 7 | `detect_file_type_hex` | Format | Identify file type from hex input |
-| 8 | `parse_elf_header` | Format | Parse ELF headers — class, endianness, arch, entry |
-| 9 | `parse_pe_header` | Format | Parse PE headers — COFF, sections, flags |
-| 10 | `extract_iocs` | Threat | Extract URLs, IPs, emails, registry keys, paths |
-| 11 | `xor_bruteforce` | Crypto | Single-byte XOR brute-force (basic) |
-| 12 | `xor_bruteforce_v2` | Crypto | XOR brute-force with **English frequency scoring** |
-| 13 | `scan_suspicious_apis` | Threat | Detect 20+ malware-associated Windows APIs |
-| 14 | `detect_packer` | Threat | Identify UPX, ASPack, Themida, VMProtect, MPRESS |
-| 15 | `yara_scan` | Threat | Match against 8 built-in YARA-style rule sets |
-| 16 | `full_analysis` / `analyze_file` | Composite | Run all tools in one call — full report |
+| # | Tool | Category | Description | Input |
+|:-:|------|----------|-------------|:-----:|
+| 1 | `hex_dump` | Basic | Convert any text or binary to hex | Text |
+| 2 | `extract_strings` | Basic | Extract readable ASCII strings (>= 4 chars) | Text |
+| 3 | `calculate_hash` | Basic | Compute SHA-256 and MD5 digests | Text |
+| 4 | `calculate_entropy` | Basic | Shannon entropy — detects packed/encrypted data | Text |
+| 5 | `file_info` | Basic | Metadata about the target file | Text |
+| 6 | `detect_file_type` | Format | Identify file type from magic numbers | Text |
+| 7 | `detect_file_type_hex` | Format | Identify file type from hex input | Hex |
+| 8 | `parse_elf_header` | Format | Parse ELF headers — class, endianness, arch, entry | Hex |
+| 9 | `parse_pe_header` | Format | Parse PE headers — COFF, sections, flags | Hex |
+| 10 | `extract_iocs` | Threat | Extract URLs, IPs, emails, registry keys, paths | Hex |
+| 11 | `xor_bruteforce` | Crypto | Single-byte XOR brute-force (basic) | Hex |
+| 12 | `xor_bruteforce_v2` | Crypto | XOR brute-force with **English frequency scoring** | Hex |
+| 13 | `scan_suspicious_apis` | Threat | Detect 20+ malware-associated Windows APIs | Hex |
+| 14 | `detect_packer` | Threat | Identify UPX, ASPack, Themida, VMProtect, MPRESS | Hex |
+| 15 | `yara_scan` | Threat | Match against 8 built-in YARA-style rule sets | Hex |
+| 16 | `full_analysis` / `analyze_file` | Composite | Run all tools in one call — full report | Hex / Path |
 
 ### AI Layer (Roadmap)
 
@@ -220,12 +221,37 @@ Register with any MCP-compatible agent (Claude Code, Cursor) via mcp.json.
 
 NEXUS-RE is organized as a five-layer architecture, designed for modularity and independent evolution.
 
-    Layer 1 - Client        : Web Dashboard | CLI | VS Code Extension
-    Layer 2 - API Gateway   : FastAPI | Auth | Rate Limiting | SSE
-    Layer 3 - Orchestration : LangGraph | Static/Dynamic/Security/CodeGen/Report Agents
-                              RAG Service | Session Memory
-    Layer 4 - MCP + Tools   : 16 Core Tools | Ghidra | Frida | radare2 | JADX
-    Layer 5 - Infrastructure: Docker | PostgreSQL | Redis | MLflow | AWS/GCP
+| Layer | Component | Responsibility |
+|:-----:|-----------|----------------|
+| 1 | Client | Web Dashboard (Next.js), CLI (Python), VS Code Extension |
+| 2 | API Gateway | FastAPI, JWT Auth, Rate Limiting, SSE streaming |
+| 3 | Orchestration | LangGraph orchestrator, Static/Dynamic/Security/CodeGen/Report agents, RAG service, session memory |
+| 4 | MCP + Tools | 16 core tools, Ghidra, Frida, radare2, JADX, dnSpy |
+| 5 | Infrastructure | Docker, PostgreSQL, Redis, MLflow, AWS/GCP |
+
+### Data Flow
+
+    User -> Web Dashboard -> FastAPI Gateway -> LangGraph Orchestrator
+                                                      |
+                                     +----------------+----------------+
+                                     |                |                |
+                              Static Agent      Dynamic Agent     Security Agent
+                                     |                |                |
+                                     +--------+-------+--------+-------+
+                                              |                |
+                                     NEXUS-RE MCP Server    RAG Service
+                                              |                |
+                              +---------------+                |
+                              |               |                |
+                          Ghidra          Frida          CVE / Docs
+                              |               |                |
+                              +-------+-------+----------------+
+                                      |
+                              Merged Evidence + Confidence
+                                      |
+                              FastAPI streams to Dashboard
+                                      |
+                              Text + Code + Graph + Evidence
 
 ### Design Principles
 
@@ -239,24 +265,31 @@ NEXUS-RE is organized as a five-layer architecture, designed for modularity and 
 
 ## Roadmap
 
-| Phase | Focus | Status |
-|:-----:|-------|:------:|
-| 0 | Foundation & Literature Review | Complete |
-| 1 | MCP Server Core (16 tools) | Complete |
-| 2 | Static Analysis (Ghidra, radare2) | Complete |
-| 3 | Dynamic Analysis (Frida, strace) | In Progress |
-| 4 | Multi-Agent Orchestration | Planned |
-| 5 | RAG Grounding + Explainability | Planned |
-| 6 | Advanced Features + Benchmarks | Planned |
-| 7 | MLOps + Deployment | Planned |
-| 8 | Publication + Public Release | Planned |
+| Phase | Focus | Duration | Status |
+|:-----:|-------|:--------:|:------:|
+| 0 | Foundation & Literature Review | Month 1 | Complete |
+| 1 | MCP Server Core (16 tools) | Month 2 | Complete |
+| 2 | Static Analysis (Ghidra, radare2) | Month 3 | Complete |
+| 3 | Dynamic Analysis (Frida, strace) | Month 4 | In Progress |
+| 4 | Multi-Agent Orchestration | Months 5-6 | Planned |
+| 5 | RAG Grounding + Explainability | Month 6 | Planned |
+| 6 | Advanced Features + Benchmarks | Month 7 | Planned |
+| 7 | MLOps + Deployment | Month 8 | Planned |
+| 8 | Publication + Public Release | Months 8-9 | Planned |
 
 ### Milestones
 
-- v0.1 - 16-tool MCP server, pure-Python toolkit (Complete)
-- v0.2 - Static + dynamic analysis integrated (In Progress)
-- v0.3 - Multi-agent orchestration (Planned)
-- v1.0 - Public release with paper + live demo (Planned)
+- **v0.1** (Month 2) — 16-tool MCP server, pure-Python toolkit (Complete)
+- **v0.2** (Month 4) — Static + dynamic analysis integrated (In Progress)
+- **v0.3** (Month 6) — Multi-agent orchestration + RAG (Planned)
+- **v1.0** (Month 9) — Public release with paper + live demo (Planned)
+
+### Current Progress
+
+- Total phases complete: 3 of 9 (33%)
+- Lines of code: ~1,200+ (pure Python)
+- Tools implemented: 16 of 16 (100%)
+- Active contributors: 1
 
 ---
 
