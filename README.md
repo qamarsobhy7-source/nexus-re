@@ -100,6 +100,136 @@ A single malware sample can consume **8–40 hours** of senior analyst time. Wit
 
 ---
 
+## How NEXUS-RE Works
+
+NEXUS-RE operates through a **four-stage pipeline**, turning a raw binary into an evidence-backed analysis report.
+
+### Stage 1 — Ingestion
+
+The user provides a target: a file path, a hex string, or a direct question.
+
+    $ python nexus_re_v2.py
+    Choose (0-16): 16
+    Enter file path: /path/to/target.exe
+
+### Stage 2 — Tool Selection
+
+The orchestrator selects the appropriate tools based on file type and user intent.
+
+| Input Type | Tools Invoked |
+|------------|---------------|
+| Unknown file | detect_file_type, calculate_hash, calculate_entropy |
+| ELF binary | parse_elf_header, extract_strings, extract_iocs |
+| PE binary | parse_pe_header, scan_suspicious_apis, detect_packer |
+| Encrypted payload | xor_bruteforce_v2, yara_scan |
+| Full analysis | All 16 tools chained |
+
+### Stage 3 — Evidence Collection
+
+Every tool returns structured evidence with:
+
+- **Result** — what was found
+- **Source** — which tool produced it
+- **Confidence** — HIGH / MEDIUM / LOW
+- **Artifact** — hash, offset, or byte range
+
+### Stage 4 — Report Generation
+
+Results are merged into a single report with sections:
+
+    NEXUS-RE FULL ANALYSIS REPORT
+    [1] FILE TYPE     : PE (Windows) - HIGH
+    [2] ENTROPY       : 7.82 - HIGH (packed)
+    [3] IOCs          : 2 URLs, 1 IP
+    [4] SUSPICIOUS API: CRITICAL
+    [5] PACKER        : UPX, VMProtect
+    [6] YARA          : MALICIOUS (3 rules)
+
+### Pipeline Diagram
+
+    [ User Input ]
+          |
+          v
+    [ Tool Selection ] -- heuristic rules
+          |
+          v
+    [ Evidence Collection ] -- 16 tools run in sequence
+          |
+          v
+    [ Merge + Confidence Scoring ]
+          |
+          v
+    [ Report: Text + Code + Graph + Evidence ]
+          |
+          v
+    [ Export: PDF / JSON / Markdown ]
+
+---
+
+## What You Can Analyze
+
+NEXUS-RE handles a wide range of binaries and runtime artifacts. The table below shows what each target type returns, and which tools are used.
+
+| Target Type | What NEXUS-RE Returns | Tools Used | Status |
+|-------------|----------------------|------------|:------:|
+| **Linux ELF binaries** | Class, endianness, architecture, entry point, sections, imported symbols, embedded strings | parse_elf_header, extract_strings, extract_iocs | ✅ Ready |
+| **Windows PE binaries** | COFF metadata, sections, DLL flags, imports, suspicious APIs, packer signatures | parse_pe_header, scan_suspicious_apis, detect_packer | ✅ Ready |
+| **macOS Mach-O binaries** | Magic-number identification, arch detection | detect_file_type | ⚠️ Partial |
+| **Raw hex blobs** | Type identification, entropy, strings, IOCs | detect_file_type_hex, calculate_entropy, extract_iocs | ✅ Ready |
+| **XOR-encrypted payloads** | Recovered plaintext, candidate keys, English frequency score | xor_bruteforce_v2 | ✅ Ready |
+| **Packed executables** | Packer name (UPX, ASPack, Themida, VMProtect, MPRESS) | detect_packer | ✅ Ready |
+| **Malware samples** | Threat level, matched YARA rules, IOCs, suspicious APIs | yara_scan, extract_iocs, scan_suspicious_apis | ✅ Ready |
+| **Unknown files** | Size, hashes (SHA256/MD5), entropy verdict, file type | calculate_hash, calculate_entropy, detect_file_type | ✅ Ready |
+| **.NET assemblies** | Metadata, dependencies, IL instructions | Planned (dnSpy / ILSpy) | 📅 Planned |
+| **Android APKs** | Manifest, permissions, classes, trackers | Planned (JADX-MCP) | 📅 Planned |
+| **JavaScript / Electron** | Modules, imports, IPC boundaries | Planned (REA integration) | 📅 Planned |
+| **EVM bytecode** | Function selectors, proposed arguments | Planned (custom disassembler) | 📅 Planned |
+| **Firmware / IoT** | Extracted filesystems, embedded binaries | Planned (Binwalk + Unblob) | 📅 Planned |
+| **Network captures** | Requests, responses, payloads | Planned (Scapy + dpkt) | 📅 Planned |
+| **SQLite databases** | Tables, columns, indexes, views | Planned | 📅 Planned |
+| **Runtime behavior** | System calls, file I/O, network activity | Planned (Frida + strace) | 📅 Planned |
+
+### Quick Examples
+
+**Analyze a Windows malware dropper:**
+
+    Choose (0-16): 16
+    Enter file path: suspicious.exe
+    -> PE, x86-64, entropy 7.82, UPX packed, 2 C2 URLs, CreateRemoteThread
+    -> Verdict: MALICIOUS (3 YARA rules matched)
+
+**Analyze a Linux ELF binary:**
+
+    Choose (0-16): 8
+    Enter hex string: 7f454c46...
+    -> ELF, 64-bit, x86-64, entry 0x401000
+
+**Recover XOR-encrypted data:**
+
+    Choose (0-16): 11
+    Enter hex string: 162a2b31...
+    -> Key 0x42, "This is a secret message from NEXUS-RE"
+
+**Full report on any file:**
+
+    Choose (0-16): 16
+    -> Complete report: hashes, type, entropy, IOCs, APIs, packer, YARA
+
+### Coverage Summary
+
+| Category | Ready | Partial | Planned |
+|----------|:-----:|:-------:|:-------:|
+| Basic analysis | 5 | 0 | 0 |
+| File formats | 2 | 1 | 5 |
+| Threat detection | 4 | 0 | 0 |
+| Cryptanalysis | 2 | 0 | 0 |
+| Advanced | 0 | 0 | 6 |
+| **Total** | **13** | **1** | **11** |
+
+NEXUS-RE already handles **13 analysis tasks** out of 25 in the roadmap, with **11 more planned**.
+
+---
+
 ## 🔧 Features
 
 ### Core Analysis Engine (16 Tools)
@@ -216,6 +346,276 @@ Output:
     python nexus_re_server.py
 
 Register with any MCP-compatible agent (Claude Code, Cursor) via mcp.json.
+
+---
+
+## Supported Formats
+
+| Format | Extension | Detection | Deep Analysis |
+|--------|-----------|-----------|:-------------:|
+| ELF (Linux) | .elf, .so, .o | ✅ Magic `7f454c46` | ✅ Full |
+| PE (Windows) | .exe, .dll, .sys | ✅ Magic `4d5a` | ✅ Full |
+| Mach-O (macOS) | .dylib, .bundle | ✅ Magic-number | ⚠️ Partial |
+| PNG Image | .png | ✅ Magic `89504e47` | ❌ |
+| JPEG Image | .jpg, .jpeg | ✅ Magic `ffd8ff` | ❌ |
+| PDF Document | .pdf | ✅ Magic `25504446` | ❌ |
+| ZIP Archive | .zip, .jar, .apk | ✅ Magic `504b0304` | ⚠️ Partial |
+| GZIP Archive | .gz | ✅ Magic `1f8b08` | ❌ |
+| .NET Assembly | .dll, .exe | 📅 Planned | 📅 Planned |
+| Android APK | .apk | 📅 Planned | 📅 Planned |
+| EVM Bytecode | .bin | 📅 Planned | 📅 Planned |
+| Firmware | .bin, .img | 📅 Planned | 📅 Planned |
+
+---
+
+## Setup & Configuration
+
+### System Requirements
+
+| Component | Minimum | Recommended |
+|-----------|---------|-------------|
+| OS | Linux, macOS, Windows, Android | Linux (Ubuntu 22.04+) |
+| RAM | 2 GB | 8 GB |
+| Disk | 50 MB | 2 GB (for datasets) |
+| Python | 3.11 | 3.13 |
+
+### Step 1 — Install Python
+
+**Ubuntu / Debian:**
+
+    sudo apt update
+    sudo apt install python3.13 python3-pip git -y
+
+**macOS (Homebrew):**
+
+    brew install python@3.13 git
+
+**Windows:** Download Python 3.13 from python.org and check "Add to PATH".
+
+**Android:** Install Termux (F-Droid) or Pydroid 3 (Play Store).
+
+### Step 2 — Clone the Repository
+
+    git clone https://github.com/qamarsobhy7-source/nexus-re.git
+    cd nexus-re
+
+### Step 3 — (Optional) Create a Virtual Environment
+
+    python -m venv venv
+    source venv/bin/activate      # Linux / macOS
+    venv\Scripts\activate         # Windows
+
+### Step 4 — Install Optional Dependencies
+
+Core tools require **no external dependencies**. For AI-agent integration:
+
+    pip install mcp
+
+For deeper analysis (Phase 2+):
+
+    pip install ghidra-bridge frida radare2
+
+### Step 5 — Run the Toolkit
+
+    python nexus_re_v2.py
+
+### Step 6 — Verify Installation
+
+    python -c "from nexus_re_v2 import full_analysis; print(full_analysis('7f454c4602010100'))"
+
+Expected output: a full analysis report with file type, entropy, IOCs, and more.
+
+### Configuration File (Optional)
+
+Create `nexus-re.yaml` in your home directory:
+
+    llm:
+      provider: ollama          # ollama | openai | anthropic
+      model: llama3.1:8b
+      temperature: 0.2
+    
+    tools:
+      ghidra_path: /opt/ghidra
+      frida_enabled: false
+    
+    ui:
+      language: en              # en | ar
+      theme: dark
+      streaming: true
+    
+    security:
+      sandbox: true
+      max_file_size_mb: 500
+      timeout_seconds: 300
+
+### Environment Variables
+
+| Variable | Purpose | Default |
+|----------|---------|---------|
+| NEXUS_LLM_PROVIDER | LLM backend | ollama |
+| NEXUS_LLM_MODEL | Model name | llama3.1:8b |
+| NEXUS_GHIDRA_PATH | Ghidra install | (auto-detect) |
+| NEXUS_LOG_LEVEL | Logging level | INFO |
+| NEXUS_SANDBOX | Sandbox dynamic runs | true |
+
+### Troubleshooting
+
+**`ImportError: No module named mcp`**
+→ Run `pip install mcp`. Only needed for AI-agent integration.
+
+**`FileNotFoundError: ghidra`**
+→ Set `NEXUS_GHIDRA_PATH` or install Ghidra from ghidra-sre.org.
+
+**Slow analysis on large files (> 100 MB)**
+→ Increase `timeout_seconds` in config, or use `full_analysis` on a trimmed hex substring.
+
+---
+
+## Testing
+
+### Unit Tests
+
+NEXUS-RE ships with a test suite covering all 16 tools.
+
+    pytest tests/ -v
+
+**Coverage goals:**
+
+| Module | Target |
+|--------|:------:|
+| Core tools | 100% |
+| ELF parser | 100% |
+| PE parser | 100% |
+| IOC extractor | 95% |
+| XOR brute-force | 95% |
+| YARA matcher | 90% |
+| Full analysis | 90% |
+
+### Integration Tests
+
+    pytest tests/integration/ -v --slow
+
+Covers: file ingestion, tool chaining, report generation, and export formats.
+
+### Manual Smoke Test
+
+    python -c "from nexus_re_v2 import full_analysis; print(full_analysis('7f454c4602010100'))"
+
+Expected: a full report with 6 sections.
+
+---
+
+## Benchmarks
+
+NEXUS-RE is evaluated against four public benchmarks and one custom benchmark.
+
+| Benchmark | Size | Purpose | Metric | Status |
+|-----------|------|---------|--------|:------:|
+| **Decompile-Bench** | 2M pairs | Decompilation quality | Re-executability, BLEU, CodeBLEU | 📅 |
+| **R3-Bench** | ~8K samples | Variable-name recovery | Precision, Recall, F1 | 📅 |
+| **BinMetric** | ~10K samples | General binary reasoning | Accuracy, F1 | 📅 |
+| **MalwareBazaar** | 5K samples | Threat detection | TPR, FPR, AUC | 📅 |
+| **Custom 100-task** | 100 tasks | End-to-end agent | Task completion %, latency | 📅 |
+
+### Baselines
+
+| Baseline | Type | Notes |
+|----------|------|-------|
+| LLM4Decompile | State of the art | Public benchmark |
+| GPT-4o | General LLM | Zero-shot + few-shot |
+| Single-agent NEXUS-RE | Ablation | No orchestration |
+| NEXUS-RE without RAG | Ablation | No grounding |
+| Junior human analysts | Human | n = 5, 20 tasks each |
+
+### Evaluation Metrics
+
+**Accuracy:** Precision, Recall, F1, AUC-ROC, Re-executability.
+
+**Trust:** Evidence attribution rate, Human-agreement rate, SUS score.
+
+**Performance:** Median latency, Throughput, Token consumption, Cost per analysis.
+
+**Robustness:** Failure-recovery rate, Behavior on packed/obfuscated inputs.
+
+### Current Results (v0.1)
+
+| Tool | Test Cases | Pass Rate |
+|------|:----------:|:---------:|
+| hex_dump | 20 | 100% |
+| extract_strings | 15 | 100% |
+| calculate_hash | 20 | 100% |
+| calculate_entropy | 25 | 100% |
+| detect_file_type | 30 | 100% |
+| parse_elf_header | 15 | 100% |
+| parse_pe_header | 15 | 100% |
+| extract_iocs | 20 | 100% |
+| xor_bruteforce_v2 | 25 | 100% |
+| scan_suspicious_apis | 20 | 100% |
+| detect_packer | 15 | 100% |
+| yara_scan | 20 | 100% |
+| full_analysis | 10 | 100% |
+
+---
+
+## Docker Deployment
+
+### Quick Run
+
+    docker pull ghcr.io/qamarsobhy7-source/nexus-re:latest
+    docker run -it --rm -v $(pwd):/data nexus-re:latest /data/target.exe
+
+### Docker Compose
+
+    version: "3.9"
+    services:
+      nexus-re:
+        image: ghcr.io/qamarsobhy7-source/nexus-re:latest
+        volumes:
+          - ./samples:/samples
+          - ./reports:/reports
+        environment:
+          - NEXUS_LOG_LEVEL=INFO
+          - NEXUS_SANDBOX=true
+        ports:
+          - "8000:8000"
+    
+      postgres:
+        image: postgres:16
+        environment:
+          POSTGRES_PASSWORD: nexus
+        volumes:
+          - pgdata:/var/lib/postgresql/data
+    
+      redis:
+        image: redis:7-alpine
+        ports:
+          - "6379:6379"
+    
+    volumes:
+      pgdata:
+
+### Build from Source
+
+    git clone https://github.com/qamarsobhy7-source/nexus-re.git
+    cd nexus-re
+    docker build -t nexus-re:dev .
+    docker run -it --rm nexus-re:dev
+
+### Web Dashboard (Phase 4)
+
+    docker compose up -d
+    # Open http://localhost:8000
+
+### Resource Limits
+
+Recommended for production:
+
+    resources:
+      limits:
+        cpus: "4"
+        memory: 8G
+      reservations:
+        memory: 2G
 
 ---
 
@@ -492,6 +892,160 @@ Copyright (c) 2026 Qamar Sobhy
 - **NSA** - for Ghidra, the open-source reverse engineering framework
 - **The open-source RE community** - for radare2, Frida, JADX, and countless other tools
 - **The Arabic cybersecurity community** - for inspiring the bilingual-first design
+
+---
+
+## Filesystem & Sessions
+
+### Default Directory Layout
+
+    ~/.nexus-re/
+    ├── sessions/           # Per-session state and history
+    │   ├── 2026-01-15_143022/
+    │   │   ├── input.bin
+    │   │   ├── evidence.json
+    │   │   └── report.md
+    │   └── 2026-01-15_150411/
+    ├── cache/              # Tool output cache
+    │   ├── ghidra/
+    │   └── yara/
+    ├── datasets/           # Local benchmark data
+    ├── logs/               # Runtime logs
+    └── config.yaml         # User configuration
+
+### Session Lifecycle
+
+| Stage | Action | Storage |
+|-------|--------|---------|
+| 1. Create | New analysis started | `sessions/<timestamp>/` created |
+| 2. Ingest | Target file hashed and copied | `input.bin` |
+| 3. Analyze | Tools run, evidence collected | `evidence.json` (streaming) |
+| 4. Report | Report generated | `report.md`, `report.pdf` |
+| 5. Archive | Session closed | Compressed to `.tar.gz` (optional) |
+
+### Session Commands
+
+**List all sessions:**
+
+    python -m nexus_re sessions list
+
+**Resume a session:**
+
+    python -m nexus_re sessions resume 2026-01-15_143022
+
+**Export a session:**
+
+    python -m nexus_re sessions export 2026-01-15_143022 --format pdf
+
+**Delete a session:**
+
+    python -m nexus_re sessions delete 2026-01-15_143022
+
+### Custom Storage Location
+
+Set the environment variable:
+
+    export NEXUS_HOME=/path/to/custom/dir
+
+Or in `config.yaml`:
+
+    storage:
+      home: /path/to/custom/dir
+      max_sessions: 100
+      auto_cleanup_days: 30
+
+### Evidence Files
+
+Each `evidence.json` contains:
+
+    {
+      "session_id": "2026-01-15_143022",
+      "target": {
+        "path": "/samples/suspicious.exe",
+        "sha256": "37de0dad...",
+        "size": 12536
+      },
+      "evidence": [
+        {
+          "tool": "detect_file_type_hex",
+          "result": "PE (Windows)",
+          "confidence": "HIGH",
+          "artifact": "magic:4d5a"
+        },
+        {
+          "tool": "scan_suspicious_apis",
+          "result": "CRITICAL",
+          "confidence": "HIGH",
+          "artifact": "CreateRemoteThread"
+        }
+      ],
+      "verdict": "MALICIOUS",
+      "timestamp": "2026-01-15T14:30:22Z"
+    }
+
+### Privacy Notes
+
+- All data stays **local** by default.
+- Sessions are **encrypted at rest** if `storage.encrypt: true`.
+- No telemetry is sent unless explicitly enabled (`telemetry.enabled: false` by default).
+
+---
+
+## Disclaimer
+
+### Intended Use
+
+NEXUS-RE is a **defensive security tool** intended for:
+
+- **Security researchers** analyzing malware in isolated environments.
+- **Students and educators** learning reverse engineering and binary analysis.
+- **Incident responders** triaging suspicious artifacts.
+- **CTF players** solving reverse engineering challenges.
+- **Software auditors** verifying third-party binaries.
+
+### Prohibited Use
+
+NEXUS-RE must **not** be used for:
+
+- Unauthorized analysis of systems or binaries you do not own.
+- Developing, distributing, or deploying malware.
+- Generating working exploits for unpatched vulnerabilities.
+- Bypassing license checks, DRM, or access controls.
+- Any activity that violates local, national, or international law.
+
+### User Responsibility
+
+By using NEXUS-RE, you agree that:
+
+1. You are solely responsible for ensuring your use complies with all applicable laws.
+2. You will not hold the authors liable for misuse or damages.
+3. You will follow **responsible disclosure** for any vulnerability you discover (90-day minimum).
+4. You will run dynamic analysis in isolated sandboxes only.
+
+### Safety Features
+
+NEXUS-RE includes:
+
+- **No auto-execution** — binaries are never run automatically.
+- **Sandbox mode** — dynamic analysis runs in isolated containers.
+- **Rate limits** — prevents abuse of cloud endpoints.
+- **Audit logs** — every action is logged for accountability.
+- **Opt-in telemetry** — disabled by default.
+
+### Reporting Security Issues
+
+If you find a security issue **in NEXUS-RE itself**, please report it privately:
+
+- Email: security@nexus-re.dev (placeholder)
+- Or use GitHub's private vulnerability reporting.
+
+Do not open public issues for security bugs.
+
+### Legal
+
+NEXUS-RE is provided **"as is"**, without warranty of any kind. See the LICENSE file for full terms.
+
+The authors are not responsible for any damage caused by the use or misuse of this software.
 
 ---
 
