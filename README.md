@@ -25,6 +25,30 @@
 
 ---
 
+## Table of Contents
+
+- [What is NEXUS-RE?](#what-is-nexus-re)
+- [Features](#features)
+  - [Core Analysis Engine (16 Tools)](#core-analysis-engine-16-tools)
+  - [AI Layer (Roadmap)](#ai-layer-roadmap)
+- [Quick Start](#quick-start)
+- [Usage Examples](#usage-examples)
+- [Architecture](#architecture)
+- [Roadmap](#roadmap)
+- [Benchmarks (Planned)](#benchmarks-planned)
+- [Tech Stack](#tech-stack)
+- [Showcases](#showcases)
+- [FAQ](#faq)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [Ethics](#ethics)
+- [License](#license)
+- [Author](#author)
+- [Star History](#star-history)
+- [Translations](#translations)
+
+---
+
 ## 🌐 What is NEXUS-RE?
 
 **NEXUS-RE** is an open-source platform that lets AI agents perform **end-to-end reverse engineering** on binaries, applications, and runtime behavior — without access to source code.
