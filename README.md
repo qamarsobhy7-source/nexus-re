@@ -137,6 +137,85 @@ A pure-Python toolkit with **zero external dependencies** — runs on Linux, mac
 
 ---
 
+## Quick Start
+
+### Prerequisites
+
+- Python 3.11+ (3.13 recommended)
+- (Optional) mcp package - only for AI-agent integration
+- (Optional) Ghidra - only for Phase 2+ deep analysis
+
+### Installation
+
+    git clone https://github.com/qamarsobhy7-source/nexus-re.git
+    cd nexus-re
+    python nexus_re_v2.py
+
+You will see an interactive menu with 16 tools divided into Basic, Binary, and Advanced categories.
+
+---
+
+## Usage Examples
+
+### Example 1 - Analyze a File End-to-End
+
+Choose (0-16): 16
+Enter file path: /path/to/suspicious.exe
+
+Output includes:
+
+    NEXUS-RE FULL ANALYSIS REPORT
+    Size: 12536 bytes
+    SHA256: 37de0dad1a1ce967fec6a594886ccbdf
+    MD5:    3424748c3ed1afd604734dd0512bc813
+
+    [1] FILE TYPE     : PE (Windows) - HIGH
+    [2] ENTROPY       : 7.82 - HIGH (packed)
+    [3] IOCs          : 2 URLs, 1 IP
+    [4] SUSPICIOUS API: CRITICAL (CreateRemoteThread, VirtualAllocEx)
+    [5] PACKER        : UPX, VMProtect
+    [6] YARA          : MALICIOUS (3 rules)
+
+### Example 2 - Parse an ELF Header
+
+Choose (0-16): 8
+Enter hex string: 7f454c4602010100000000000000000002003e00010000000010400000000000
+
+Output:
+
+    ELF Header Analysis
+    Class:        64-bit
+    Endianness:   Little-endian
+    Type:         Executable
+    Architecture: x86-64
+    Entry Point:  0x401000
+
+### Example 3 - Crack XOR-Encrypted Strings
+
+Choose (0-16): 11
+Enter hex string: 162a2b31622b31622362312721302736622f27313123252762
+
+Output:
+
+    XOR Brute Force v2 - Top 3:
+      Key 0x42 (score 12.83)
+        This is a secret message from NEXUS-RE
+
+### Example 4 - Python API
+
+    from nexus_re_v2 import full_analysis, yara_scan
+
+    report = full_analysis("7f454c4602010100...")
+    print(report)
+
+### Example 5 - MCP Server (AI Agent Integration)
+
+    python nexus_re_server.py
+
+Register with any MCP-compatible agent (Claude Code, Cursor) via mcp.json.
+
+---
+
 ## Architecture
 
 **Design Principles:** Determinism at tool layer, Evidence-first, Composability, Fail-safe, Bilingual by default.
