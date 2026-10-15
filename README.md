@@ -1,7 +1,7 @@
 <div align="center">
 
-**🌍 Languages:** 
-[English](README.md) | [العربية](README.ar.md) | [Français](README.fr.md) | [Español](README.es.md)
+**🌍 Languages:**
+[English](README.md) | [العربية](README.ar.md) | [Français](README.fr.md) | [Español](README.es.md) | [Deutsch](README.de.md) | [中文](README.zh.md) | [日本語](README.ja.md) | [Русский](README.ru.md)
 
 </div>
 
@@ -218,7 +218,22 @@ Register with any MCP-compatible agent (Claude Code, Cursor) via mcp.json.
 
 ## Architecture
 
-**Design Principles:** Determinism at tool layer, Evidence-first, Composability, Fail-safe, Bilingual by default.
+NEXUS-RE is organized as a five-layer architecture, designed for modularity and independent evolution.
+
+    Layer 1 - Client        : Web Dashboard | CLI | VS Code Extension
+    Layer 2 - API Gateway   : FastAPI | Auth | Rate Limiting | SSE
+    Layer 3 - Orchestration : LangGraph | Static/Dynamic/Security/CodeGen/Report Agents
+                              RAG Service | Session Memory
+    Layer 4 - MCP + Tools   : 16 Core Tools | Ghidra | Frida | radare2 | JADX
+    Layer 5 - Infrastructure: Docker | PostgreSQL | Redis | MLflow | AWS/GCP
+
+### Design Principles
+
+1. Determinism at the tool layer - every tool is a pure function.
+2. Evidence-first - every agent claim carries a citation and confidence score.
+3. Composability - any layer can be swapped without affecting others.
+4. Fail-safe - if a tool fails, fallbacks are automatic.
+5. Bilingual by default - Arabic + English from a single source.
 
 ---
 
@@ -236,7 +251,12 @@ Register with any MCP-compatible agent (Claude Code, Cursor) via mcp.json.
 | 7 | MLOps + Deployment | Planned |
 | 8 | Publication + Public Release | Planned |
 
-**Milestones:** v0.1 (16-tool toolkit) | v0.2 (static + dynamic) | v0.3 (multi-agent) | v1.0 (public release with paper).
+### Milestones
+
+- v0.1 - 16-tool MCP server, pure-Python toolkit (Complete)
+- v0.2 - Static + dynamic analysis integrated (In Progress)
+- v0.3 - Multi-agent orchestration (Planned)
+- v1.0 - Public release with paper + live demo (Planned)
 
 ---
 
@@ -267,62 +287,11 @@ Register with any MCP-compatible agent (Claude Code, Cursor) via mcp.json.
 
 ---
 
-## Documentation
-
-- [Research Proposal](proposal.md) - Problem, Objectives, Methodology, Evaluation
-- [Architecture](proposal.md#4-system-architecture) - 5-layer design
-- [Timeline](proposal.md#6-timeline) - 9-month roadmap
-
----
-
-## Contributing
-
-1. Fork | 2. Branch (`feature/xyz`) | 3. Commit | 4. Push | 5. PR
-
-**Good first issues:** Arabic translations, unit tests, YARA rules, bug reports.
-
----
-
-## Ethics
-
-Designed for **defensive research, education, and authorized auditing**.
-
-- Permitted: your own binaries, academic research, CTF, sandboxed malware analysis.
-- Prohibited: unauthorized analysis, exploit generation, offensive use.
-
-All dynamic analysis runs in isolated sandboxes. 90-day responsible disclosure policy.
-
----
-
-## License
-
-**MIT License** - Copyright (c) 2026 Qamar Sobhy
-
----
-
-## Author
-
-**Qamar Sobhy** - [@qamarsobhy7-source](https://github.com/qamarsobhy7-source)
-
-## Acknowledgments
-
-Anthropic (MCP), NSA (Ghidra), Open-source RE community, Arabic cybersecurity community.
-
-<div align="center">
-
-**If you find NEXUS-RE useful, please give it a star!**
-
-Made with love for the reverse engineering community.
-
-</div>
-
----
-
 ## Showcases
 
 Real analyses performed with NEXUS-RE. Each case study includes the input, the tools invoked, and the output.
 
-### Case Study 1 — Identifying a Windows Ransomware Dropper
+### Case Study 1 - Identifying a Windows Ransomware Dropper
 
 **Input:** 2.4 MB PE executable, unknown origin.
 
@@ -338,7 +307,7 @@ Real analyses performed with NEXUS-RE. Each case study includes the input, the t
 
 **Result:** Classified as Ransomware Dropper in 12 seconds. Evidence: high entropy, UPX packing, C2 URL, and remote-thread injection API. All claims backed by cryptographic hashes.
 
-### Case Study 2 — Recovering XOR-Encrypted Strings
+### Case Study 2 - Recovering XOR-Encrypted Strings
 
 **Input:** Hex blob from an obfuscated binary.
 
@@ -353,7 +322,7 @@ Real analyses performed with NEXUS-RE. Each case study includes the input, the t
 
 The correct key ranked first out of 255 possibilities, thanks to English frequency scoring (vs. 0x5f in the naive approach).
 
-### Case Study 3 — Parsing a Linux ELF Binary
+### Case Study 3 - Parsing a Linux ELF Binary
 
 **Input:** 64-bit Linux executable, stripped.
 
@@ -371,7 +340,7 @@ The correct key ranked first out of 255 possibilities, thanks to English frequen
 
 Full report exported to PDF, JSON, and Markdown - audit-ready.
 
-### Case Study 4 — Mobile APK Triage (Roadmap)
+### Case Study 4 - Mobile APK Triage (Roadmap)
 
 **Planned workflow:**
 
@@ -408,7 +377,7 @@ NEXUS-RE adds three things neither has: multi-agent LLM orchestration (LangGraph
 
 ### Is this safe to use on real malware?
 
-Yes, with precautions. Always run dynamic analysis in an isolated sandbox with no network access. NEXUS-RE never executes binaries automatically — you control when and where.
+Yes, with precautions. Always run dynamic analysis in an isolated sandbox with no network access. NEXUS-RE never executes binaries automatically - you control when and where.
 
 ### Why is there a research proposal in the repo?
 
@@ -425,6 +394,69 @@ MIT License. You can use, modify, and distribute NEXUS-RE freely, including for 
 ### When will the AI agents be ready?
 
 Phase 4 (Multi-Agent Orchestration) is planned for Months 5-6 of the project timeline. The 16-tool toolkit and MCP server are already working today.
+
+---
+
+## Documentation
+
+- [Research Proposal](proposal.md) - Problem, Objectives, Methodology, Evaluation
+- [Architecture](proposal.md#4-system-architecture) - 5-layer design
+- [Timeline](proposal.md#6-timeline) - 9-month roadmap
+- [Evaluation Plan](proposal.md#5-evaluation-plan) - Benchmarks, metrics, ablations
+
+---
+
+## Contributing
+
+Contributions are welcome. To contribute:
+
+1. Fork the repository.
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request.
+
+### Good First Issues
+
+- Improve Arabic translations in the UI
+- Add unit tests for `parse_elf_header`
+- Expand YARA rule set with new patterns
+- Report bugs via GitHub Issues
+
+---
+
+## Ethics
+
+NEXUS-RE is designed for **defensive security research, education, and authorized auditing**.
+
+- **Permitted:** analyzing your own binaries, academic research, CTF challenges, malware analysis in sandboxes.
+- **Prohibited:** unauthorized analysis of third-party systems, generating exploits, offensive operations.
+
+All dynamic analysis runs in isolated sandboxes. Newly discovered vulnerabilities are reported via **90-day responsible disclosure** before publication.
+
+---
+
+## License
+
+This project is licensed under the **MIT License** - see [LICENSE](LICENSE) for details.
+
+Copyright (c) 2026 Qamar Sobhy
+
+---
+
+## Author
+
+**Qamar Sobhy**
+- GitHub: [@qamarsobhy7-source](https://github.com/qamarsobhy7-source)
+
+---
+
+## Acknowledgments
+
+- **Anthropic** - for the Model Context Protocol specification
+- **NSA** - for Ghidra, the open-source reverse engineering framework
+- **The open-source RE community** - for radare2, Frida, JADX, and countless other tools
+- **The Arabic cybersecurity community** - for inspiring the bilingual-first design
 
 ---
 
