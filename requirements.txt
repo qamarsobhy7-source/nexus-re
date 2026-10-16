@@ -1,0 +1,26 @@
+# NEXUS-RE Core Dependencies
+# Note: Core tools (nexus_re_v3.py) have ZERO dependencies.
+# These are only needed for advanced features.
+
+# AI Agent Integration (Phase 4)
+mcp>=2.3.0
+langgraph>=0.2.0
+langchain>=0.3.0
+
+# RAG Service (Phase 5)
+faiss-cpu>=1.8.0
+chromadb>=0.5.0
+sentence-transformers>=3.0.0
+
+# Explainable AI (Phase 5)
+shap>=0.46.0
+lime>=0.2.0
+
+# Web Backend (Phase 7)
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+pydantic>=2.9.0
+
+# Data & Utils
+numpy>=1.26.0
+requests>=2.32.0
