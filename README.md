@@ -1036,7 +1036,7 @@ Yes, with precautions. Always run dynamic analysis in an isolated sandbox with n
 
 ### Why is there a research proposal in the repo?
 
-Because NEXUS-RE is also a research project. The proposal.md file documents the full problem statement, objectives, methodology, evaluation plan, and timeline. It is intended for academic review and grant applications.
+Because NEXUS-RE is also a research project. The proposal.md file documents the full problem statement, objectives, methodology, evaluation plan, and timeline. It is intended for academic review and open-source community feedback.
 
 ### Can I contribute?
 
