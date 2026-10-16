@@ -1,0 +1,101 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nexus-re"
+version = "3.0.0"
+description = "AI-Powered Reverse Engineering & Security Analysis Platform"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+    { name = "Qamar Sobhy" }
+]
+keywords = [
+    "reverse-engineering",
+    "malware-analysis",
+    "binary-analysis",
+    "security",
+    "cybersecurity",
+    "ai",
+    "llm",
+    "mcp",
+    "multi-agent",
+    "rag",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+Homepage = "https://github.com/qamarsobhy7-source/nexus-re"
+Repository = "https://github.com/qamarsobhy7-source/nexus-re"
+Issues = "https://github.com/qamarsobhy7-source/nexus-re/issues"
+Documentation = "https://github.com/qamarsobhy7-source/nexus-re/blob/main/README.md"
+
+[project.optional-dependencies]
+agents = [
+    "mcp>=2.3.0",
+    "langgraph>=0.2.0",
+    "langchain>=0.3.0",
+]
+rag = [
+    "faiss-cpu>=1.8.0",
+    "chromadb>=0.5.0",
+    "sentence-transformers>=3.0.0",
+]
+api = [
+    "fastapi>=0.115.0",
+    "uvicorn>=0.32.0",
+]
+dev = [
+    "pytest>=8.0.0",
+    "flake8>=7.0.0",
+    "black>=24.0.0",
+    "bandit>=1.7.0",
+]
+all = [
+    "mcp>=2.3.0",
+    "langgraph>=0.2.0",
+    "langchain>=0.3.0",
+    "fastapi>=0.115.0",
+    "uvicorn>=0.32.0",
+    "pytest>=8.0.0",
+]
+
+[project.scripts]
+nexus-re = "nexus_re_v3:main"
+nexus-agents = "nexus_agents:main"
+nexus-rag = "nexus_rag:main"
+
+[tool.black]
+line-length = 120
+target-version = ["py311", "py312", "py313"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.flake8]
+max-line-length = 120
+extend-ignore = ["E501", "W503", "E203"]
+exclude = [".git", "__pycache__", "build", "dist", "venv"]
+
+[tool.bandit]
+exclude_dirs = ["tests", "venv"]
+skips = ["B101", "B601"]
