@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: nexus-re-api
+    runtime: python
+    plan: free
+    region: frankfurt
+    branch: main
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt || true
+    startCommand: python api_render.py
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: PYTHON_VERSION
+        value: 3.11.9
+    autoDeploy: true
+    healthCheckPath: /health
+    disk:
+      name: nexus-data
+      mountPath: /data
+      sizeGB: 1
+
+  - type: web
+    name: nexus-re-api-alt
+    runtime: python
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt || true
+    startCommand: python api_render.py
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: PYTHON_VERSION
+        value: 3.11.9
+    autoDeploy: true
+    healthCheckPath: /health
