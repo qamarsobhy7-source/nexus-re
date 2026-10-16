@@ -1,0 +1,76 @@
+%% NEXUS-RE Architecture Diagram
+%% Version 3.0.0 | 2026-10-16
+
+graph TB
+    subgraph Client["Layer 1 - Client Layer"]
+        WEB["Web Dashboard<br/>(index.html)"]
+        CLI["CLI<br/>(nexus_re_v3.py)"]
+        REST["REST Client<br/>(curl / fetch)"]
+    end
+
+    subgraph Gateway["Layer 2 - API Gateway"]
+        API["Pure-Python HTTP Server<br/>24 endpoints<br/>CORS enabled"]
+    end
+
+    subgraph Orchestration["Layer 3 - Orchestration Layer"]
+        ORCH["Multi-Agent Orchestrator"]
+        STATIC["Static Agent"]
+        SECURITY["Security Agent"]
+        CRYPTO["Crypto Agent"]
+        REPORT["Report Agent"]
+        RAG["RAG Service<br/>12 entries"]
+        MEMORY["Session Memory"]
+    end
+
+    subgraph Tools["Layer 4 - Tools Layer (21 Tools)"]
+        BASIC["Basic (6)<br/>hex_dump, strings,<br/>hash, entropy,<br/>file_info, file_type"]
+        FORMAT["Format (3)<br/>file_type_hex,<br/>parse_elf, parse_pe"]
+        THREAT["Threat (4)<br/>iocs, apis,<br/>packer, yara"]
+        CRYPTO_T["Crypto (2)<br/>xor_v1, xor_v2"]
+        ADVANCED["Advanced (6)<br/>version_diff, sections,<br/>base64, similarity,<br/>full_analysis, analyze_file"]
+    end
+
+    subgraph Infra["Layer 5 - Infrastructure"]
+        DOCKER["Docker<br/>Multi-stage build"]
+        CI["GitHub Actions<br/>Python 3.11 / 3.12 / 3.13"]
+        LICENSE["MIT License"]
+    end
+
+    WEB --> API
+    CLI --> API
+    REST --> API
+
+    API --> ORCH
+    ORCH --> STATIC
+    ORCH --> SECURITY
+    ORCH --> CRYPTO
+    ORCH --> REPORT
+
+    STATIC --> BASIC
+    STATIC --> FORMAT
+    SECURITY --> THREAT
+    CRYPTO --> CRYPTO_T
+    REPORT --> ADVANCED
+
+    STATIC --> RAG
+    SECURITY --> RAG
+    REPORT --> RAG
+
+    ORCH --> MEMORY
+    REPORT --> API
+
+    API --> DOCKER
+    API --> CI
+    API --> LICENSE
+
+    classDef clientStyle fill:#6C63FF,stroke:#fff,color:#fff
+    classDef gatewayStyle fill:#00FF88,stroke:#fff,color:#000
+    classDef orchestrationStyle fill:#FFA500,stroke:#fff,color:#000
+    classDef toolsStyle fill:#1a1f3a,stroke:#6C63FF,color:#fff
+    classDef infraStyle fill:#FF4D4D,stroke:#fff,color:#fff
+
+    class WEB,CLI,REST clientStyle
+    class API gatewayStyle
+    class ORCH,STATIC,SECURITY,CRYPTO,REPORT,RAG,MEMORY orchestrationStyle
+    class BASIC,FORMAT,THREAT,CRYPTO_T,ADVANCED toolsStyle
+    class DOCKER,CI,LICENSE infraStyle
