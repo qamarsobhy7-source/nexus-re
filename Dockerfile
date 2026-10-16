@@ -1,50 +1,28 @@
-# NEXUS-RE Dockerfile
-# Multi-stage build for a minimal production image
-
-FROM python:3.13-slim AS builder
-
-WORKDIR /app
-
-# Copy dependencies list
-COPY requirements.txt .
-
-# Install dependencies into a virtual environment
-RUN python -m venv /opt/venv && \
-    /opt/venv/bin/pip install --no-cache-dir --upgrade pip && \
-    /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
-
-# ============================================
-
-FROM python:3.13-slim
+FROM python:3.11-slim
 
 LABEL maintainer="Qamar Sobhy"
 LABEL description="NEXUS-RE: AI-Powered Reverse Engineering Platform"
 LABEL version="3.0"
-LABEL license="MIT"
 
 WORKDIR /app
 
-# Copy the virtual environment from builder
-COPY --from=builder /opt/venv /opt/venv
-
-# Copy application code
+# Copy all Python files
 COPY nexus_re_v3.py .
+COPY nexus_agents.py .
+COPY nexus_rag.py .
+COPY api_render.py .
 COPY README.md .
 COPY proposal.md .
 
-# Set up environment
-ENV PATH="/opt/venv/bin:$PATH"
-ENV PYTHONUNBUFFERED=1
-ENV NEXUS_LOG_LEVEL=INFO
-
-# Create non-root user for security
+# Non-root user
 RUN useradd -m -u 1000 nexus && chown -R nexus:nexus /app
 USER nexus
 
-# Default command
-CMD ["python", "nexus_re_v3.py"]
+ENV PYTHONUNBUFFERED=1
+ENV PYTHON_VERSION=3.11.9
+ENV PORT=8000
 
-# Usage:
-#   docker build -t nexus-re:latest .
-#   docker run -it --rm nexus-re:latest
-#   docker run -it --rm -v $(pwd)/samples:/samples nexus-re:latest
+EXPOSE 8000
+
+# Run the API (not the CLI)
+CMD ["python", "api_render.py"]
