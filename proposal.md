@@ -1,3 +1,137 @@
+# NEXUS-RE: An AI-Powered Multi-Agent Platform for Automated Reverse Engineering and Security Analysis
+
+## Abstract
+
+Reverse engineering (RE) is a critical discipline in cybersecurity, malware analysis, and software security assessment. However, traditional RE tools (Ghidra, IDA Pro, radare2) demand deep expertise, are time-consuming, and produce raw output that requires extensive manual interpretation. Meanwhile, modern AI techniques - Large Language Models (LLMs), multi-agent systems, and retrieval-augmented generation (RAG) - have demonstrated remarkable capabilities in code understanding and reasoning, yet their integration with professional RE toolchains remains limited and fragmented.
+
+This project proposes NEXUS-RE, an open-source, AI-powered platform that bridges the gap between LLM agents and professional reverse engineering tools. NEXUS-RE implements 21 specialized binary analysis tools exposed through a Model Context Protocol (MCP) server, orchestrated by a working multi-agent layer (Static, Security, Crypto, Report agents), and grounded by a TF-IDF RAG service over NVD/CVE and MITRE ATT&CK knowledge. Every result is accompanied by evidence, confidence scores, and traceable artifacts. The system ships with a REST API, a Docker deployment, a CI/CD pipeline, and a 100%-passing test suite.
+
+We evaluate NEXUS-RE against existing benchmarks - Decompile-Bench, R3-Bench, and BinMetric - and compare its performance with LLM4Decompile and GPT-4o. The project targets publication at top-tier venues (NeurIPS, ICML, USENIX Security) and aims to democratize access to reverse engineering expertise for students, researchers, and security analysts in the Arab world and beyond.
+
+Keywords: Reverse Engineering, Large Language Models, Multi-Agent Systems, Model Context Protocol, Cybersecurity, Binary Analysis, Explainable AI, RAG, FastAPI, Docker.
+
+---
+
+## 1. Problem Statement
+
+### 1.1 The Reverse Engineering Bottleneck
+
+Reverse engineering is the process of analyzing compiled software to recover its design, functionality, and behavior without access to source code. It is indispensable in malware analysis, vulnerability research, software security auditing, interoperability, and digital forensics.
+
+Despite its importance, modern reverse engineering remains expert-intensive and slow. A skilled analyst must load the binary into a disassembler, manually navigate thousands of functions, reconstruct data structures, cross-reference system calls and network activity, and document findings with evidence. Industry surveys indicate that a single malware sample can consume 8-40 hours of senior analyst time. With over 560,000 new malware samples discovered daily (AV-TEST, 2024), this approach does not scale.
+
+### 1.2 The AI Opportunity - and Its Fragmentation
+
+Recent advances in Large Language Models (LLMs) have demonstrated strong capabilities in code comprehension, explanation, and generation. Early research (LLM4Decompile, Nova, ReSym) shows that LLMs can assist with decompilation and variable-name recovery.
+
+However, current integrations between LLMs and reverse engineering suffer from four critical limitations:
+
+1. Fragmentation - Existing tools (GhidraMCP, Frida-MCP, IDA-MCP) each solve one narrow problem, with no unified orchestration layer.
+2. Lack of transparency - Most AI-based RE tools output a single answer with no evidence trail, no confidence levels, and no auditability.
+3. Single-agent limitations - Current systems rely on a single LLM call, which cannot plan multi-step investigations or coordinate specialized subtasks.
+4. Language and access gap - No existing platform provides native Arabic support for the Arabic-speaking cybersecurity community.
+
+### 1.3 Research Gap
+
+To the best of our knowledge, no existing open-source project:
+
+- Combines 21 deterministic analysis tools with multi-agent LLM orchestration under a single MCP server.
+- Produces evidence-backed, confidence-scored reports for every analytical claim.
+- Integrates RAG over CVE and MITRE ATT&CK knowledge to ground LLM reasoning.
+- Ships a working REST API + Docker deployment + CI/CD in a single package.
+- Offers bilingual (Arabic/English) orientation for security analysts.
+
+NEXUS-RE addresses these gaps directly.
+
+### 1.4 Research Questions
+
+RQ1. Can a multi-agent system, grounded in 21 deterministic RE tools via MCP, automate significant portions of static binary analysis with accuracy comparable to a junior human analyst?
+
+RQ2. How does evidence-backed retrieval (RAG over CVE and tool docs) affect the accuracy and trustworthiness of LLM-driven vulnerability detection?
+
+RQ3. To what extent can an explainability layer (SHAP/LIME + tool traces) improve analyst trust and reduce false positives?
+
+RQ4. What is the performance overhead of a multi-agent architecture compared to single-agent baselines on Decompile-Bench and R3-Bench?
+
+---
+
+## 2. Objectives
+
+The NEXUS-RE project has five primary objectives:
+
+### Objective 1: Build a Unified MCP Server for Reverse Engineering
+
+Goal: Design and implement an open-source Model Context Protocol server that exposes 21 production-grade reverse engineering tools to any MCP-compatible AI agent.
+
+Sub-goals:
+- Implement 6 basic tools (hex dump, strings, hash, entropy, file info, file-type).
+- Implement 3 format tools (ELF parser, PE parser, magic-number detection).
+- Implement 4 threat tools (IOC extraction, suspicious API scanner, packer detector, YARA matcher).
+- Implement 2 crypto tools (XOR v1, XOR v2 with frequency scoring).
+- Implement 6 advanced tools (version diff, section analyzer, Base64 detector, string similarity, full analysis, analyze file).
+
+Success Metric: Server passes 95% of unit tests; tools produce deterministic results.
+
+### Objective 2: Develop a Multi-Agent Orchestration Layer
+
+Goal: Build a working multi-agent system where Static, Security, Crypto, and Report agents collaborate to complete end-to-end RE workflows.
+
+Sub-goals:
+- Implement shared AnalysisState with structured Evidence objects.
+- Design a plan-based orchestrator that runs agents in sequence.
+- Attach confidence scores (HIGH/MEDIUM/LOW) to every evidence item.
+- Support fallback: agents continue if one tool fails.
+
+Success Metric: 80% task completion on a 100-task internal benchmark.
+
+### Objective 3: Integrate RAG for Grounded Reasoning
+
+Goal: Ground every agent claim in verifiable evidence using Retrieval-Augmented Generation.
+
+Sub-goals:
+- Build a knowledge base of 12+ entries covering NVD/CVE, MITRE ATT&CK, and packer signatures.
+- Implement a TF-IDF retrieval engine with pure-Python fallback.
+- Attach evidence citations to every agent claim.
+- Provide a /rag/search API endpoint.
+
+Success Metric: 90% of generated claims traceable to a source.
+
+### Objective 4: Deliver a Complete Engineering Stack
+
+Goal: Ship a production-ready stack: REST API, Docker, CI/CD, tests, and packaging.
+
+Sub-goals:
+- Implement a pure-Python REST API exposing 21 tools + agents + RAG (24 endpoints).
+- Provide Dockerfile + docker-compose.yml.
+- Configure GitHub Actions CI across Python 3.11, 3.12, 3.13.
+- Write 27 unit tests covering all tools (100% pass).
+- Publish setup.py and pyproject.toml for pip install nexus-re.
+
+Success Metric: All CI checks pass; package installable.
+
+### Objective 5: Benchmark and Publish
+
+Goal: Rigorously evaluate NEXUS-RE against existing baselines and disseminate results.
+
+Sub-goals:
+- Evaluate on Decompile-Bench, R3-Bench, and BinMetric.
+- Compare against LLM4Decompile, GPT-4o, and single-agent baselines.
+- Run ablation studies: multi-agent vs single-agent, RAG vs no-RAG.
+- Publish code under MIT License on GitHub.
+- Submit a technical paper to NeurIPS, ICML, or USENIX Security.
+
+Success Metric: Paper submitted; GitHub repository reaches 500+ stars within 12 months.
+
+### Summary of Objectives
+
+| # | Objective | Primary Deliverable | Key Metric |
+|---|-----------|---------------------|------------|
+| 1 | MCP Server | 21-tool server (Python) | 95% test pass |
+| 2 | Multi-Agent Layer | 4-agent orchestrator | 80% task completion |
+| 3 | RAG Grounding | 12-entry knowledge base | 90% traceable claims |
+| 4 | Engineering Stack | API + Docker + CI/CD | 100% CI pass |
+| 5 | Benchmark + Publish | Paper + GitHub repo | Top-venue submission |
+
 ---
 
 ## 3. Methodology
