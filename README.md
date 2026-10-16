@@ -21,6 +21,13 @@
 
 [📖 Overview](#-what-is-nexus-re) · [⚡ Quick Start](#-quick-start) · [🔧 Tools](#-features) · [🏗️ Architecture](#️-architecture) · [🗺️ Roadmap](#️-roadmap) · [🎯 Showcases](#showcases) · [❓ FAQ](#faq) · [📚 Docs](#documentation) · [📄 Proposal](proposal.md) · [🤝 Contributing](#-contributing)
 
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-hf.space-6C63FF?style=for-the-badge&logo=huggingface)](https://qamar-sobhy-nexus-re-api.hf.space)
+
+**[🚀 Try the Live Demo →](https://qamar-sobhy-nexus-re-api.hf.space)**
+
+
+
 </div>
 
 ---
