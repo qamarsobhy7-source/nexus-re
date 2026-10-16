@@ -542,28 +542,6 @@ Reverse engineering tools can be misused. NEXUS-RE mitigates this through:
 
 ---
 
-## 9. Budget Estimate
-
-| Item | Cost (USD) | Notes |
-|------|-----------:|-------|
-| Cloud GPU (training + benchmarks) | 3,000 | AWS/GCP credits + grants |
-| LLM API credits (baselines) | 1,500 | GPT-4o, Claude comparison |
-| Cloud hosting (12 months) | 1,200 | Backend + database + CDN |
-| Dataset licensing | 500 | Where not free |
-| Conference registration | 1,500 | NeurIPS / ICML |
-| Travel (conference) | 2,000 | If in-person |
-| Domain + SSL | 100 | nexus-re.ai |
-| Total | 9,800 | Excludes student stipend |
-
-Funding sources targeted:
-- Google Cloud Research Credits
-- AWS Cloud Credit for Research
-- Hugging Face Community Grants
-- Egypt STDF
-- University scholarships
-
----
-
 ## 10. Expected Impact
 
 ### 10.1 Academic Impact
