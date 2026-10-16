@@ -67,7 +67,7 @@
 
 **NEXUS-RE** is an open-source platform for **AI-assisted reverse engineering** of binaries, applications, and runtime behavior — without access to source code.
 
-It currently ships **16 deterministic binary analysis tools** through a **Model Context Protocol (MCP)** server. The roadmap adds a **multi-agent LLM orchestration layer** built on LangGraph and the ReAct pattern, designed to plan and execute complex analyses automatically. Every tool result already carries **evidence, confidence scores, and traceable artifacts** — making analysis **auditable, reproducible, and trustworthy**.
+It currently ships **21 deterministic binary analysis tools** through a **Model Context Protocol (MCP)** server. The roadmap adds a **multi-agent LLM orchestration layer** built on LangGraph and the ReAct pattern, designed to plan and execute complex analyses automatically. Every tool result already carries **evidence, confidence scores, and traceable artifacts** — making analysis **auditable, reproducible, and trustworthy**.
 
 ### The Problem
 
@@ -92,7 +92,7 @@ A single malware sample can consume **8–40 hours** of senior analyst time. Wit
 | Feature | What It Means |
 |---------|---------------|
 | 🔍 **Evidence-First** | Every claim is backed by a cryptographic hash, a tool trace, and a confidence level. No black-box answers. |
-| 🧰 **16 Working Tools** | A pure-Python toolkit covering basic, format, threat, and crypto analysis — works offline today. |
+| 🧰 **21 Working Tools** | A pure-Python toolkit covering basic, format, threat, and crypto analysis — works offline today. |
 | 🤖 **Multi-Agent (Planned)** | Static, Dynamic, Security, Code-Gen, and Report agents will collaborate under a LangGraph orchestrator. |
 | 📚 **RAG-Grounded (Planned)** | Every LLM decision will be anchored in official Ghidra/Frida docs and the NVD/CVE database. |
 | 🌍 **Bilingual (Planned)** | Native Arabic (RTL) and English (LTR) UI — a first for RE tooling. |
@@ -103,7 +103,7 @@ A single malware sample can consume **8–40 hours** of senior analyst time. Wit
 
 | Feature | NEXUS-RE | REA | DecompAI | GhidraMCP |
 |---------|:--------:|:---:|:--------:|:---------:|
-| 16-tool pure-Python core (ready) | ✅ | ❌ | ❌ | ❌ |
+| 21-tool pure-Python core (ready) | ✅ | ❌ | ❌ | ❌ |
 | Evidence + confidence scores | ✅ | ✅ | ⚠️ | ❌ |
 | Multi-agent orchestration (planned) | ✅ | ❌ | ❌ | ❌ |
 | RAG over CVE + docs (planned) | ✅ | ❌ | ❌ | ❌ |
@@ -135,7 +135,7 @@ The orchestrator selects the appropriate tools based on file type and user inten
 | ELF binary | parse_elf_header, extract_strings, extract_iocs |
 | PE binary | parse_pe_header, scan_suspicious_apis, detect_packer |
 | Encrypted payload | xor_bruteforce_v2, yara_scan |
-| Full analysis | All 16 tools chained |
+| Full analysis | All 21 tools chained |
 
 ### Stage 3 — Evidence Collection
 
@@ -166,7 +166,7 @@ Results are merged into a single report with sections:
     [ Tool Selection ] -- heuristic rules
           |
           v
-    [ Evidence Collection ] -- 16 tools run in sequence
+    [ Evidence Collection ] -- 21 tools run in sequence
           |
           v
     [ Merge + Confidence Scoring ]
@@ -245,7 +245,7 @@ NEXUS-RE already handles **13 analysis tasks** out of 25 in the roadmap, with **
 
 ## 🔧 Features
 
-### Core Analysis Engine (16 Tools)
+### Core Analysis Engine (21 Tools)
 
 A pure-Python toolkit with **zero external dependencies** — runs on Linux, macOS, Windows, and Android (via Termux or Pydroid 3).
 
@@ -297,7 +297,7 @@ A pure-Python toolkit with **zero external dependencies** — runs on Linux, mac
     cd nexus-re
     python nexus_re_v2.py
 
-You will see an interactive menu with 16 tools divided into Basic, Binary, and Advanced categories.
+You will see an interactive menu with 21 tools divided into Basic, Binary, and Advanced categories.
 
 ---
 
@@ -528,7 +528,7 @@ Create `nexus-re.yaml` in your home directory:
 
 ### Unit Tests
 
-NEXUS-RE ships with a test suite covering all 16 tools.
+NEXUS-RE ships with a test suite covering all 21 tools.
 
     pytest tests/ -v
 
@@ -679,7 +679,7 @@ Recommended for production:
     ├── LICENSE                      # MIT License
     ├── proposal.md                  # Full research proposal (837 lines)
     ├── requirements.txt             # Python dependencies (optional)
-    ├── nexus_re_v2.py               # Main toolkit (16 tools)
+    ├── nexus_re_v2.py               # Main toolkit (21 tools)
     ├── nexus_re_v1.py               # Earlier version (11 tools)
     ├── nexus_re_server.py           # MCP server for AI agents
     │
@@ -795,7 +795,7 @@ NEXUS-RE is organized as a five-layer architecture, designed for modularity and 
 | Phase | Focus | Duration | Status |
 |:-----:|-------|:--------:|:------:|
 | 0 | Foundation & Literature Review | Month 1 | Complete |
-| 1 | MCP Server Core (16 tools) | Month 2 | Complete |
+| 1 | MCP Server Core (21 tools) | Month 2 | Complete |
 | 2 | Static Analysis (Ghidra, radare2) | Month 3 | Complete |
 | 3 | Dynamic Analysis (Frida, strace) | Month 4 | In Progress |
 | 4 | Multi-Agent Orchestration | Months 5-6 | Planned |
@@ -806,7 +806,7 @@ NEXUS-RE is organized as a five-layer architecture, designed for modularity and 
 
 ### Milestones
 
-- **v0.1** (Month 2) — 16-tool MCP server, pure-Python toolkit (Complete)
+- **v0.1** (Month 2) — 21-tool MCP server, pure-Python toolkit (Complete)
 - **v0.2** (Month 4) — Static + dynamic analysis integrated (In Progress)
 - **v0.3** (Month 6) — Multi-agent orchestration + RAG (Planned)
 - **v1.0** (Month 9) — Public release with paper + live demo (Planned)
@@ -933,7 +933,7 @@ Currently: ELF (Linux), PE (Windows), and Mach-O (macOS) via magic-number detect
 
 ### How is NEXUS-RE different from REA or GhidraMCP?
 
-NEXUS-RE adds three things neither has: multi-agent LLM orchestration (LangGraph + ReAct), RAG grounding over CVE databases, and a bilingual (Arabic/English) interface. It also ships a complete 16-tool pure-Python toolkit that works offline.
+NEXUS-RE adds three things neither has: multi-agent LLM orchestration (LangGraph + ReAct), RAG grounding over CVE databases, and a bilingual (Arabic/English) interface. It also ships a complete 21-tool pure-Python toolkit that works offline.
 
 ### Is this safe to use on real malware?
 
@@ -953,7 +953,7 @@ MIT License. You can use, modify, and distribute NEXUS-RE freely, including for 
 
 ### When will the AI agents be ready?
 
-Phase 4 (Multi-Agent Orchestration) is planned for Months 5-6 of the project timeline. The 16-tool toolkit and MCP server are already working today.
+Phase 4 (Multi-Agent Orchestration) is planned for Months 5-6 of the project timeline. The 21-tool toolkit and MCP server are already working today.
 
 ---
 
