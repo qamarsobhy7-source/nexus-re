@@ -1067,6 +1067,9 @@ Phase 4 (Multi-Agent Orchestration) is planned for Months 5-6 of the project tim
 
 ## Documentation
 
+- [Technical Report (Research Paper)](paper/technical_report.md) - A deep dive into the architecture, challenges, and engineering journey of building NEXUS-RE entirely on a mobile phone.
+
+
 - [Research Proposal](proposal.md) - Problem, Objectives, Methodology, Evaluation
 - [Architecture](proposal.md#4-system-architecture) - 5-layer design
 - [Timeline](proposal.md#6-timeline) - 9-month roadmap
