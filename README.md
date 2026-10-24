@@ -1182,6 +1182,66 @@ We tested NEXUS-RE on **10 synthetic samples** (5 clean + 5 malicious-like) to d
 
 > **⚠️ Important:** These are **synthetic samples** for testing — not real malware. Full benchmarking against Decompile-Bench, R3-Bench, and BinMetric is tracked in [Issue #22](https://github.com/qamarsobhy7-source/nexus-re/issues/22).
 
+
+---
+
+## ⚠️ Known Issues
+
+These are **confirmed bugs and limitations** discovered during testing. See [Issues](https://github.com/qamarsobhy7-source/nexus-re/issues) for full details.
+
+| Issue | Severity | Description |
+|-------|:--------:|-------------|
+| Slow on files > 50 MB | 🟡 Medium | Memory limits on Android may cause crashes |
+| MCP Server exposes 16/31 tools | 🔴 High | 15 advanced tools not yet in MCP (#23) |
+| No dynamic analysis | 🔴 High | Frida integration pending (#19) |
+| Mach-O support is partial | 🟡 Medium | Only magic-number detection, no deep parsing |
+| No caching | 🟡 Medium | Every request recomputes everything |
+| No rate limiting | 🟠 Low | API is intended for local use only |
+| Test coverage ~60% | 🟡 Medium | 27+15 tests cover main paths, not all edge cases |
+
+### Reporting New Issues
+
+If you find a bug, please [open an issue](https://github.com/qamarsobhy7-source/nexus-re/issues/new/choose) with:
+- A clear title
+- Steps to reproduce
+- Expected vs. actual behavior
+
+
+
+---
+
+## 💡 The Story Behind This Project
+
+### Why Did I Build This?
+
+I am **Qamar Sobhy**, and I built NEXUS-RE **entirely on an Android phone** (no laptop, no desktop, no GPU).
+
+Reverse engineering is hard. Malware analysts spend 8-40 hours per sample. I wanted to prove that AI could help — and that a developer with a phone can build something meaningful.
+
+### The Real Challenges
+
+1. **Google Colab banned my account** because my code contained strings like `CreateRemoteThread` (legitimate malware-analysis APIs). Lesson: platform abuse detection is aggressive.
+2. **Rust dependency hell** — `mcp`, `fastapi`, and `huggingface_hub` required Rust, which Pydroid doesn't have. Solution: pin older versions or write pure-Python alternatives.
+3. **No Node.js** — Next.js was impossible. Solution: build a single-file HTML dashboard with a real JavaScript analysis engine.
+4. **Memory limits** — Pydroid crashes with large files. Solution: split code into modules, use `importlib`.
+5. **Cloud deployment friction** — Render asked for a credit card, Hugging Face needed `.static.hf.space` for static sites.
+
+### What I Learned
+
+- **Constraints breed creativity.** Every limitation forced a simpler, better solution.
+- **Documentation matters as much as code.** The engineer who reviewed this project praised the transparency of `Project Reality` and `Known Limitations`.
+- **Honesty builds trust.** Claiming "complete" when you're not is worse than saying "here's what works, here's what's next."
+- **Mobile-first AI is possible.** We don't need a $2,000 GPU to build useful tools.
+
+### What's Next
+
+See the [6 open issues](https://github.com/qamarsobhy7-source/nexus-re/issues) on GitHub — that's the real roadmap.
+
+> *"The best project isn't the most complete one — it's the most honest one."*
+
+— Qamar Sobhy, October 2026
+
+
 ## License
 
 This project is licensed under the **MIT License** - see [LICENSE](LICENSE) for details.
