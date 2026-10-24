@@ -7,9 +7,21 @@ on:
     branches: [main]
 
 jobs:
+  doctor:
+    name: Environment Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Run NEXUS-RE Doctor
+        run: python doctor.py
+
   test:
     name: Run Tests
     runs-on: ubuntu-latest
+    needs: doctor
     strategy:
       matrix:
         python-version: ["3.11", "3.12", "3.13"]
@@ -29,7 +41,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Verify toolkit loads
-        run: python -c "import importlib.util; spec = importlib.util.spec_from_file_location('nexus', 'nexus_re_v3.py'); m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); print('OK:', hasattr(m, 'full_analysis'))"
+        run: python -c "import importlib.util; spec = importlib.util.spec_from_file_location('nexus', 'nexus_re_v3.py'); m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); print('OK:', len([x for x in dir(m) if callable(getattr(m, x)) and not x.startswith('_')]), 'tools loaded')"
 
       - name: Verify README exists
         run: test -f README.md && echo "README OK"
@@ -40,6 +52,7 @@ jobs:
   lint:
     name: Lint Code
     runs-on: ubuntu-latest
+    needs: doctor
 
     steps:
       - name: Checkout repository
@@ -54,14 +67,15 @@ jobs:
         run: pip install flake8 black
 
       - name: Run flake8
-        run: flake8 nexus_re_v3.py --max-line-length=120 --ignore=E501,W503,E203 || true
+        run: flake8 nexus_re_v3.py doctor.py --max-line-length=120 --ignore=E501,W503,E203 || true
 
       - name: Check formatting
-        run: black --check nexus_re_v3.py || true
+        run: black --check nexus_re_v3.py doctor.py || true
 
   security:
     name: Security Scan
     runs-on: ubuntu-latest
+    needs: doctor
 
     steps:
       - name: Checkout repository
@@ -70,7 +84,7 @@ jobs:
       - name: Run Bandit security scan
         run: |
           pip install bandit
-          bandit -r nexus_re_v3.py -ll || true
+          bandit -r nexus_re_v3.py doctor.py -ll || true
 
   build-docker:
     name: Build Docker Image
