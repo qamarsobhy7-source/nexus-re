@@ -24,7 +24,7 @@
 </div>
 
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-hf.space-6C63FF?style=for-the-badge&logo=huggingface)](https://qamar-sobhy-nexus-re-api.hf.space)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-hf.space-6C63FF?style=for-the-badge&logo=huggingface)](https://qamar-sobhy-nexus-re-api.static.hf.space)
 
 ---
 
@@ -439,7 +439,7 @@ Register with any MCP-compatible agent (Claude Code, Cursor) via mcp.json.
 
 ### Live Demo
 
-🚀 **Try NEXUS-RE Now:** [https://qamar-sobhy-nexus-re-api.hf.space](https://qamar-sobhy-nexus-re-api.hf.space)
+🚀 **Try NEXUS-RE Now:** [https://qamar-sobhy-nexus-re-api.static.hf.space](https://qamar-sobhy-nexus-re-api.static.hf.space)
 
 The live dashboard includes:
 - 31 interactive analysis tools
