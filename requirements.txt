@@ -14,7 +14,7 @@ sentence-transformers>=3.0.0
 
 # Explainable AI (Phase 5)
 shap>=0.46.0
-lime>=0.2.0
+lime>=0.2.0.1
 
 # Web Backend (Phase 7)
 fastapi>=0.115.0
