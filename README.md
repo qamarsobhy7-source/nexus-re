@@ -21,13 +21,6 @@
 
 [📖 Overview](#-what-is-nexus-re) · [⚡ Quick Start](#-quick-start) · [🔧 Tools](#-features) · [🏗️ Architecture](#️-architecture) · [🗺️ Roadmap](#️-roadmap) · [🎯 Showcases](#showcases) · [❓ FAQ](#faq) · [📚 Docs](#documentation) · [📄 Proposal](proposal.md) · [🤝 Contributing](#-contributing)
 
-
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-hf.space-6C63FF?style=for-the-badge&logo=huggingface)](https://qamar-sobhy-nexus-re-api.hf.space)
-
-**[🚀 Try the Live Demo →](https://qamar-sobhy-nexus-re-api.hf.space)**
-
-
-
 </div>
 
 ---
@@ -38,7 +31,7 @@
 - [How NEXUS-RE Works](#how-nexus-re-works)
 - [What You Can Analyze](#what-you-can-analyze)
 - [Features](#features)
-  - [Core Analysis Engine (21 Tools)](#core-analysis-engine-21-tools)
+  - [Core Analysis Engine (31 Tools)](#core-analysis-engine-31-tools)
   - [Multi-Agent System](#multi-agent-system-phase-4--ready)
   - [RAG Service](#rag-service-phase-5--ready)
   - [REST API](#rest-api-phase-7--ready)
@@ -256,7 +249,7 @@ NEXUS-RE already handles **13 analysis tasks** out of 25 in the roadmap, with **
 
 ## 🔧 Features
 
-### Core Analysis Engine (21 Tools)
+### Core Analysis Engine (31 Tools)
 
 A pure-Python toolkit with **zero external dependencies** — runs on Linux, macOS, Windows, and Android (via Termux or Pydroid 3).
 
@@ -314,7 +307,7 @@ Every piece of evidence carries: **tool name, result, confidence (HIGH/MEDIUM/LO
 `api.py` exposes **every tool + agents + RAG** as HTTP endpoints:
 
 - `GET  /health` — server status
-- `GET  /tools` — list all 21 tools
+- `GET  /tools` — list all 31 tools
 - `POST /hex_dump` — {text: "NEXUS"}
 - `POST /full_analysis` — {hex_string: "7f454c46..."}
 - `POST /agents/analyze` — {target: "hex_or_path"}
