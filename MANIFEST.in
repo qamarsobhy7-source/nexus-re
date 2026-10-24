@@ -1,0 +1,12 @@
+include README.md
+include README_ar.md
+include LICENSE
+include requirements.txt
+include requirements-dev.txt
+include doctor.py
+include api_render.py
+include nexus_re_server.py
+recursive-include docs *.md *.yaml *.mermaid
+recursive-include tests *.py
+recursive-include paper *.md
+recursive-include .github *.yml *.md
