@@ -7,6 +7,10 @@
 
 > **📌 TL;DR:** A reverse engineering and security analysis platform featuring **31 analysis tools**, **4 AI agents**, a **REST API**, and a **web dashboard** — built entirely on Android. **MIT License.** **[Try the Live Demo →](https://qamar-sobhy-nexus-re-api.static.hf.space)**
 
+> **⚠️ Project Status: Alpha (v3.0.0)**
+> This is an **early-stage project** built entirely on Android. It is a working prototype, not a production-ready platform. See [Project Reality](#️-project-reality-what-is-implemented-vs-planned) and [Known Limitations](#-known-limitations-honest) for honest scope.
+
+
 
 
 <div align="center">
@@ -20,7 +24,7 @@
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://www.docker.com/)
 
 
-### AI-Ready Reverse Engineering & Security Analysis Platform
+### AI-Ready Binary Analysis Toolkit — Currently in Alpha
 
 > **Current Implementation:** Symbolic analysis + TF-IDF retrieval + custom multi-agent orchestrator. Real LLM integration (Llama 3, Mistral, Jais) is in active development — see [Issue #20](https://github.com/qamarsobhy7-source/nexus-re/issues/20).
 
@@ -30,7 +34,8 @@
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![MCP](https://img.shields.io/badge/MCP-2.3.0-6C63FF?style=for-the-badge)](https://modelcontextprotocol.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-00FF88?style=for-the-badge)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Active-orange?style=for-the-badge)]()
+[![Status: Alpha](https://img.shields.io/badge/Status-Alpha-orange?style=for-the-badge)]()
+[![Status](https://img.shields.io/badge/Stage-Prototype-red?style=for-the-badge)]()
 [![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Android-black?style=for-the-badge)]()
 
 [📖 Overview](#-what-is-nexus-re) · [⚡ Quick Start](#-quick-start) · [🔧 Tools](#-features) · [🏗️ Architecture](#️-architecture) · [🗺️ Roadmap](#️-roadmap) · [🎯 Showcases](#showcases) · [❓ FAQ](#faq) · [📚 Docs](#documentation) · [📄 Proposal](proposal.md) · [🤝 Contributing](#-contributing)
