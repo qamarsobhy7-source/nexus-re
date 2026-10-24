@@ -23,6 +23,9 @@
 
 </div>
 
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-hf.space-6C63FF?style=for-the-badge&logo=huggingface)](https://qamar-sobhy-nexus-re-api.hf.space)
+
 ---
 
 ## Table of Contents
@@ -434,9 +437,16 @@ Register with any MCP-compatible agent (Claude Code, Cursor) via mcp.json.
 
 ## Demo
 
-### Live Demo (Coming Soon)
+### Live Demo
 
-A public web demo is planned for **Phase 4 (Month 6)**. It will be deployed on Hugging Face Spaces with rate limiting.
+🚀 **Try NEXUS-RE Now:** [https://qamar-sobhy-nexus-re-api.hf.space](https://qamar-sobhy-nexus-re-api.hf.space)
+
+The live dashboard includes:
+- 31 interactive analysis tools
+- Real-time evidence panel
+- Vulnerability cards
+- Code viewer
+- PDF export
 
 ### Quick Terminal Demo
 
