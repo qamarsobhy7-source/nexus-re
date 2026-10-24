@@ -9,6 +9,13 @@
 
 # NEXUS-RE
 
+[![CI](https://github.com/qamarsobhy7-source/nexus-re/actions/workflows/ci.yml/badge.svg)](https://github.com/qamarsobhy7-source/nexus-re/actions/workflows/ci.yml)
+[![Security](https://github.com/qamarsobhy7-source/nexus-re/actions/workflows/security.yml/badge.svg)](https://github.com/qamarsobhy7-source/nexus-re/actions/workflows/security.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://www.docker.com/)
+
+
 ### AI-Powered Reverse Engineering & Security Analysis Platform
 
 *Bridging Large Language Models with professional reverse engineering tools — through the Model Context Protocol.*
