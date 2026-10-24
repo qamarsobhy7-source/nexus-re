@@ -35,6 +35,12 @@
 
 ---
 
+🚀 **Try NEXUS-RE Now:** [https://qamar-sobhy-nexus-re-api.static.hf.space](https://qamar-sobhy-nexus-re-api.static.hf.space)
+
+![NEXUS-RE Dashboard](docs/new_dashboard.png)
+
+---
+
 ## Table of Contents
 
 - [What is NEXUS-RE?](#what-is-nexus-re)
@@ -439,63 +445,6 @@ Output:
     python nexus_re_server.py
 
 Register with any MCP-compatible agent (Claude Code, Cursor) via mcp.json.
-
----
-
-## Demo
-
-
-### Live Demo
-
-🚀 **Try NEXUS-RE Now:** [https://qamar-sobhy-nexus-re-api.static.hf.space](https://qamar-sobhy-nexus-re-api.static.hf.space)
-
-![NEXUS-RE Dashboard](docs/new_dashboard.png)
-
-
-
-
-
-
-
-
-The live dashboard includes:
-- 31 interactive analysis tools
-- Real-time evidence panel
-- Vulnerability cards
-- Code viewer
-- PDF export
-
-### Quick Terminal Demo
-
-The fastest way to see NEXUS-RE in action:
-
-    $ python nexus_re_v2.py
-    Choose (0-16): 16
-    Enter file path: /samples/suspicious.exe
-
-    =======================================================
-    NEXUS-RE FULL ANALYSIS REPORT
-    =======================================================
-    Size: 12536 bytes
-    SHA256: 37de0dad1a1ce967fec6a594886ccbdf7c2623b14c46abef537ddd03ee94521b
-    MD5:    3424748c3ed1afd604734dd0512bc813
-
-    [1] FILE TYPE     : PE (Windows) - HIGH
-    [2] ENTROPY       : 7.82 - HIGH (packed)
-    [3] IOCs          : 2 URLs, 1 IP
-    [4] SUSPICIOUS API: CRITICAL (CreateRemoteThread, VirtualAllocEx)
-    [5] PACKER        : UPX, VMProtect
-    [6] YARA          : MALICIOUS (3 rules)
-
-    Analysis complete in 1.2 seconds.
-
-### Screenshots
-
-Coming soon: dashboard screenshots after Phase 4.
-
-### Video Walkthrough
-
-A 3-minute walkthrough video will be published alongside the v1.0 release (Phase 8).
 
 ---
 
