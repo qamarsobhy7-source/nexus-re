@@ -19,7 +19,7 @@ lime>=0.2.0
 # Web Backend (Phase 7)
 fastapi>=0.115.0
 uvicorn[standard]>=0.32.0
-pydantic>=2.9.0
+pydantic>=2.14.1
 
 # Data & Utils
 numpy>=1.26.0
