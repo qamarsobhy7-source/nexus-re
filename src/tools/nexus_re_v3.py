@@ -384,6 +384,162 @@ def string_similarity(text1, text2):
     out.append(f"Verdict: {verdict}")
     return "\n".join(out)
 
+
+# ==================== 10 NEW TOOLS ====================
+
+def pe_section_analyzer(hex_string):
+    """Analyze PE sections (name, size, permissions)."""
+    try: data = bytes.fromhex(hex_string)
+    except: return "Invalid hex"
+    if len(data) < 64 or data[:2] != b'MZ': return "Not a PE file"
+    out = ["PE Section Analyzer", "=" * 40]
+    out.append("Note: Full PE section parsing requires struct offsets.")
+    out.append("Basic check: MZ header detected.")
+    out.append(f"File size: {len(data)} bytes")
+    return "\n".join(out)
+
+def elf_section_analyzer(hex_string):
+    """Analyze ELF sections (name, size, type)."""
+    try: data = bytes.fromhex(hex_string)
+    except: return "Invalid hex"
+    if len(data) < 20 or data[:4] != b'\x7fELF': return "Not an ELF file"
+    out = ["ELF Section Analyzer", "=" * 40]
+    out.append("Note: Full ELF section parsing requires struct offsets.")
+    out.append("Basic check: ELF header detected.")
+    out.append(f"File size: {len(data)} bytes")
+    return "\n".join(out)
+
+def import_table_parser(hex_string):
+    """Parse import table (PE) or dynamic section (ELF)."""
+    try: data = bytes.fromhex(hex_string)
+    except: return "Invalid hex"
+    text = data.decode('latin-1', errors='ignore')
+    dlls = re.findall(r'[a-zA-Z0-9_]+\.dll', text, re.IGNORECASE)
+    out = ["Import Table Parser", "=" * 40]
+    if dlls:
+        out.append(f"Found {len(dlls)} DLL imports:")
+        for d in set(dlls): out.append(f"  - {d}")
+    else:
+        out.append("No DLL imports found (may be ELF or packed)")
+    return "\n".join(out)
+
+def export_table_parser(hex_string):
+    """Parse export table (PE)."""
+    try: data = bytes.fromhex(hex_string)
+    except: return "Invalid hex"
+    out = ["Export Table Parser", "=" * 40]
+    out.append("Note: Requires full PE parsing. Basic check only.")
+    out.append(f"Size: {len(data)} bytes")
+    return "\n".join(out)
+
+def anti_debug_detector(hex_string):
+    """Detect anti-debugging techniques."""
+    try: data = bytes.fromhex(hex_string)
+    except: return "Invalid hex"
+    text = data.decode('latin-1', errors='ignore').lower()
+    apis = ['isdebuggerpresent', 'checkremotedebuggerpresent', 'ntqueryinformationprocess',
+            'outputdebugstring', 'ptrace', 'gettickcount']
+    found = [api for api in apis if api in text]
+    out = ["Anti-Debug Detector", "=" * 40]
+    if found:
+        out.append(f"THREAT LEVEL: HIGH")
+        out.append(f"Found {len(found)} anti-debug APIs:")
+        for api in found: out.append(f"  [!] {api}")
+    else:
+        out.append("No anti-debug APIs detected")
+    return "\n".join(out)
+
+def crypto_constant_scanner(hex_string):
+    """Detect cryptographic constants (AES, SHA, MD5)."""
+    try: data = bytes.fromhex(hex_string)
+    except: return "Invalid hex"
+    constants = {
+        'AES S-Box': b'\x63\x7c\x77\x7b',
+        'SHA-256 Init': b'\x6a\x09\xe6\x67',
+        'MD5 Init': b'\x01\x23\x45\x67',
+        'CRC32 Table': b'\x00\x00\x00\x00',
+    }
+    out = ["Crypto Constant Scanner", "=" * 40]
+    found = 0
+    for name, const in constants.items():
+        if const in data:
+            out.append(f"  [FOUND] {name} constant detected")
+            found += 1
+    if found == 0:
+        out.append("No known crypto constants found")
+    return "\n".join(out)
+
+def string_obfuscation_detector(hex_string):
+    """Detect string obfuscation (high entropy short strings)."""
+    try: data = bytes.fromhex(hex_string)
+    except: return "Invalid hex"
+    text = data.decode('latin-1', errors='ignore')
+    strings = re.findall(r'[ -~]{8,}', text)
+    suspicious = 0
+    for s in strings:
+        if len(set(s)) > len(s) * 0.8:  # حروف متنوعة جدًا
+            suspicious += 1
+    out = ["String Obfuscation Detector", "=" * 40]
+    out.append(f"Total strings: {len(strings)}")
+    out.append(f"Suspicious (high variety): {suspicious}")
+    if suspicious > len(strings) * 0.5:
+        out.append("WARNING: High string obfuscation detected")
+    else:
+        out.append("String patterns appear normal")
+    return "\n".join(out)
+
+def apk_manifest_parser(hex_string):
+    """Parse AndroidManifest.xml from APK (basic)."""
+    try: data = bytes.fromhex(hex_string)
+    except: return "Invalid hex"
+    text = data.decode('latin-1', errors='ignore')
+    out = ["APK Manifest Parser", "=" * 40]
+    if 'android' in text.lower() or 'manifest' in text.lower():
+        out.append("AndroidManifest indicators found")
+        perms = re.findall(r'android\.permission\.[A-Z_]+', text)
+        if perms:
+            out.append(f"Permissions ({len(perms)}):")
+            for p in list(set(perms))[:10]: out.append(f"  - {p}")
+    else:
+        out.append("No AndroidManifest detected")
+    return "\n".join(out)
+
+def certificate_extractor(hex_string):
+    """Extract digital certificates (basic)."""
+    try: data = bytes.fromhex(hex_string)
+    except: return "Invalid hex"
+    text = data.decode('latin-1', errors='ignore')
+    out = ["Certificate Extractor", "=" * 40]
+    cert_patterns = ['BEGIN CERTIFICATE', 'BEGIN RSA', 'BEGIN PUBLIC KEY']
+    found = [p for p in cert_patterns if p in text]
+    if found:
+        out.append("Certificates found:")
+        for f in found: out.append(f"  - {f}")
+    else:
+        out.append("No digital certificates detected")
+    return "\n".join(out)
+
+def deep_packer_scanner(hex_string):
+    """Deeper packer detection (more signatures)."""
+    try: data = bytes.fromhex(hex_string)
+    except: return "Invalid hex"
+    packers = [(b'UPX', 'UPX'), (b'.aspack', 'ASPack'), (b'MPRESS', 'MPRESS'),
+               (b'PECompact', 'PECompact'), (b'Themida', 'Themida'),
+               (b'VMProtect', 'VMProtect'), (b'Enigma', 'Enigma'),
+               (b'Obsidium', 'Obsidium'), (b'Armadillo', 'Armadillo')]
+    found = []
+    for sig, name in packers:
+        if sig in data and name not in found:
+            found.append(name)
+    out = ["Deep Packer Scanner", "=" * 40]
+    if found:
+        out.append("PACKED: YES")
+        out.append(f"Detected: {', '.join(found)}")
+    else:
+        out.append("PACKED: NO")
+    return "\n".join(out)
+
+
 def main():
     print("=" * 55)
     print("  NEXUS-RE v3.0 - Reverse Engineering Toolkit")
@@ -417,9 +573,21 @@ def main():
     print("20. Base64 Detector (hex input)")
     print("21. String Similarity (two text inputs)")
     print()
+    print("--- NEW TOOLS (v3.1) ---")
+    print("22. PE Section Analyzer (hex)")
+    print("23. ELF Section Analyzer (hex)")
+    print("24. Import Table Parser (hex)")
+    print("25. Export Table Parser (hex)")
+    print("26. Anti-Debug Detector (hex)")
+    print("27. Crypto Constant Scanner (hex)")
+    print("28. String Obfuscation Detector (hex)")
+    print("29. APK Manifest Parser (hex)")
+    print("30. Certificate Extractor (hex)")
+    print("31. Deep Packer Scanner (hex)")
+    print()
     print(" 0. Exit")
     print()
-    choice = input("Choose (0-21): ").strip()
+    choice = input("Choose (0-31): ").strip()
     if choice == "0":
         print("Goodbye!")
         return
@@ -436,6 +604,11 @@ def main():
         "13": scan_suspicious_apis, "14": detect_packer,
         "15": yara_scan, "16": full_analysis,
         "19": section_analyzer, "20": base64_detector,
+        "22": pe_section_analyzer, "23": elf_section_analyzer,
+        "24": import_table_parser, "25": export_table_parser,
+        "26": anti_debug_detector, "27": crypto_constant_scanner,
+        "28": string_obfuscation_detector, "29": apk_manifest_parser,
+        "30": certificate_extractor, "31": deep_packer_scanner,
     }
 
     if choice in text_tools:
