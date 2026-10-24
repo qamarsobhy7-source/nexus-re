@@ -82,7 +82,24 @@ class NexusAPIHandler(BaseHTTPRequestHandler):
         self.send_header('Access-Control-Max-Age', '86400')
         self.end_headers()
 
+
+    def _check_auth(self):
+        public_paths = ['/', '/health', '/tools']
+        path_only = self.path.split('?')[0]
+        if path_only in public_paths:
+            return True
+        expected = os.environ.get('NEXUS_API_KEY', '')
+        if not expected:
+            return True
+        provided = self.headers.get('X-API-Key', '')
+        if provided != expected:
+            self._send_json({'error': 'Unauthorized'}, 401)
+            return False
+        return True
+
     def do_GET(self):
+        if not self._check_auth():
+            return
         parsed = urlparse(self.path)
         path = parsed.path
         params = parse_qs(parsed.query)
@@ -126,6 +143,8 @@ class NexusAPIHandler(BaseHTTPRequestHandler):
             self._send_json({"error": "Not found", "path": path}, 404)
 
     def do_POST(self):
+        if not self._check_auth():
+            return
         parsed = urlparse(self.path)
         path = parsed.path
         body = self._read_body()
