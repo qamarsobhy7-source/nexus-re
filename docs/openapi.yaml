@@ -1,0 +1,113 @@
+openapi: 3.0.3
+info:
+  title: NEXUS-RE API
+  description: AI-Powered Reverse Engineering & Security Analysis Platform API. This API exposes 31 deterministic binary analysis tools.
+  version: 3.0.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+  - url: https://qamar-sobhy-nexus-re-api.hf.space
+    description: Production server (Hugging Face)
+paths:
+  /health:
+    get:
+      summary: Health Check
+      description: Returns the health status of the API and its loaded modules.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  toolkit_loaded:
+                    type: boolean
+                  agents_loaded:
+                    type: boolean
+                  rag_loaded:
+                    type: boolean
+  /tools:
+    get:
+      summary: List Tools
+      description: Returns a list of all 31 available analysis tools.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  tools:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+  /full_analysis:
+    post:
+      summary: Full Binary Analysis
+      description: Runs all core tools on a given hex string.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hex_string:
+                  type: string
+                  description: The hexadecimal representation of the binary.
+                  example: "7f454c4602010100"
+      responses:
+        '200':
+          description: Successful analysis
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+  /agents/analyze:
+    post:
+      summary: Multi-Agent Analysis
+      description: Runs the 4-agent orchestrator (Static, Security, Crypto, Report) on the target.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target:
+                  type: string
+                  description: Hex string or file path.
+                  example: "7f454c4602010100"
+      responses:
+        '200':
+          description: Successful analysis
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_id:
+                    type: string
+                  verdict:
+                    type: string
+                  evidence_count:
+                    type: integer
+                  report:
+                    type: string
