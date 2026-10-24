@@ -448,8 +448,11 @@ Register with any MCP-compatible agent (Claude Code, Cursor) via mcp.json.
 
 🚀 **Try NEXUS-RE Now:** [https://qamar-sobhy-nexus-re-api.static.hf.space](https://qamar-sobhy-nexus-re-api.static.hf.space)
 
+![NEXUS-RE Live Analysis](docs/new_dashboard.png)
 
-![NEXUS-RE Dashboard](docs/screenshot.png)
+
+
+
 
 The live dashboard includes:
 - 31 interactive analysis tools
