@@ -22,5 +22,5 @@ uvicorn[standard]>=0.32.0
 pydantic>=2.9.0
 
 # Data & Utils
-numpy>=1.26.0
+numpy>=2.4.6
 requests>=2.32.0
