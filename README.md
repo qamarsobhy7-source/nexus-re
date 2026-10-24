@@ -444,11 +444,14 @@ Register with any MCP-compatible agent (Claude Code, Cursor) via mcp.json.
 
 ## Demo
 
+![NEXUS-RE Dashboard](docs/new_dashboard.png)
+
+
 ### Live Demo
 
 🚀 **Try NEXUS-RE Now:** [https://qamar-sobhy-nexus-re-api.static.hf.space](https://qamar-sobhy-nexus-re-api.static.hf.space)
 
-![NEXUS-RE Live Analysis](docs/new_dashboard.png)
+
 
 
 
