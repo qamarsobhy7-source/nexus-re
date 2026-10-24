@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use NEXUS-RE in academic work, please cite it as below."
+authors:
+  - family-names: "Sobhy"
+    given-names: "Qamar"
+title: "NEXUS-RE: AI-Powered Reverse Engineering & Security Analysis Platform"
+version: 3.0.0
+date-released: "2026-10-17"
+url: "https://github.com/qamarsobhy7-source/nexus-re"
+license: MIT
+repository-code: "https://github.com/qamarsobhy7-source/nexus-re"
+abstract: "An open-source platform combining 31 deterministic binary analysis tools, 4 AI agents, a RAG service, and a REST API. Built entirely on Android (Pydroid 3) as a demonstration that complex AI systems can be developed without traditional hardware."
+keywords:
+  - reverse engineering
+  - binary analysis
+  - cybersecurity
+  - artificial intelligence
+  - multi-agent systems
+  - RAG
+  - Python
