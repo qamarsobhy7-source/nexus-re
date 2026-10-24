@@ -770,73 +770,28 @@ Recommended for production:
 
 ## Project Structure
 
-    nexus-re/
-    ├── README.md                    # Main documentation (this file)
-    ├── LICENSE                      # MIT License
-    ├── proposal.md                  # Full research proposal (837 lines)
-    ├── requirements.txt             # Python dependencies (optional)
-    ├── nexus_re_v3.py               # Main toolkit (16 tools)
-    ├── nexus_re_v1.py               # Earlier version (11 tools)
-    ├── nexus_re_server.py           # MCP server for AI agents
-    │
-    ├── docs/                        # Documentation
-    │   ├── architecture.md          # 5-layer design
-    │   ├── benchmarks.md            # Evaluation details
-    │   └── api.md                   # API reference
-    │
-    ├── tests/                       # Test suite
-    │   ├── test_basic_tools.py
-    │   ├── test_format_parsers.py
-    │   ├── test_threat_detection.py
-    │   └── test_crypto.py
-    │
-    ├── samples/                     # Test binaries (safe, synthetic)
-    │   ├── sample.elf
-    │   ├── sample.exe
-    │   └── sample_xor.bin
-    │
-    ├── datasets/                    # Benchmark data (gitignored)
-    │   └── README.md                # How to download
-    │
-    ├── docker/                      # Docker configuration
-    │   ├── Dockerfile
-    │   └── docker-compose.yml
-    │
-    └── .github/                     # GitHub automation
-        └── workflows/
-            ├── ci.yml               # Run tests on push
-            └── release.yml          # Publish on tag
+**Repository layout:**
 
-### File Descriptions
+- **nexus_re_v3.py** - Main toolkit (31 analysis tools)
+- **nexus_re_server.py** - MCP server (16 tools - legacy)
+- **nexus_agents.py** - Multi-agent orchestrator (4 agents)
+- **nexus_rag.py** - RAG service (32 knowledge entries)
+- **api_render.py** - REST API (24 endpoints + X-API-Key auth)
+- **index.html** - Live web dashboard (real JavaScript engine)
+- **doctor.py** - Environment health check
+- **LICENSE** - MIT License
+- **README.md** - Main documentation
+- **README_ar.md** - Arabic documentation
+- **LIMITATIONS.md** - Honest limitations
+- **CITATION.cff** - Academic citation
+**Folders:**
 
-| File / Folder | Purpose |
-|---------------|---------|
-| `README.md` | Complete project documentation |
-| `proposal.md` | Research proposal (problem, objectives, methodology) |
-| `nexus_re_v3.py` | Main toolkit — 31 analysis tools |
-| `nexus_re_server.py` | MCP server exposing tools to AI agents |
-| `docs/` | Extended documentation |
-| `tests/` | Unit and integration tests |
-| `samples/` | Safe synthetic binaries for testing |
-| `datasets/` | Benchmark data (downloaded separately) |
-| `docker/` | Container configuration |
-| `.github/workflows/` | CI/CD pipelines |
-
-### What Gets Committed
-
-- **Source code** (`*.py`)
-- **Documentation** (`*.md`)
-- **Tests** (`tests/**`)
-- **Synthetic samples** (`samples/**`, safe)
-- **Configuration** (`docker/`, `.github/`)
-
-### What Gets Gitignored
-
-- **Real malware samples** (never committed)
-- **Large datasets** (`datasets/`, download separately)
-- **Local reports** (`reports/`, `*.pdf`)
-- **Virtual environments** (`venv/`, `__pycache__/`)
-- **User configs** (`nexus-re.yaml`, `.env`)
+- **docs/** - Architecture, API, CLI, Testing, Evidence, Installation, Roadmap, OpenAPI, Mermaid diagram, Screenshot
+- **src/** - Modular source code (tools, agents, rag, api)
+- **tests/** - 42 tests total (27 core + 15 edge cases)
+- **paper/** - Technical report (214 lines)
+- **.github/** - CI/CD, CodeQL, Scorecard, Release, Dependabot, Issue templates, PR template, CODEOWNERS
+- **.agents/skills/** - AI agent skill instructions
 
 ---
 
