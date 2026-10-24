@@ -83,11 +83,54 @@
 
 ---
 
+---
+
+## ⚠️ Project Reality: What Is Implemented vs Planned
+
+**Full transparency** about what works today vs what is planned for future versions.
+
+### ✅ Implemented and Working Today
+
+| Component | Status | Location |
+|-----------|:------:|----------|
+| **31 Analysis Tools** | ✅ Working | `nexus_re_v3.py` |
+| **16 Tools in MCP Server** | ✅ Working | `nexus_re_server.py` (legacy) |
+| **4 AI Agents** (Static, Security, Crypto, Report) | ✅ Working | `nexus_agents.py` |
+| **RAG Service (TF-IDF, 12 entries)** | ✅ Working | `nexus_rag.py` |
+| **REST API (24 endpoints)** | ✅ Working | `api_render.py` |
+| **Interactive Web Dashboard** | ✅ Working | `index.html` (real JavaScript analysis engine) |
+| **27 Unit Tests (100% pass)** | ✅ Working | `tests/test_tools.py` |
+| **Docker + CI/CD** | ✅ Working | `.github/workflows/` |
+| **Security (CodeQL + Semgrep)** | ✅ Active | `.github/workflows/` |
+| **Documentation** | ✅ Complete | `docs/` + `README.md` |
+
+### 📅 Planned (Not Yet Implemented)
+
+| Feature | Status | Reason |
+|---------|:------:|--------|
+| Ghidra / Frida / IDA integration | 📅 Planned | Requires desktop OS |
+| Real LLMs (Llama 3, Mistral) | 📅 Planned | Requires GPU or paid API |
+| Next.js full dashboard | 📅 Planned | Requires Node.js |
+| LangGraph (real) | 📅 Planned | Currently using custom orchestrator |
+| FAISS / Chroma (real) | 📅 Planned | Currently using TF-IDF |
+| Call Graph visualization | 📅 Planned | Requires React Flow |
+| SHAP / LIME explainability | 📅 Planned | Requires GPU |
+| Benchmark results (Decompile-Bench) | 📅 Planned | Not yet run |
+
+### 🎯 What This Means
+
+- **The project is a working prototype**, not a complete production platform.
+- The **core engine** (31 tools + 4 agents + RAG + REST API) **is real, tested, and works**.
+- The **interactive web dashboard** runs in any browser — try it at [qamar-sobhy-nexus-re-api.static.hf.space](https://qamar-sobhy-nexus-re-api.static.hf.space).
+- **Professional RE tools** (Ghidra, Frida) are future work — clearly documented in `docs/roadmap.md`.
+
+
+
 ## 🌐 What is NEXUS-RE?
 
 **NEXUS-RE** is an open-source platform for **AI-assisted reverse engineering** of binaries, applications, and runtime behavior — without access to source code.
 
-It currently ships **16 deterministic binary analysis tools** through a **Model Context Protocol (MCP)** server. The roadmap adds a **multi-agent LLM orchestration layer** built on LangGraph and the ReAct pattern, designed to plan and execute complex analyses automatically. Every tool result already carries **evidence, confidence scores, and traceable artifacts** — making analysis **auditable, reproducible, and trustworthy**.
+It currently ships **31 deterministic binary analysis tools** through a **Model Context Protocol (MCP)** server. The roadmap adds a **multi-agent LLM orchestration layer** built on LangGraph and the ReAct pattern, designed to plan and execute complex analyses automatically. Every tool result already carries **evidence, confidence scores, and traceable artifacts** — making analysis **auditable, reproducible, and trustworthy**.
 
 ### The Problem
 
@@ -112,7 +155,7 @@ A single malware sample can consume **8–40 hours** of senior analyst time. Wit
 | Feature | What It Means |
 |---------|---------------|
 | 🔍 **Evidence-First** | Every claim is backed by a cryptographic hash, a tool trace, and a confidence level. No black-box answers. |
-| 🧰 **16 Working Tools** | A pure-Python toolkit covering basic, format, threat, and crypto analysis — works offline today. |
+| 🧰 **31 Working Tools** | A pure-Python toolkit covering basic, format, threat, and crypto analysis — works offline today. |
 | 🤖 **Multi-Agent (Planned)** | Static, Dynamic, Security, Code-Gen, and Report agents will collaborate under a LangGraph orchestrator. |
 | 📚 **RAG-Grounded (Planned)** | Every LLM decision will be anchored in official Ghidra/Frida docs and the NVD/CVE database. |
 | 🌍 **Bilingual (Planned)** | Native Arabic (RTL) and English (LTR) UI — a first for RE tooling. |
@@ -123,7 +166,7 @@ A single malware sample can consume **8–40 hours** of senior analyst time. Wit
 
 | Feature | NEXUS-RE | REA | DecompAI | GhidraMCP |
 |---------|:--------:|:---:|:--------:|:---------:|
-| 16-tool pure-Python core (ready) | ✅ | ❌ | ❌ | ❌ |
+| 31-tool pure-Python core (ready) | ✅ | ❌ | ❌ | ❌ |
 | Evidence + confidence scores | ✅ | ✅ | ⚠️ | ❌ |
 | Multi-agent orchestration (planned) | ✅ | ❌ | ❌ | ❌ |
 | RAG over CVE + docs (planned) | ✅ | ❌ | ❌ | ❌ |
@@ -155,7 +198,7 @@ The orchestrator selects the appropriate tools based on file type and user inten
 | ELF binary | parse_elf_header, extract_strings, extract_iocs |
 | PE binary | parse_pe_header, scan_suspicious_apis, detect_packer |
 | Encrypted payload | xor_bruteforce_v2, yara_scan |
-| Full analysis | All 16 tools chained |
+| Full analysis | All 31 tools chained |
 
 ### Stage 3 — Evidence Collection
 
@@ -186,7 +229,7 @@ Results are merged into a single report with sections:
     [ Tool Selection ] -- heuristic rules
           |
           v
-    [ Evidence Collection ] -- 16 tools run in sequence
+    [ Evidence Collection ] -- 31 tools run in sequence
           |
           v
     [ Merge + Confidence Scoring ]
@@ -383,7 +426,7 @@ Every piece of evidence carries: **tool name, result, confidence (HIGH/MEDIUM/LO
     cd nexus-re
     python nexus_re_v2.py
 
-You will see an interactive menu with 16 tools divided into Basic, Binary, and Advanced categories.
+You will see an interactive menu with 31 tools divided into Basic, Binary, and Advanced categories.
 
 ---
 
@@ -763,7 +806,7 @@ Recommended for production:
 |---------------|---------|
 | `README.md` | Complete project documentation |
 | `proposal.md` | Research proposal (problem, objectives, methodology) |
-| `nexus_re_v2.py` | Main toolkit — 16 analysis tools |
+| `nexus_re_v2.py` | Main toolkit — 31 analysis tools |
 | `nexus_re_server.py` | MCP server exposing tools to AI agents |
 | `docs/` | Extended documentation |
 | `tests/` | Unit and integration tests |
@@ -799,7 +842,7 @@ NEXUS-RE is organized as a five-layer architecture, designed for modularity and 
 | 1 | Client | Web Dashboard, CLI (Python), REST API | ✅ CLI + API |
 | 2 | API Gateway | Pure-Python HTTP server (api.py) | ✅ Ready |
 | 3 | Orchestration | Multi-Agent (nexus_agents.py), RAG (nexus_rag.py) | ✅ Ready |
-| 4 | MCP + Tools | 21 core tools, Ghidra, Frida, radare2, JADX | ✅ Core Ready |
+| 4 | MCP + Tools | 31 core tools, Ghidra, Frida, radare2, JADX | ✅ Core Ready |
 | 5 | Infrastructure | Docker, GitHub Actions, MIT License | ✅ Ready |
 
 ### Multi-Agent Architecture
@@ -861,12 +904,12 @@ The RAG service grounds every multi-agent claim in retrieved evidence.
 
 | Phase | Focus | Duration | Status |
 |:-----:|-------|:--------:|:------:|
-| 0 | Foundation & Literature Review | Month 1 | ✅ Complete |
-| 1 | MCP Server Core (16 tools) | Month 2 | ✅ Complete |
-| 2 | Static Analysis (ELF, PE) | Month 3 | ✅ Complete |
+| 0 | Foundation & Literature Review | Month 1 | ✅ MVP Complete |
+| 1 | MCP Server (16 tools) + Toolkit (31 tools) | Month 2 | ✅ MVP Complete |
+| 2 | Static Analysis (ELF, PE) | Month 3 | ✅ MVP Complete |
 | 3 | Dynamic Analysis (Frida, strace) | Month 4 | 🔄 Partial |
-| 4 | Multi-Agent Orchestration | Months 5-6 | ✅ Complete |
-| 5 | RAG Grounding + Explainability | Month 6 | ✅ Complete |
+| 4 | Multi-Agent Orchestration | Months 5-6 | ✅ MVP Complete |
+| 5 | RAG Grounding (TF-IDF) | Month 6 | ✅ MVP Complete |
 | 6 | Advanced Features + Benchmarks | Month 7 | ✅ 60% |
 | 7 | MLOps + Deployment | Month 8 | ✅ 90% |
 | 8 | Publication + Public Release | Months 8-9 | 📅 Planned |
@@ -881,7 +924,7 @@ The RAG service grounds every multi-agent claim in retrieved evidence.
 ### Current Progress
 
 - **Total phases complete:** 4.5 of 9 (50%)
-- **Tools implemented:** 21 of 21 (100%)
+- **Tools implemented:** 31 of 31 (100%)
 - **Agents implemented:** 4 of 4 (100%)
 - **Tests passing:** 27 of 27 (100%)
 - **Lines of Python:** ~2,500+
@@ -992,7 +1035,7 @@ NEXUS-RE is an open-source platform that connects AI agents (LLMs) with professi
 
 ### Do I need Ghidra or IDA Pro to use it?
 
-No. The 16 core tools are pure Python with zero external dependencies. Ghidra, Frida, radare2, and JADX are optional integrations for deeper analysis (Phase 2 and beyond).
+No. The 31 core tools are pure Python with zero external dependencies. Ghidra, Frida, radare2, and JADX are optional integrations for deeper analysis (Phase 2 and beyond).
 
 ### Does NEXUS-RE upload my binaries to the cloud?
 
@@ -1024,7 +1067,7 @@ MIT License. You can use, modify, and distribute NEXUS-RE freely, including for 
 
 ### When will the AI agents be ready?
 
-Phase 4 (Multi-Agent Orchestration) is planned for Months 5-6 of the project timeline. The 16-tool toolkit and MCP server are already working today.
+Phase 4 (Multi-Agent Orchestration) is planned for Months 5-6 of the project timeline. The 31-tool toolkit and MCP server are already working today.
 
 ---
 
@@ -1069,6 +1112,37 @@ NEXUS-RE is designed for **defensive security research, education, and authorize
 All dynamic analysis runs in isolated sandboxes. Newly discovered vulnerabilities are reported via **90-day responsible disclosure** before publication.
 
 ---
+
+
+---
+
+## 🔒 Known Limitations (Honest)
+
+This project was built **entirely on an Android phone** using Pydroid 3 and Termux. This constraint shaped every architectural decision.
+
+### Technical Constraints
+
+1. **No Ghidra/Frida/IDA integration** — these professional RE tools require a desktop OS.
+2. **No real LLM** — Llama 3/Mistral require GPU or paid API. The agents use rule-based logic instead.
+3. **RAG uses TF-IDF, not neural embeddings** — weaker semantic retrieval than FAISS/Chroma.
+4. **No Next.js dashboard** — the current `index.html` is a single-file app with a real JavaScript analysis engine (9 tools implemented in JS, tested live).
+5. **No call graph visualization** — requires React Flow.
+6. **No SHAP/LIME explainability** — requires GPU and additional libraries.
+7. **MCP server has 16 tools** while the main toolkit has 31 — the MCP server is a legacy version that needs updating.
+
+### What This Means for Users
+
+- **For learning**: The project is an excellent case study of full-stack AI development under mobile constraints.
+- **For production**: It needs the planned integrations (Ghidra, Frida, LLMs) before production use.
+- **For research**: The architecture is sound; missing pieces are documented in `docs/roadmap.md`.
+
+### What We Are Proud Of
+
+- **31 working analysis tools** — all tested.
+- **4 collaborating AI agents** — verified in live sessions.
+- **Real interactive web dashboard** — not mock data (verified with `Hello World` and `7f454c46`).
+- **27 passing tests** — 100% success rate.
+- **Complete documentation** — 7 docs + README + Proposal + Model Cards.
 
 ## License
 
