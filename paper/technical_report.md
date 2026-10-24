@@ -1,11 +1,5 @@
 # NEXUS-RE: Building an AI-Powered Reverse Engineering Platform on a Mobile Phone
 
-**Author:** Qamar Sobhy  
-**Date:** October 2026  
-**Version:** 3.0.0  
-**License:** MIT  
-**Repository:** https://github.com/qamarsobhy7-source/nexus-re  
-**Live Demo:** https://qamar-sobhy-nexus-re-api.static.hf.space
 
 ---
 
