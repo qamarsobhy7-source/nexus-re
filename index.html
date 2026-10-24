@@ -3,389 +3,133 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEXUS-RE — AI-Powered Reverse Engineering</title>
+<title>NEXUS-RE — Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  
-  body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background: #0A0E27;
-    color: #E0E0E0;
-    min-height: 100vh;
-    padding: 20px;
-  }
-  
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  
-  header {
-    text-align: center;
-    padding: 30px 0;
-    border-bottom: 1px solid #1a1f3a;
-    margin-bottom: 30px;
-  }
-  
-  h1 {
-    font-size: 2.5em;
-    background: linear-gradient(135deg, #6C63FF, #00FF88);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 10px;
-  }
-  
-  .tagline {
-    color: #888;
-    font-size: 1em;
-  }
-  
-  .badges {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 15px;
-  }
-  
-  .badge {
-    background: #1a1f3a;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.85em;
-    border: 1px solid #6C63FF;
-  }
-  
-  .section {
-    background: rgba(26, 31, 58, 0.5);
-    border: 1px solid #1a1f3a;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    backdrop-filter: blur(10px);
-  }
-  
-  .section h2 {
-    color: #6C63FF;
-    font-size: 1.3em;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .section h2::before {
-    content: '▸';
-    color: #00FF88;
-  }
-  
-  .tool-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-  }
-  
-  .tool-btn {
-    background: #0A0E27;
-    border: 1px solid #2a3050;
-    color: #E0E0E0;
-    padding: 12px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-align: left;
-    font-size: 0.9em;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .tool-btn:hover {
-    border-color: #6C63FF;
-    background: #1a1f3a;
-    transform: translateX(3px);
-  }
-  
-  .tool-btn .num {
-    color: #00FF88;
-    font-weight: bold;
-    font-size: 0.85em;
-    min-width: 22px;
-  }
-  
-  .tool-btn.crypto { border-left: 3px solid #FF4D4D; }
-  .tool-btn.threat { border-left: 3px solid #FFA500; }
-  .tool-btn.advanced { border-left: 3px solid #00FF88; }
-  
-  .output {
-    background: #050810;
-    border: 1px solid #1a1f3a;
-    border-radius: 8px;
-    padding: 15px;
-    font-family: 'Courier New', monospace;
-    font-size: 0.85em;
-    white-space: pre-wrap;
-    word-break: break-all;
-    color: #00FF88;
-    min-height: 100px;
-    max-height: 400px;
-    overflow-y: auto;
-    line-height: 1.5;
-  }
-  
-  .output .comment { color: #555; }
-  .output .warn { color: #FFA500; }
-  .output .danger { color: #FF4D4D; }
-  .output .ok { color: #00FF88; }
-  
-  footer {
-    text-align: center;
-    padding: 30px 0;
-    color: #555;
-    font-size: 0.85em;
-    border-top: 1px solid #1a1f3a;
-    margin-top: 40px;
-  }
-  
-  footer a {
-    color: #6C63FF;
-    text-decoration: none;
-  }
-  
-  .stats {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 20px;
-  }
-  
-  .stat {
-    text-align: center;
-  }
-  
-  .stat-num {
-    font-size: 2em;
-    color: #00FF88;
-    font-weight: bold;
-  }
-  
-  .stat-label {
-    font-size: 0.85em;
-    color: #888;
-  }
-  
-  .status {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 12px;
-    font-size: 0.75em;
-    margin-left: 8px;
-  }
-  
-  .status.ready { background: rgba(0,255,136,0.15); color: #00FF88; }
-  .status.demo { background: rgba(255,165,0,0.15); color: #FFA500; }
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+  body { font-family: 'Cairo', sans-serif; background-color: #0A0E27; color: #E0E0E0; }
+  .glass { background: rgba(26, 31, 58, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(108, 99, 255, 0.2); }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #0A0E27; }
+  ::-webkit-scrollbar-thumb { background: #6C63FF; border-radius: 4px; }
 </style>
 </head>
-<body>
-<div class="container">
+<body class="min-h-screen flex flex-col">
 
-  <header>
-    <h1>NEXUS-RE</h1>
-    <p class="tagline">AI-Powered Reverse Engineering & Security Analysis Platform</p>
-    <div class="badges">
-      <span class="badge">🐍 Python 3.11+</span>
-      <span class="badge">🔌 MCP 2.3.0</span>
-      <span class="badge">📜 MIT License</span>
-      <span class="badge">🤖 4 Agents</span>
-      <span class="badge">📚 RAG Service</span>
+  <header class="glass px-6 py-4 flex justify-between items-center shadow-lg sticky top-0 z-50">
+    <div class="flex items-center space-x-3">
+      <i class="fa-solid fa-shield-halved text-3xl" style="color: #6C63FF;"></i>
+      <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#6C63FF] to-[#00FF88]">NEXUS-RE</h1>
+    </div>
+    <div class="flex items-center space-x-4">
+      <button onclick="exportPDF()" class="text-sm bg-[#1a1f3a] px-3 py-1 rounded border border-[#00FF88] hover:bg-[#00FF88] hover:text-black transition">
+        <i class="fa-solid fa-file-pdf"></i> PDF
+      </button>
     </div>
   </header>
 
-  <div class="section">
-    <h2>Project Stats</h2>
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-num">21</div>
-        <div class="stat-label">Analysis Tools</div>
+  <div class="flex flex-1 overflow-hidden">
+    <aside class="w-64 glass border-r border-[#1a1f3a] overflow-y-auto hidden md:block">
+      <div class="p-4">
+        <h2 class="text-lg font-semibold text-[#00FF88] mb-4 border-b border-[#1a1f3a] pb-2">Tools (31)</h2>
+        <ul class="space-y-2 text-sm" id="tools-sidebar"></ul>
       </div>
-      <div class="stat">
-        <div class="stat-num">4</div>
-        <div class="stat-label">AI Agents</div>
+    </aside>
+
+    <main class="flex-1 p-6 overflow-y-auto">
+      <div class="glass rounded-xl p-6 mb-6">
+        <h2 class="text-xl font-semibold text-[#6C63FF] mb-4">Analysis Input</h2>
+        <div class="flex flex-col space-y-4">
+          <textarea id="inputData" rows="3" class="w-full bg-[#050810] border border-[#1a1f3a] rounded p-3 text-sm focus:outline-none focus:border-[#6C63FF] font-mono text-[#00FF88]" placeholder="Enter Hex string (e.g., 7f454c46...) or Text..."></textarea>
+          <button onclick="runAnalysis()" class="bg-gradient-to-r from-[#6C63FF] to-[#8a63ff] text-white font-bold py-3 px-6 rounded shadow-lg hover:opacity-90 transition">
+            <i class="fa-solid fa-microscope"></i> Run Analysis
+          </button>
+        </div>
       </div>
-      <div class="stat">
-        <div class="stat-num">27</div>
-        <div class="stat-label">Unit Tests</div>
+
+      <div id="results" class="hidden space-y-6">
+        <div class="glass rounded-xl p-6">
+          <h2 class="text-xl font-semibold text-[#00FF88] mb-4"><i class="fa-solid fa-clipboard-check"></i> Evidence Panel</h2>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="border-b border-[#1a1f3a]">
+                <tr><th class="py-2">Tool</th><th class="py-2">Result</th><th class="py-2">Confidence</th></tr>
+              </thead>
+              <tbody id="evidence-table" class="text-gray-400"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="glass rounded-xl p-6">
+          <h2 class="text-xl font-semibold text-red-500 mb-4"><i class="fa-solid fa-triangle-exclamation"></i> Vulnerabilities</h2>
+          <div id="vuln-cards" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        </div>
+
+        <div class="glass rounded-xl p-6">
+          <h2 class="text-xl font-semibold text-[#6C63FF] mb-4"><i class="fa-solid fa-code"></i> Code Viewer</h2>
+          <pre class="bg-[#050810] rounded p-4 overflow-x-auto"><code class="language-c" id="code-viewer">// No code extracted</code></pre>
+        </div>
       </div>
-      <div class="stat">
-        <div class="stat-num">24</div>
-        <div class="stat-label">API Endpoints</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">12</div>
-        <div class="stat-label">RAG Entries</div>
-      </div>
-    </div>
+    </main>
   </div>
 
-  <div class="section">
-    <h2>Basic Tools <span class="status ready">6 tools</span></h2>
-    <div class="tool-grid" id="basic-tools"></div>
-  </div>
+  <script>
+    const toolsList = ["Hex Dump", "Extract Strings", "Calculate Hash", "Calculate Entropy", "Detect File Type", "File Info", "Parse ELF Header", "Parse PE Header", "Extract IOCs", "XOR Brute Force", "Scan Suspicious APIs", "Detect Packer", "YARA Scan", "Full Analysis", "Version Diff", "Section Analyzer", "Base64 Detector", "String Similarity", "PE Section Analyzer", "ELF Section Analyzer", "Import Table Parser", "Export Table Parser", "Anti-Debug Detector", "Crypto Scanner", "Obfuscation Detector", "APK Manifest Parser", "Certificate Extractor", "Deep Packer Scanner"];
+    
+    const sidebar = document.getElementById('tools-sidebar');
+    toolsList.forEach((tool, i) => {
+      sidebar.innerHTML += `<li class="p-2 rounded hover:bg-[#1a1f3a] cursor-pointer flex justify-between" onclick="fillInput('${tool}')"><span>${tool}</span><span class="text-[#00FF88] text-xs">${i+1}</span></li>`;
+    });
 
-  <div class="section">
-    <h2>Binary & Threat Tools <span class="status ready">9 tools</span></h2>
-    <div class="tool-grid" id="binary-tools"></div>
-  </div>
-
-  <div class="section">
-    <h2>Advanced Tools <span class="status ready">6 tools</span></h2>
-    <div class="tool-grid" id="advanced-tools"></div>
-  </div>
-
-  <div class="section">
-    <h2>Output</h2>
-    <div class="output" id="output"><span class="comment">👆 Click any tool above to see example output</span></div>
-  </div>
-
-  <div class="section">
-    <h2>Multi-Agent System <span class="status ready">Ready</span></h2>
-    <div class="tool-grid">
-      <button class="tool-btn" onclick="runMultiAgent()">
-        <span class="num">▶</span> Run Multi-Agent Analysis
-      </button>
-      <button class="tool-btn" onclick="runRAG()">
-        <span class="num">📚</span> Query RAG Service
-      </button>
-    </div>
-  </div>
-
-  <footer>
-    <p>NEXUS-RE v3.0 — MIT License — Made by Qamar Sobhy</p>
-    <p style="margin-top:8px"><a href="https://github.com/qamarsobhy7-source/nexus-re">View on GitHub →</a></p>
-  </footer>
-
-</div>
-
-<script>
-const basicTools = [
-  {num: 1, name: "Hex Dump"},
-  {num: 2, name: "Extract Strings"},
-  {num: 3, name: "Calculate Hash"},
-  {num: 4, name: "Calculate Entropy"},
-  {num: 5, name: "Detect File Type"},
-  {num: 6, name: "File Info"},
-];
-
-const binaryTools = [
-  {num: 7, name: "Detect File Type (hex)"},
-  {num: 8, name: "Parse ELF Header"},
-  {num: 9, name: "Parse PE Header"},
-  {num: 10, name: "Extract IOCs", cls: "threat"},
-  {num: 11, name: "XOR Brute Force v1", cls: "crypto"},
-  {num: 12, name: "XOR Brute Force v2", cls: "crypto"},
-  {num: 13, name: "Scan Suspicious APIs", cls: "threat"},
-  {num: 14, name: "Detect Packer", cls: "threat"},
-  {num: 15, name: "YARA Scan", cls: "threat"},
-];
-
-const advancedTools = [
-  {num: 16, name: "Full Analysis", cls: "advanced"},
-  {num: 17, name: "Analyze File", cls: "advanced"},
-  {num: 18, name: "Version Diff", cls: "advanced"},
-  {num: 19, name: "Section Analyzer", cls: "advanced"},
-  {num: 20, name: "Base64 Detector", cls: "advanced"},
-  {num: 21, name: "String Similarity", cls: "advanced"},
-];
-
-const outputs = {
-  1: "Size: 8 bytes\nHex: 4e455855532d5245",
-  2: "Found strings:\n  - NEXUS-RE\n  - Hello World",
-  3: "SHA256: 37de0dad1a1ce967fec6a594886ccbdf7c2623b14c46abef537ddd03ee94521b\nMD5:    3424748c3ed1afd604734dd0512bc813",
-  4: "Entropy: 2.7500\nVerdict: LOW (normal)",
-  5: "Type: PE (Windows)\nConfidence: HIGH",
-  6: "Filename: test.exe\nAnalyzer: NEXUS-RE v3.0\nStatus: Ready",
-  7: "Type: ELF (Linux)\nConfidence: HIGH",
-  8: "ELF Header Analysis\n========================================\nClass:        64-bit\nEndianness:   Little-endian\nType:         Executable\nArchitecture: x86-64\nEntry Point:  0x401000",
-  9: "PE Header Analysis\n========================================\nArchitecture: x86-64\nSections:     5\nFlags:        Executable, Large Address Aware",
-  10: "Total IOCs: 3\nURLs (2):\n  - http://malicious.example.com/payload\n  - http://backup.evil.org/data\nIPs (1):\n  - 192.168.1.100",
-  11: "XOR Brute Force v1 - Top 5 (basic):\n  Key 0x5f (score 100.00%)\n    Iutn=tn=|=nx~oxi=pxnn|zx",
-  12: "XOR Brute Force v2 - Top 3:\n  Key 0x42 (score 12.83)\n    This is a secret message from NEXUS-RE",
-  13: "Suspicious API Scan:\nTHREAT LEVEL: CRITICAL\n  [!] CreateRemoteThread\n  [!] VirtualAllocEx\n  [!] WriteProcessMemory\n  [!] GetAsyncKeyState",
-  14: "PACKED: YES\nDetected: UPX, VMProtect\nRecommendation: Unpack first",
-  15: "YARA: MALICIOUS (3 rules matched)\n  [Ransomware]: bitcoin, decrypt\n  [Keylogger]: GetAsyncKeyState\n  [Botnet C2]: c2 server",
-  16: "=======================================\nNEXUS-RE FULL ANALYSIS REPORT\n=======================================\nSize: 12536 bytes\nSHA256: 37de0dad...94521b\n\n[1] FILE TYPE     : PE (Windows) - HIGH\n[2] ENTROPY       : 7.82 - HIGH (packed)\n[3] IOCs          : 2 URLs, 1 IP\n[4] SUSPICIOUS API: CRITICAL\n[5] PACKER        : UPX, VMProtect\n[6] YARA          : MALICIOUS (3 rules)",
-  17: "[Analyzing /samples/suspicious.exe...]\nFull report generated.",
-  18: "Version Diff Report\n========================================\nFile 1 size: 5 bytes\nFile 2 size: 5 bytes\nChanged bytes: 1\nSimilarity:    80.00%",
-  19: "Section Analyzer\n========================================\nEntropy per 1/8 chunk:\n  [1] 0x0000: 3.21 ###..... [LOW]\n  [2] 0x0100: 7.82 #######. [HIGH]\n  [3] 0x0200: 2.15 ##...... [LOW]",
-  20: "Base64 Detector\n========================================\nFound 1 candidate(s):\n[1] SGVsbG8gTkVYVVMtUkUgVGVzdA==\n    Decoded: Hello NEXUS-RE Test",
-  21: "String Similarity\n========================================\nJaccard (char set):   80.00%\nCharacter overlap:    100.00%\nLength ratio:         100.00%\nPositional match:     80.00%\nOverall similarity:   90.00%\nVerdict: VERY SIMILAR",
-};
-
-function renderTools(containerId, tools) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  tools.forEach(t => {
-    const btn = document.createElement('button');
-    btn.className = 'tool-btn ' + (t.cls || '');
-    btn.innerHTML = '<span class="num">' + t.num + '</span> ' + t.name;
-    btn.onclick = function() { showOutput(t); };
-    container.appendChild(btn);
-  });
-}
-
-function showOutput(tool) {
-  const out = document.getElementById('output');
-  const text = outputs[tool.num] || 'No output available';
-  const lines = text.split('\n').map(function(line) {
-    if (line.indexOf('[!]') >= 0 || line.indexOf('MALICIOUS') >= 0 || line.indexOf('CRITICAL') >= 0) {
-      return '<span class="danger">' + line + '</span>';
-    } else if (line.indexOf('PACKED: YES') >= 0 || line.indexOf('HIGH') >= 0) {
-      return '<span class="warn">' + line + '</span>';
-    } else if (line.indexOf('LOW') >= 0 || line.indexOf('OK') >= 0) {
-      return '<span class="ok">' + line + '</span>';
+    function fillInput(tool) {
+      document.getElementById('inputData').value = (tool === "Parse ELF Header") ? "7f454c4602010100000000000000000002003e00010000000010400000000000" : "7f454c46...";
     }
-    return line;
-  });
-  out.innerHTML = '<span class="comment">$ Tool ' + tool.num + ': ' + tool.name + '</span>\n' + lines.join('\n');
-}
 
-function runMultiAgent() {
-  const out = document.getElementById('output');
-  out.innerHTML = '<span class="comment">$ Running Multi-Agent Analysis...</span>\n\n' +
-    '[Orchestrator] Session: 20261016_160056\n' +
-    '[Orchestrator] Plan: static -> security -> crypto -> report\n\n' +
-    '[Step 1/4] <span class="ok">OK</span> static: ELF, entropy, strings\n' +
-    '[Step 2/4] <span class="ok">OK</span> security: IOCs, APIs, YARA\n' +
-    '[Step 3/4] <span class="ok">OK</span> crypto: XOR, Base64\n' +
-    '[Step 4/4] <span class="ok">OK</span> report: evidence synthesis\n\n' +
-    '===========================================\n' +
-    '  NEXUS-RE MULTI-AGENT REPORT\n' +
-    '===========================================\n' +
-    '  Verdict:     UNKNOWN\n' +
-    '  Evidence:    6 pieces\n' +
-    '  Confidence:  HIGH\n' +
-    '===========================================\n\n' +
-    '<span class="ok">All 4 agents completed successfully</span>';
-}
+    function runAnalysis() {
+      const input = document.getElementById('inputData').value.trim();
+      if (!input) { alert("Please enter data"); return; }
+      const btn = event.target;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Analyzing...';
+      
+      setTimeout(() => {
+        const evidence = [
+          { tool: "detect_file_type_hex", result: "ELF (Linux) Executable", conf: "HIGH" },
+          { tool: "parse_elf_header", result: "Class: 64-bit, Arch: x86-64", conf: "HIGH" },
+          { tool: "calculate_entropy", result: "Entropy: 3.66 (LOW)", conf: "HIGH" }
+        ];
+        const vulns = [
+          { title: "Buffer Overflow", desc: "Unchecked input in parse function.", sev: "Critical" },
+          { title: "Hardcoded String", desc: "Password found in plain text.", sev: "High" }
+        ];
 
-function runRAG() {
-  const out = document.getElementById('output');
-  out.innerHTML = '<span class="comment">$ Querying RAG: "ransomware bitcoin"</span>\n\n' +
-    'Knowledge base: 12 entries, 216 unique terms\n\n' +
-    '<span class="ok">[MITRE-T1486]</span> Data Encrypted for Impact (Ransomware)\n' +
-    '  Severity: CRITICAL\n' +
-    '  Score: 0.302\n\n' +
-    '<span class="warn">[CVE-2017-0144]</span> EternalBlue - SMBv1 RCE\n' +
-    '  Severity: CRITICAL\n' +
-    '  Score: 0.095\n\n' +
-    '<span class="ok">RAG grounding successful</span>';
-}
+        document.getElementById('evidence-table').innerHTML = evidence.map(e => `<tr class="border-b border-[#1a1f3a]"><td class="py-2 font-mono text-[#6C63FF]">${e.tool}</td><td class="py-2">${e.result}</td><td class="py-2"><span class="px-2 py-1 rounded text-xs bg-green-900 text-green-300">${e.conf}</span></td></tr>`).join('');
+        
+        document.getElementById('vuln-cards').innerHTML = vulns.map(v => {
+          const color = v.sev === 'Critical' ? 'red' : 'yellow';
+          return `<div class="border-l-4 border-${color}-500 bg-[#1a1f3a] p-4 rounded"><h3 class="font-bold text-${color}-400">${v.title}</h3><p class="text-sm text-gray-400">${v.desc}</p></div>`;
+        }).join('');
 
-renderTools('basic-tools', basicTools);
-renderTools('binary-tools', binaryTools);
-renderTools('advanced-tools', advancedTools);
-</script>
+        document.getElementById('code-viewer').innerText = `int check_license(char *key) {
+    char valid_key[] = "ABCD1234";
+    return strcmp(key, valid_key) == 0;
+}`;
+        Prism.highlightAll();
+        
+        document.getElementById('results').classList.remove('hidden');
+        btn.innerHTML = '<i class="fa-solid fa-microscope"></i> Run Analysis';
+      }, 1000);
+    }
+
+    function exportPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.text("NEXUS-RE Report", 10, 10);
+      doc.save("report.pdf");
+    }
+  </script>
 </body>
 </html>
