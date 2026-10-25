@@ -3,133 +3,265 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEXUS-RE — Dashboard</title>
+<title>NEXUS-RE — Live Analysis</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
   body { font-family: 'Cairo', sans-serif; background-color: #0A0E27; color: #E0E0E0; }
   .glass { background: rgba(26, 31, 58, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(108, 99, 255, 0.2); }
-  ::-webkit-scrollbar { width: 8px; }
-  ::-webkit-scrollbar-track { background: #0A0E27; }
-  ::-webkit-scrollbar-thumb { background: #6C63FF; border-radius: 4px; }
+  .mono { font-family: 'Courier New', monospace; }
 </style>
 </head>
 <body class="min-h-screen flex flex-col">
-
-  <header class="glass px-6 py-4 flex justify-between items-center shadow-lg sticky top-0 z-50">
-    <div class="flex items-center space-x-3">
-      <i class="fa-solid fa-shield-halved text-3xl" style="color: #6C63FF;"></i>
-      <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#6C63FF] to-[#00FF88]">NEXUS-RE</h1>
+  <header class="glass px-4 py-3 flex justify-between items-center sticky top-0 z-50">
+    <div class="flex items-center space-x-2">
+      <span class="text-2xl">🛡️</span>
+      <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#6C63FF] to-[#00FF88]">NEXUS-RE</h1>
     </div>
-    <div class="flex items-center space-x-4">
-      <button onclick="exportPDF()" class="text-sm bg-[#1a1f3a] px-3 py-1 rounded border border-[#00FF88] hover:bg-[#00FF88] hover:text-black transition">
-        <i class="fa-solid fa-file-pdf"></i> PDF
-      </button>
+    <div class="text-xs text-gray-400 text-right">
+      <div class="text-[#00FF88] font-bold">8 browser tools</div>
+      <div>23 via API</div>
     </div>
   </header>
 
-  <div class="flex flex-1 overflow-hidden">
+  <div class="flex flex-1">
     <aside class="w-64 glass border-r border-[#1a1f3a] overflow-y-auto hidden md:block">
-      <div class="p-4">
-        <h2 class="text-lg font-semibold text-[#00FF88] mb-4 border-b border-[#1a1f3a] pb-2">Tools (31)</h2>
-        <ul class="space-y-2 text-sm" id="tools-sidebar"></ul>
+      <div class="p-3">
+        <h2 class="text-xs font-bold text-[#00FF88] uppercase mb-2">🌐 Browser (8)</h2>
+        <ul class="space-y-1 text-xs" id="browser-tools"></ul>
+        <h2 class="text-xs font-bold text-gray-500 uppercase mt-4 mb-2">🔌 API only (23)</h2>
+        <ul class="space-y-1 text-xs text-gray-600" id="api-tools"></ul>
       </div>
     </aside>
 
-    <main class="flex-1 p-6 overflow-y-auto">
-      <div class="glass rounded-xl p-6 mb-6">
-        <h2 class="text-xl font-semibold text-[#6C63FF] mb-4">Analysis Input</h2>
-        <div class="flex flex-col space-y-4">
-          <textarea id="inputData" rows="3" class="w-full bg-[#050810] border border-[#1a1f3a] rounded p-3 text-sm focus:outline-none focus:border-[#6C63FF] font-mono text-[#00FF88]" placeholder="Enter Hex string (e.g., 7f454c46...) or Text..."></textarea>
-          <button onclick="runAnalysis()" class="bg-gradient-to-r from-[#6C63FF] to-[#8a63ff] text-white font-bold py-3 px-6 rounded shadow-lg hover:opacity-90 transition">
-            <i class="fa-solid fa-microscope"></i> Run Analysis
-          </button>
+    <main class="flex-1 p-4 overflow-y-auto">
+      <div class="glass rounded-xl p-4 mb-4">
+        <h2 class="text-lg font-semibold text-[#6C63FF] mb-2">🔍 Analysis Input</h2>
+        <textarea id="inputData" rows="4" class="w-full bg-[#050810] border border-[#1a1f3a] rounded p-2 text-sm focus:outline-none focus:border-[#6C63FF] mono text-[#00FF88]" placeholder="Paste hex (7f454c46...) or text..."></textarea>
+        <div class="flex gap-2 mt-2 flex-wrap">
+          <button id="runBtn" onclick="runAnalysis()" class="bg-gradient-to-r from-[#6C63FF] to-[#8a63ff] text-white font-bold py-2 px-4 rounded shadow-lg hover:opacity-90 transition text-sm">▶ Run Analysis</button>
+          <button onclick="loadSample('7f454c4602010100000000000000000002003e00010000000010400000000000')" class="bg-[#1a1f3a] text-[#00FF88] py-2 px-3 rounded border border-[#00FF88] text-xs">Sample: ELF</button>
+          <button onclick="loadSample('48656c6c6f20576f726c6421')" class="bg-[#1a1f3a] text-[#00FF88] py-2 px-3 rounded border border-[#00FF88] text-xs">Sample: Text</button>
         </div>
       </div>
 
-      <div id="results" class="hidden space-y-6">
-        <div class="glass rounded-xl p-6">
-          <h2 class="text-xl font-semibold text-[#00FF88] mb-4"><i class="fa-solid fa-clipboard-check"></i> Evidence Panel</h2>
+      <div id="results" class="hidden space-y-4">
+        <div class="glass rounded-xl p-4">
+          <h2 class="text-lg font-semibold text-[#00FF88] mb-2">📋 Evidence Panel</h2>
           <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm">
-              <thead class="border-b border-[#1a1f3a]">
-                <tr><th class="py-2">Tool</th><th class="py-2">Result</th><th class="py-2">Confidence</th></tr>
+            <table class="w-full text-xs">
+              <thead class="border-b border-[#1a1f3a] text-gray-400">
+                <tr><th class="text-left py-1">Tool</th><th class="text-left py-1">Result</th><th class="text-left py-1">Confidence</th></tr>
               </thead>
-              <tbody id="evidence-table" class="text-gray-400"></tbody>
+              <tbody id="evidence-table"></tbody>
             </table>
           </div>
         </div>
 
-        <div class="glass rounded-xl p-6">
-          <h2 class="text-xl font-semibold text-red-500 mb-4"><i class="fa-solid fa-triangle-exclamation"></i> Vulnerabilities</h2>
-          <div id="vuln-cards" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        <div class="glass rounded-xl p-4">
+          <h2 class="text-lg font-semibold text-yellow-400 mb-2">⚠ IOCs Found</h2>
+          <div id="ioc-panel" class="text-xs space-y-1"></div>
         </div>
 
-        <div class="glass rounded-xl p-6">
-          <h2 class="text-xl font-semibold text-[#6C63FF] mb-4"><i class="fa-solid fa-code"></i> Code Viewer</h2>
-          <pre class="bg-[#050810] rounded p-4 overflow-x-auto"><code class="language-c" id="code-viewer">// No code extracted</code></pre>
+        <div class="glass rounded-xl p-4">
+          <h2 class="text-lg font-semibold text-[#6C63FF] mb-2">🔓 XOR Analysis</h2>
+          <pre class="bg-[#050810] rounded p-3 overflow-x-auto mono text-xs text-[#00FF88]" id="xor-view">// No analysis yet</pre>
+        </div>
+
+        <div class="text-xs text-gray-500 text-center pt-2">
+          ℹ 8 tools run in your browser. For all 31 tools + AI agents + RAG, use the <a href="https://github.com/qamarsobhy7-source/nexus-re#api" class="text-[#6C63FF] underline">REST API</a>.
         </div>
       </div>
     </main>
   </div>
 
-  <script>
-    const toolsList = ["Hex Dump", "Extract Strings", "Calculate Hash", "Calculate Entropy", "Detect File Type", "File Info", "Parse ELF Header", "Parse PE Header", "Extract IOCs", "XOR Brute Force", "Scan Suspicious APIs", "Detect Packer", "YARA Scan", "Full Analysis", "Version Diff", "Section Analyzer", "Base64 Detector", "String Similarity", "PE Section Analyzer", "ELF Section Analyzer", "Import Table Parser", "Export Table Parser", "Anti-Debug Detector", "Crypto Scanner", "Obfuscation Detector", "APK Manifest Parser", "Certificate Extractor", "Deep Packer Scanner"];
-    
-    const sidebar = document.getElementById('tools-sidebar');
-    toolsList.forEach((tool, i) => {
-      sidebar.innerHTML += `<li class="p-2 rounded hover:bg-[#1a1f3a] cursor-pointer flex justify-between" onclick="fillInput('${tool}')"><span>${tool}</span><span class="text-[#00FF88] text-xs">${i+1}</span></li>`;
-    });
+<script>
+const BROWSER_TOOLS = [
+  "hex_dump", "extract_strings", "sha256", "calculate_entropy",
+  "detect_file_type", "base64_detector", "xor_bruteforce", "extract_iocs"
+];
+const API_TOOLS = [
+  "parse_elf_header", "parse_pe_header", "detect_packer", "yara_scan",
+  "full_analysis", "analyze_file", "version_diff", "section_analyzer",
+  "string_similarity", "pe_section_analyzer", "elf_section_analyzer",
+  "import_table_parser", "export_table_parser", "anti_debug_detector",
+  "crypto_constant_scanner", "string_obfuscation_detector",
+  "apk_manifest_parser", "certificate_extractor", "deep_packer_scanner",
+  "scan_suspicious_apis", "xor_bruteforce_v2", "detect_file_type_hex",
+  "file_info"
+];
 
-    function fillInput(tool) {
-      document.getElementById('inputData').value = (tool === "Parse ELF Header") ? "7f454c4602010100000000000000000002003e00010000000010400000000000" : "7f454c46...";
+function renderSidebar() {
+  document.getElementById('browser-tools').innerHTML = BROWSER_TOOLS.map((t,i)=>
+    `<li class="p-1 rounded hover:bg-[#1a1f3a] flex justify-between cursor-default"><span>${t}</span><span class="text-[#00FF88]">${i+1}</span></li>`
+  ).join('');
+  document.getElementById('api-tools').innerHTML = API_TOOLS.map(t=>
+    `<li class="p-1 flex justify-between"><span>${t}</span><span>🔒</span></li>`
+  ).join('');
+}
+
+function loadSample(hex) {
+  document.getElementById('inputData').value = hex;
+}
+
+function parseInput() {
+  const raw = document.getElementById('inputData').value.trim();
+  if (!raw) throw new Error("Please enter hex or text");
+  const cleanHex = raw.replace(/\s/g,'');
+  if (/^[0-9a-fA-F]+$/.test(cleanHex) && cleanHex.length % 2 === 0 && cleanHex.length >= 4) {
+    const bytes = new Uint8Array(cleanHex.length/2);
+    for (let i=0;i<bytes.length;i++) bytes[i] = parseInt(cleanHex.substr(i*2,2),16);
+    return { bytes, isHex: true };
+  }
+  const enc = new TextEncoder();
+  return { bytes: enc.encode(raw), isHex: false };
+}
+
+function bytesToHex(b){return Array.from(b).map(x=>x.toString(16).padStart(2,'0')).join('');}
+function bytesToAscii(b){return Array.from(b).map(x=>x>=32&&x<127?String.fromCharCode(x):'.').join('');}
+
+function hexDump(bytes) {
+  const hex = bytesToHex(bytes);
+  const ascii = bytesToAscii(bytes);
+  return `Size: ${bytes.length} bytes\nHex: ${hex.slice(0,80)}${hex.length>80?'...':''}\nASCII: ${ascii.slice(0,40)}${ascii.length>40?'...':''}`;
+}
+
+function extractStrings(bytes) {
+  const m = String.fromCharCode(...bytes).match(/[\x20-\x7E]{4,}/g) || [];
+  return m.length ? `${m.length} strings: ${m.slice(0,5).join(' | ').slice(0,60)}...` : "No printable strings (min 4 chars)";
+}
+
+async function sha256(bytes) {
+  const buf = await crypto.subtle.digest('SHA-256', bytes);
+  return bytesToHex(new Uint8Array(buf));
+}
+
+function calcEntropy(bytes) {
+  if (!bytes.length) return 0;
+  const freq = {};
+  for (const b of bytes) freq[b] = (freq[b]||0)+1;
+  let H = 0;
+  for (const c of Object.values(freq)) {
+    const p = c/bytes.length;
+    H -= p * Math.log2(p);
+  }
+  return H;
+}
+
+function detectFileType(bytes) {
+  if (bytes.length < 4) return "Too small";
+  const sig = bytesToHex(bytes.slice(0,4));
+  const map = {
+    '7f454c46':'ELF (Linux binary)', '4d5a':'PE (Windows exe/dll)',
+    '89504e47':'PNG image', 'ffd8ffe0':'JPEG image', '504b0304':'ZIP/APK/JAR',
+    '1f8b08':'GZIP', '425a68':'BZIP2', '52617221':'RAR archive',
+    '377abcaf':'7z archive', 'cafebabe':'Java class / Mach-O fat',
+    'cffaedfe':'Mach-O 64-bit', '4d534346':'Microsoft CAB'
+  };
+  for (const [s,n] of Object.entries(map)) if (sig.startsWith(s)) return n;
+  return "Unknown (no magic match)";
+}
+
+function detectBase64(bytes) {
+  const text = String.fromCharCode(...bytes).replace(/\s/g,'');
+  if (/^[A-Za-z0-9+/]{20,}={0,2}$/.test(text)) {
+    try {
+      const d = atob(text);
+      return `Valid Base64 (${d.length} bytes decoded)`;
+    } catch { return "Looks like Base64 but invalid padding"; }
+  }
+  return "Not Base64";
+}
+
+function xorBruteforce(bytes) {
+  const hits = [];
+  for (let k=1;k<256;k++) {
+    let p=0, sample="";
+    const n = Math.min(bytes.length, 100);
+    for (let i=0;i<n;i++) {
+      const x = bytes[i]^k;
+      if (x>=32&&x<127){p++;sample+=String.fromCharCode(x);} else sample+='.';
+    }
+    const score = p/n;
+    if (score>0.85) hits.push({k,score,sample:sample.slice(0,40)});
+  }
+  hits.sort((a,b)=>b.score-a.score);
+  if (!hits.length) return "No strong single-byte XOR key found (threshold 85%)";
+  return `Top candidate: Key 0x${hits[0].k.toString(16).toUpperCase().padStart(2,'0')} (score ${(hits[0].score*100).toFixed(1)}%)\nSample: ${hits[0].sample}`;
+}
+
+function extractIOCs(bytes) {
+  const text = String.fromCharCode(...bytes);
+  const ips = text.match(/\b(?:\d{1,3}\.){3}\d{1,3}\b/g) || [];
+  const urls = text.match(/https?:\/\/[^\s"'<>]{4,}/g) || [];
+  const emails = text.match(/[\w.+-]+@[\w-]+\.[a-z]{2,}/gi) || [];
+  const domains = text.match(/\b(?:[a-z0-9-]+\.)+(?:com|net|org|io|ru|cn|tk|xyz|info)\b/gi) || [];
+  return { ips:[...new Set(ips)], urls:[...new Set(urls)], emails:[...new Set(emails)], domains:[...new Set(domains)] };
+}
+
+function confClass(c) {
+  if (c.includes('HIGH')) return 'bg-green-900 text-green-300';
+  if (c.includes('MEDIUM')) return 'bg-yellow-900 text-yellow-300';
+  if (c.includes('LOW')) return 'bg-blue-900 text-blue-300';
+  return 'bg-gray-800 text-gray-400';
+}
+
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+async function runAnalysis() {
+  const btn = document.getElementById('runBtn');
+  const orig = btn.innerHTML;
+  btn.innerHTML = '⏳ Analyzing...';
+  btn.disabled = true;
+  try {
+    const { bytes, isHex } = parseInput();
+    const rows = [];
+
+    rows.push({t:'hex_dump', r: hexDump(bytes).split('\n')[0], c:'HIGH'});
+    rows.push({t:'extract_strings', r: extractStrings(bytes), c:'HIGH'});
+    const hash = await sha256(bytes);
+    rows.push({t:'sha256', r: hash.slice(0,32)+'...', c:'HIGH'});
+    const ent = calcEntropy(bytes);
+    rows.push({t:'calculate_entropy', r:`${ent.toFixed(2)}/8.0 ${ent>7?'(packed?)':''}`, c: ent>7?'HIGH':'LOW'});
+    rows.push({t:'detect_file_type', r: detectFileType(bytes), c:'HIGH'});
+    rows.push({t:'base64_detector', r: detectBase64(bytes), c:'MEDIUM'});
+    const xorResult = xorBruteforce(bytes);
+    rows.push({t:'xor_bruteforce', r: xorResult.split('\n')[0], c:'MEDIUM'});
+
+    const iocs = extractIOCs(bytes);
+    const iocCount = iocs.ips.length+iocs.urls.length+iocs.emails.length+iocs.domains.length;
+    rows.push({t:'extract_iocs', r: iocCount ? `${iocCount} IOCs found` : 'No IOCs', c: iocCount?'HIGH':'NONE'});
+
+    document.getElementById('evidence-table').innerHTML = rows.map(r=>
+      `<tr class="border-b border-[#1a1f3a]">
+        <td class="py-1 mono text-[#6C63FF]">${r.t}</td>
+        <td class="py-1">${escapeHtml(r.r)}</td>
+        <td class="py-1"><span class="px-1.5 py-0.5 rounded text-[10px] ${confClass(r.c)}">${r.c}</span></td>
+      </tr>`
+    ).join('');
+
+    const ip = document.getElementById('ioc-panel');
+    if (iocCount === 0) {
+      ip.innerHTML = '<div class="text-gray-500">No IOCs detected.</div>';
+    } else {
+      ip.innerHTML = '';
+      if (iocs.ips.length) ip.innerHTML += `<div><b class="text-yellow-300">IPs:</b> ${iocs.ips.slice(0,5).join(', ')}</div>`;
+      if (iocs.urls.length) ip.innerHTML += `<div><b class="text-yellow-300">URLs:</b> ${iocs.urls.slice(0,3).join(', ')}</div>`;
+      if (iocs.emails.length) ip.innerHTML += `<div><b class="text-yellow-300">Emails:</b> ${iocs.emails.slice(0,3).join(', ')}</div>`;
+      if (iocs.domains.length) ip.innerHTML += `<div><b class="text-yellow-300">Domains:</b> ${iocs.domains.slice(0,3).join(', ')}</div>`;
     }
 
-    function runAnalysis() {
-      const input = document.getElementById('inputData').value.trim();
-      if (!input) { alert("Please enter data"); return; }
-      const btn = event.target;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Analyzing...';
-      
-      setTimeout(() => {
-        const evidence = [
-          { tool: "detect_file_type_hex", result: "ELF (Linux) Executable", conf: "HIGH" },
-          { tool: "parse_elf_header", result: "Class: 64-bit, Arch: x86-64", conf: "HIGH" },
-          { tool: "calculate_entropy", result: "Entropy: 3.66 (LOW)", conf: "HIGH" }
-        ];
-        const vulns = [
-          { title: "Buffer Overflow", desc: "Unchecked input in parse function.", sev: "Critical" },
-          { title: "Hardcoded String", desc: "Password found in plain text.", sev: "High" }
-        ];
+    document.getElementById('xor-view').innerText = xorResult;
+    document.getElementById('results').classList.remove('hidden');
+  } catch(e) {
+    alert('Error: ' + e.message);
+  } finally {
+    btn.innerHTML = orig;
+    btn.disabled = false;
+  }
+}
 
-        document.getElementById('evidence-table').innerHTML = evidence.map(e => `<tr class="border-b border-[#1a1f3a]"><td class="py-2 font-mono text-[#6C63FF]">${e.tool}</td><td class="py-2">${e.result}</td><td class="py-2"><span class="px-2 py-1 rounded text-xs bg-green-900 text-green-300">${e.conf}</span></td></tr>`).join('');
-        
-        document.getElementById('vuln-cards').innerHTML = vulns.map(v => {
-          const color = v.sev === 'Critical' ? 'red' : 'yellow';
-          return `<div class="border-l-4 border-${color}-500 bg-[#1a1f3a] p-4 rounded"><h3 class="font-bold text-${color}-400">${v.title}</h3><p class="text-sm text-gray-400">${v.desc}</p></div>`;
-        }).join('');
-
-        document.getElementById('code-viewer').innerText = `int check_license(char *key) {
-    char valid_key[] = "ABCD1234";
-    return strcmp(key, valid_key) == 0;
-}`;
-        Prism.highlightAll();
-        
-        document.getElementById('results').classList.remove('hidden');
-        btn.innerHTML = '<i class="fa-solid fa-microscope"></i> Run Analysis';
-      }, 1000);
-    }
-
-    function exportPDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.text("NEXUS-RE Report", 10, 10);
-      doc.save("report.pdf");
-    }
-  </script>
+renderSidebar();
+</script>
 </body>
 </html>
