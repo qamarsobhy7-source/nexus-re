@@ -1,6 +1,6 @@
 """
 NEXUS-RE Multi-Agent Orchestration System
-Phase 4 - LangGraph + ReAct pattern
+Phase 4 - Custom ReAct Orchestrator
 """
 
 import os
