@@ -322,7 +322,7 @@ NEXUS-RE already handles **13 analysis tasks** out of 25 in the roadmap, with **
 
 ### Core Analysis Engine (31 Tools)
 
-A pure-Python toolkit with **zero external dependencies** — runs on Linux, macOS, Windows, and Android (via Termux or Pydroid 3).
+A pure-Python toolkit — the 31 core analysis tools have **zero external runtime dependencies** — runs on Linux, macOS, Windows, and Android (via Termux or Pydroid 3).
 
 | # | Tool | Category | Description | Input |
 |:-:|------|----------|-------------|:-----:|
@@ -404,7 +404,7 @@ Every piece of evidence carries: **tool name, result, confidence (HIGH/MEDIUM/LO
 
 | Metric | Value |
 |--------|------:|
-| Unit tests | **27** |
+| Unit tests | **56** |
 | Pass rate | **100%** |
 | Test coverage areas | Basic, Binary, Advanced, Composite |
 | CI/CD | GitHub Actions (3 Python versions) |
@@ -561,7 +561,7 @@ Register with any MCP-compatible agent (Claude Code, Cursor) via mcp.json.
 
 ### Step 4 — Install Optional Dependencies
 
-Core tools require **no external dependencies**. For AI-agent integration:
+Core tools require **no external runtime dependencies**. For AI-agent integration:
 
     pip install mcp
 
@@ -793,7 +793,7 @@ Recommended for production:
 
 - **docs/** - Architecture, API, CLI, Testing, Evidence, Installation, Roadmap, OpenAPI, Mermaid diagram, Screenshot
 - **src/** - Modular source code (tools, agents, rag, api)
-- **tests/** - 42 tests total (27 core + 15 edge cases)
+- **tests/** - 56 tests total (27 tools + 15 edge cases + 6 agents + 8 API)
 - **paper/** - Technical report (214 lines)
 - **.github/** - CI/CD, CodeQL, Scorecard, Release, Dependabot, Issue templates, PR template, CODEOWNERS
 - **.agents/skills/** - AI agent skill instructions
@@ -893,7 +893,7 @@ The RAG service grounds every multi-agent claim in retrieved evidence.
 - **Total phases complete:** 4.5 of 9 (50%)
 - **Tools implemented:** 31 of 31 (100%)
 - **Agents implemented:** 4 of 4 (100%)
-- **Tests passing:** 59 of 59 (100%)
+- **Tests passing:** 56 of 56 (100%)
 - **Lines of Python:** ~2,500+
 - **Lines of docs:** ~2,200+
 
@@ -1108,7 +1108,7 @@ This project was built **entirely on an Android phone** using Pydroid 3 and Term
 - **31 working analysis tools** — all tested.
 - **4 collaborating AI agents** — verified in live sessions.
 - **Real interactive web dashboard** — not mock data (verified with `Hello World` and `7f454c46`).
-- **27 passing tests** — 100% success rate.
+- **56 passing tests** — 100% success rate.
 - **Complete documentation** — 7 docs + README + Proposal + Model Cards.
 
 
@@ -1157,7 +1157,7 @@ These are **confirmed bugs and limitations** discovered during testing. See [Iss
 | Mach-O support is partial | 🟡 Medium | Only magic-number detection, no deep parsing |
 | No caching | 🟡 Medium | Every request recomputes everything |
 | No rate limiting | 🟠 Low | API is intended for local use only |
-| Test coverage ~60% | 🟡 Medium | 27+15 tests cover main paths, not all edge cases |
+| Test coverage ~60% | 🟡 Medium | 56 tests cover main paths, not all edge cases |
 
 ### Reporting New Issues
 
