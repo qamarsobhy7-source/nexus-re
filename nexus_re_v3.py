@@ -59,8 +59,9 @@ def detect_file_type_hex(hex_string):
 def parse_elf_header(hex_string):
     try: data = bytes.fromhex(hex_string)
     except: return "Invalid hex"
-    if len(data) < 20: return "ELF header too small"
+    if len(data) < 4: return "ELF header too small"
     if data[:4] != b'\x7fELF': return "Not an ELF file"
+    if len(data) < 20: return "ELF header too small"
     ei_class = data[4]
     bits = "64-bit" if ei_class == 2 else "32-bit" if ei_class == 1 else "Unknown"
     ei_data = data[5]
