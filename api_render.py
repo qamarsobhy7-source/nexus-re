@@ -137,18 +137,21 @@ class NexusAPIHandler(BaseHTTPRequestHandler):
             })
 
         elif path == "/tools":
-            tools = [
-                {"id": i, "name": name}
-                for i, name in enumerate([
-                    "hex_dump", "extract_strings", "calculate_hash",
-                    "calculate_entropy", "file_info", "detect_file_type",
-                    "detect_file_type_hex", "parse_elf_header", "parse_pe_header",
-                    "extract_iocs", "xor_bruteforce", "xor_bruteforce_v2",
-                    "scan_suspicious_apis", "detect_packer", "yara_scan",
-                    "full_analysis", "analyze_file", "version_diff",
-                    "section_analyzer", "base64_detector", "string_similarity",
-                ], 1)
-            ]
+            # Dynamically pull tools from the loaded toolkit module
+            tool_names = []
+            if toolkit:
+                for name in dir(toolkit):
+                    if name.startswith("_"):
+                        continue
+                    obj = getattr(toolkit, name, None)
+                    if not callable(obj):
+                        continue
+                    # Only functions defined in nexus_re_v3 itself
+                    if getattr(obj, "__module__", "") != "nexus_re_v3":
+                        continue
+                    tool_names.append(name)
+            tool_names.sort()
+            tools = [{"id": i, "name": n} for i, n in enumerate(tool_names, 1)]
             self._send_json({"count": len(tools), "tools": tools})
 
         elif path == "/rag/search":
