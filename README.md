@@ -49,7 +49,7 @@
 
 🚀 **Try NEXUS-RE Now:** [https://qamar-sobhy-nexus-re-api.static.hf.space](https://qamar-sobhy-nexus-re-api.static.hf.space)
 
-![NEXUS-RE Dashboard](docs/new_dashboard.png)
+![NEXUS-RE Dashboard](docs/new_dashboard.png?v=2)
 
 ---
 
@@ -114,7 +114,6 @@
 | **27 Tests in test_tools.py (100% pass)** | ✅ Working | `tests/test_tools.py` |
 | **Docker + CI/CD** | ✅ Working | `.github/workflows/` |
 | **Security (CodeQL + Semgrep)** | ✅ Active | `.github/workflows/` |
-| **Documentation** | ✅ Complete | `docs/` + `README.md` |
 
 ### 📅 Planned (Not Yet Implemented)
 
