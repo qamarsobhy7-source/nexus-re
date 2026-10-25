@@ -2,7 +2,7 @@
 
 > Version: 3.0.0 | Last Updated: 2026-10-16
 
-This document describes the NEXUS-RE Command-Line Interface, including all 21 tools and the interactive menu.
+This document describes the NEXUS-RE Command-Line Interface, including all 31 tools and the interactive menu.
 
 ---
 
@@ -430,7 +430,7 @@ Goodbye!
 
 ## Python API Usage
 
-All 21 tools can also be used programmatically:
+All 31 tools can also be used programmatically:
 
 from nexus_re_v3 import (
     hex_dump, extract_strings, calculate_hash, calculate_entropy,
