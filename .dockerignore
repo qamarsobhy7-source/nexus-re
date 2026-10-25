@@ -1,0 +1,52 @@
+# Git
+.git
+.gitignore
+.github
+
+# Documentation
+docs
+paper
+*.md
+!README.md
+proposal.md
+MODEL_CARDS.md
+
+# Tests
+tests
+.pytest_cache
+.coverage
+htmlcov
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+build
+dist
+.venv
+venv
+env
+
+# NEXUS-RE runtime data
+samples
+reports
+sessions
+datasets
+*.log
+.env
+
+# Config
+config.yaml
+nexus-re.yaml
+
+# IDE
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
