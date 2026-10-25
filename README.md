@@ -1,56 +1,35 @@
 <div align="center">
 
-[English](README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · [Español](README.es.md) · [Deutsch](README.de.md) · [中文](README.zh.md) · [日本語](README.ja.md) · [Русский](README.ru.md) · [Português](README.pt.md) · [Italiano](README.it.md) · [한국어](README.ko.md) · [Türkçe](README.tr.md) · [Nederlands](README.nl.md) · [Polski](README.pl.md) · [हिन्दी](README.hi.md)
+# 🛡️ NEXUS-RE
 
-</div>
+**AI-Ready Binary Analysis Toolkit — Currently in Alpha**
 
-> **📌 TL;DR:** A reverse engineering and security analysis platform featuring **31 analysis tools**, **4 AI agents**, a **REST API**, and a **web dashboard** — built entirely on Android. **MIT License.** **[Try the Live Demo →](https://qamar-sobhy-nexus-re-api.static.hf.space)**
+[![CI/CD](https://github.com/qamarsobhy7-source/nexus-re/actions/workflows/ci.yml/badge.svg)](https://github.com/qamarsobhy7-source/nexus-re/actions)
+[![Security](https://img.shields.io/badge/Security-Passing-green)](#)
+[![License](https://img.shields.io/badge/License-MIT-blue)](#)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-blue)](#)
+[![Docker](https://img.shields.io/badge/Docker-Ready-blue)](#)
 
-> **⚠️ Project Status: Alpha (v3.0.0)**
-> This is an **early-stage project** built entirely on Android. It is a working prototype, not a production-ready platform. See [Project Reality](#️-project-reality-what-is-implemented-vs-planned) and [Known Limitations](#-known-limitations-honest) for honest scope.
+*A reverse engineering and security analysis platform built entirely on Android. Featuring 31 analysis tools, 4 AI agents, a REST API, and a real-time web dashboard.*
 
+<br>
 
+<a href="https://qamar-sobhy-nexus-re-api.static.hf.space" target="_blank">
+  <img src="https://img.shields.io/badge/🌐_TRY_LIVE_DEMO-Click_Here-success?style=for-the-badge" alt="Live Demo">
+</a>
 
-
-<div align="center">
-
-# NEXUS-RE
-
-[![CI](https://github.com/qamarsobhy7-source/nexus-re/actions/workflows/ci.yml/badge.svg)](https://github.com/qamarsobhy7-source/nexus-re/actions/workflows/ci.yml)
-[![Security](https://github.com/qamarsobhy7-source/nexus-re/actions/workflows/security.yml/badge.svg)](https://github.com/qamarsobhy7-source/nexus-re/actions/workflows/security.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
-[![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://www.docker.com/)
-
-
-### AI-Ready Binary Analysis Toolkit — Currently in Alpha
-
-> **Current Implementation:** Symbolic analysis + TF-IDF retrieval + custom multi-agent orchestrator. Real LLM integration (Llama 3, Mistral, Jais) is in active development — see [Issue #20](https://github.com/qamarsobhy7-source/nexus-re/issues/20).
-
-
-*Bridging Large Language Models with professional reverse engineering tools — through the Model Context Protocol.*
-
-[![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![MCP](https://img.shields.io/badge/MCP-2.3.0-6C63FF?style=for-the-badge)](https://modelcontextprotocol.io)
-[![License: MIT](https://img.shields.io/badge/License-MIT-00FF88?style=for-the-badge)](LICENSE)
-[![Status: Alpha](https://img.shields.io/badge/Status-Alpha-orange?style=for-the-badge)]()
-[![Status](https://img.shields.io/badge/Stage-Prototype-red?style=for-the-badge)]()
-[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Android-black?style=for-the-badge)]()
-
-[📖 Overview](#-what-is-nexus-re) · [⚡ Quick Start](#-quick-start) · [🔧 Tools](#-features) · [🏗️ Architecture](#️-architecture) · [🗺️ Roadmap](#️-roadmap) · [🎯 Showcases](#showcases) · [❓ FAQ](#faq) · [📚 Docs](#documentation) · [📄 Proposal](proposal.md) · [🤝 Contributing](#-contributing)
-
-</div>
-
-
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-hf.space-6C63FF?style=for-the-badge&logo=huggingface)](https://qamar-sobhy-nexus-re-api.static.hf.space)
-
----
-
-🚀 **Try NEXUS-RE Now:** [https://qamar-sobhy-nexus-re-api.static.hf.space](https://qamar-sobhy-nexus-re-api.static.hf.space)
+<br><br>
 
 ![NEXUS-RE Dashboard](docs/dashboard_v2.png)
 
+</div>
+
 ---
+
+> ⚠️ **Project Status:** Alpha (v3.0.0). Early-stage prototype. See [Project Reality](#project-reality) and [Known Limitations](#limitations).
+
+---
+
 
 ## Table of Contents
 
