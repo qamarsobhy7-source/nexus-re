@@ -629,7 +629,7 @@ Create `nexus-re.yaml` in your home directory:
 
 ### Unit Tests
 
-NEXUS-RE ships with a test suite covering all 16 tools.
+NEXUS-RE ships with a test suite covering all 31 tools.
 
     pytest tests/ -v
 
