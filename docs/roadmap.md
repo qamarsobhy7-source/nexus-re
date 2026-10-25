@@ -51,7 +51,7 @@ Status: Complete
 Duration: Month 2
 
 Deliverables:
-- 21 tools in pure Python
+- 31 tools in pure Python
 - Model Context Protocol server
 - 27 unit tests with 100 percent pass rate
 
@@ -116,7 +116,7 @@ Status: Complete
 Duration: Month 6
 
 Deliverables:
-- Knowledge base of 12 curated entries
+- Knowledge base of 33 curated entries
 - TF-IDF retrieval engine
 - Evidence citations in agent claims
 
