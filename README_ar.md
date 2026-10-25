@@ -9,7 +9,7 @@
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![MCP](https://img.shields.io/badge/MCP-2.3.0-6C63FF?style=for-the-badge)](https://modelcontextprotocol.io)
 [![License](https://img.shields.io/badge/License-MIT-00FF88?style=for-the-badge)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-27%2F27-success?style=for-the-badge)]()
+[![Tests](https://img.shields.io/badge/Tests-56%2F56-success?style=for-the-badge)]()
 
 </div>
 
