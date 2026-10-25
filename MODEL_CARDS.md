@@ -2,7 +2,7 @@
 
 This document provides **Model Cards** for every intelligent component in NEXUS-RE, following the framework proposed by Mitchell et al. (2019).
 
-**Project:** NEXUS-RE — AI-Powered Reverse Engineering Platform
+**Project:** NEXUS-RE — AI-Ready Reverse Engineering Platform
 **Version:** 3.0.0
 **License:** MIT
 **Repository:** https://github.com/qamarsobhy7-source/nexus-re
@@ -209,7 +209,7 @@ This document provides **Model Cards** for every intelligent component in NEXUS-
 - **Type:** TF-IDF retrieval + knowledge base
 - **Developed by:** Qamar Sobhy
 - **License:** MIT
-- **Knowledge base size:** 12 curated entries
+- **Knowledge base size:** 33 curated entries
 
 ### Intended Use
 - **Primary use:** Ground agent claims in NVD/CVE, MITRE ATT&CK, and packer knowledge.
@@ -231,7 +231,7 @@ This document provides **Model Cards** for every intelligent component in NEXUS-
 
 ### Evaluation Data
 - **Source:** NVD/CVE, MITRE ATT&CK, packer signatures.
-- **Size:** 12 entries across 4 categories.
+- **Size:** 33 entries across 4 categories.
 
 ### Training Data
 - **Not applicable** — TF-IDF index, no neural training.
@@ -246,7 +246,7 @@ This document provides **Model Cards** for every intelligent component in NEXUS-
 - **Mitigation:** All sources cited with IDs.
 
 ### Caveats and Recommendations
-- **Limitation:** Only 12 entries; not exhaustive.
+- **Limitation:** Only 33 entries; not exhaustive.
 - **Recommendation:** Extend `KNOWLEDGE_BASE` list for production use.
 
 ---
@@ -329,7 +329,7 @@ This document provides **Model Cards** for every intelligent component in NEXUS-
 
 ### Evaluation Data
 - **Source:** 3 self-test cases + manual curl tests.
-- **Size:** Full coverage of all 21 tools.
+- **Size:** Full coverage of all 31 tools.
 
 ### Training Data
 - **Not applicable** — direct HTTP dispatch.
@@ -370,7 +370,7 @@ This document provides **Model Cards** for every intelligent component in NEXUS-
 
 1. **No neural LLM in v1.0** — all agents use rule-based logic. LLM integration is planned for v2.0.
 2. **No dynamic analysis** — Frida and strace integration is partial.
-3. **Knowledge base is small** — only 12 entries in RAG service.
+3. **Knowledge base is small** — only 33 entries in RAG service.
 4. **English-only RAG** — Arabic knowledge base is planned.
 5. **No authentication in API** — development-only; production needs JWT.
 
@@ -386,7 +386,7 @@ This document provides **Model Cards** for every intelligent component in NEXUS-
 
 If you use NEXUS-RE in academic work, please cite:
 
-Sobhy, Q. (2026). *NEXUS-RE: AI-Powered Reverse Engineering & Security Analysis Platform* [Computer software]. https://github.com/qamarsobhy7-source/nexus-re
+Sobhy, Q. (2026). *NEXUS-RE: AI-Ready Reverse Engineering & Security Analysis Platform* [Computer software]. https://github.com/qamarsobhy7-source/nexus-re
 
 ### References
 
