@@ -137,7 +137,7 @@ Example session (20261016_122358):
 
 | Source | Type | Description |
 |--------|------|-------------|
-| Static tools | Deterministic | 21 tools in nexus_re_v3.py |
+| Static tools | Deterministic | 31 tools in nexus_re_v3.py |
 | Agent synthesis | Derived | Combining static evidence |
 | RAG grounding | External | NVD/CVE, MITRE ATT&CK, packers |
 | Session history | Temporal | Previous analyses (planned) |
