@@ -353,7 +353,7 @@ Every piece of evidence carries: **tool name, result, confidence (HIGH/MEDIUM/LO
 
 ### REST API (Phase 7 — Ready)
 
-`api.py` exposes **every tool + agents + RAG** as HTTP endpoints:
+`api_render.py` exposes **every tool + agents + RAG** as HTTP endpoints:
 
 - `GET  /health` — server status
 - `GET  /tools` — list all 31 tools
@@ -785,7 +785,7 @@ NEXUS-RE is organized as a five-layer architecture, designed for modularity and 
 | Layer | Component | Responsibility | Status |
 |:-----:|-----------|----------------|:------:|
 | 1 | Client | Web Dashboard, CLI (Python), REST API | ✅ CLI + API |
-| 2 | API Gateway | Pure-Python HTTP server (api.py) | ✅ Ready |
+| 2 | API Gateway | Pure-Python HTTP server (api_render.py) | ✅ Ready |
 | 3 | Orchestration | Multi-Agent (nexus_agents.py), RAG (nexus_rag.py) | ✅ Ready |
 | 4 | MCP + Tools | 31 core tools, Ghidra, Frida, radare2, JADX | ✅ Core Ready |
 | 5 | Infrastructure | Docker, GitHub Actions, MIT License | ✅ Ready |
@@ -896,7 +896,7 @@ The RAG service grounds every multi-agent claim in retrieved evidence.
 | Layer | Tech |
 |-------|------|
 | Frontend | Next.js 14, TypeScript, Tailwind (planned) |
-| Backend | Pure-Python HTTP server (api.py) ✅ |
+| Backend | Pure-Python HTTP server (api_render.py) ✅ |
 | Agents | Custom orchestrator + ReAct pattern ✅ |
 | RAG | TF-IDF (pure-Python) ✅ |
 | AI (planned) | LangGraph, Llama 3, Mistral, Jais |
