@@ -1,5 +1,9 @@
 version: "3.9"
 
+# NEXUS-RE has ZERO runtime dependencies.
+# No database, no cache, no message queue needed.
+# The API runs on pure Python stdlib (http.server).
+
 services:
   nexus-re:
     build: .
@@ -10,7 +14,6 @@ services:
       - ./reports:/reports
     environment:
       - NEXUS_LOG_LEVEL=INFO
-      - NEXUS_SANDBOX=true
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -19,37 +22,13 @@ services:
     build: .
     image: nexus-re:latest
     container_name: nexus-api
-    command: python -m uvicorn api:app --host 0.0.0.0 --port 8000
+    command: python api_render.py
     ports:
       - "8000:8000"
     environment:
       - NEXUS_LOG_LEVEL=INFO
-    depends_on:
-      - postgres
-      - redis
-
-  postgres:
-    image: postgres:16-alpine
-    container_name: nexus-postgres
-    environment:
-      POSTGRES_USER: nexus
-      POSTGRES_PASSWORD: nexus
-      POSTGRES_DB: nexus_re
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-
-  redis:
-    image: redis:7-alpine
-    container_name: nexus-redis
-    ports:
-      - "6379:6379"
-    command: redis-server --appendonly yes
-
-volumes:
-  pgdata:
-    driver: local
+      - PORT=8000
+    restart: unless-stopped
 
 networks:
   default:
