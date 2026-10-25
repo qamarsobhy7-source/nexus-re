@@ -88,10 +88,10 @@
 | **31 Analysis Tools** | ✅ Working | `nexus_re_v3.py` |
 | **16 Tools in MCP Server** | ✅ Working | `nexus_re_server.py` (legacy) |
 | **4 AI Agents** (Static, Security, Crypto, Report) | ✅ Working | `nexus_agents.py` |
-| **RAG Service (TF-IDF, 33 entries)** | ✅ Working | `nexus_rag.py` |
+| **RAG Service (TF-IDF, 32 entries)** | ✅ Working | `nexus_rag.py` |
 | **REST API (24 endpoints)** | ✅ Working | `api_render.py` |
-| **Web Dashboard (UI mockup)** | 🟡 Demo | `index.html` — static sample output only |
-| **27 Tests in test_tools.py (100% pass)** | ✅ Working | `tests/test_tools.py` |
+| **Real Web Dashboard** | ✅ Working | `index.html` — static sample output only |
+| **56 Tests (100% pass)** | ✅ Working | `tests/test_tools.py` |
 | **Docker + CI/CD** | ✅ Working | `.github/workflows/` |
 | **Security (CodeQL + Semgrep)** | ✅ Active | `.github/workflows/` |
 
@@ -112,7 +112,7 @@
 
 - **The project is a working prototype**, not a complete production platform.
 - The **core engine** (31 tools + 4 agents + RAG + REST API) **is real, tested, and works**.
-- The **web dashboard UI mockup** opens in any browser — try it at [qamar-sobhy-nexus-re-api.static.hf.space](https://qamar-sobhy-nexus-re-api.static.hf.space).
+- The **web dashboard** opens in any browser — try it at [qamar-sobhy-nexus-re-api.static.hf.space](https://qamar-sobhy-nexus-re-api.static.hf.space).
 - **Professional RE tools** (Ghidra, Frida) are future work — clearly documented in `docs/roadmap.md`.
 
 
@@ -469,7 +469,7 @@ Output:
 
 ### Example 4 - Python API
 
-    from nexus_re_v2 import full_analysis, yara_scan
+    from nexus_re_v3 import full_analysis, yara_scan
 
     report = full_analysis("7f454c4602010100...")
     print(report)
@@ -554,7 +554,7 @@ For deeper analysis (Phase 2+):
 
 ### Step 6 — Verify Installation
 
-    python -c "from nexus_re_v2 import full_analysis; print(full_analysis('7f454c4602010100'))"
+    python -c "from nexus_re_v3 import full_analysis; print(full_analysis('7f454c4602010100'))"
 
 Expected output: a full analysis report with file type, entropy, IOCs, and more.
 
@@ -632,7 +632,7 @@ Covers: file ingestion, tool chaining, report generation, and export formats.
 
 ### Manual Smoke Test
 
-    python -c "from nexus_re_v2 import full_analysis; print(full_analysis('7f454c4602010100'))"
+    python -c "from nexus_re_v3 import full_analysis; print(full_analysis('7f454c4602010100'))"
 
 Expected: a full report with 6 sections.
 
