@@ -1,10 +1,10 @@
-# NEXUS-RE: An AI-Powered Multi-Agent Platform for Automated Reverse Engineering and Security Analysis
+# NEXUS-RE: An AI-Ready Multi-Agent Platform for Automated Reverse Engineering and Security Analysis
 
 ## Abstract
 
 Reverse engineering (RE) is a critical discipline in cybersecurity, malware analysis, and software security assessment. However, traditional RE tools (Ghidra, IDA Pro, radare2) demand deep expertise, are time-consuming, and produce raw output that requires extensive manual interpretation. Meanwhile, modern AI techniques - Large Language Models (LLMs), multi-agent systems, and retrieval-augmented generation (RAG) - have demonstrated remarkable capabilities in code understanding and reasoning, yet their integration with professional RE toolchains remains limited and fragmented.
 
-This project proposes NEXUS-RE, an open-source, AI-powered platform that bridges the gap between LLM agents and professional reverse engineering tools. NEXUS-RE implements 21 specialized binary analysis tools exposed through a Model Context Protocol (MCP) server, orchestrated by a working multi-agent layer (Static, Security, Crypto, Report agents), and grounded by a TF-IDF RAG service over NVD/CVE and MITRE ATT&CK knowledge. Every result is accompanied by evidence, confidence scores, and traceable artifacts. The system ships with a REST API, a Docker deployment, a CI/CD pipeline, and a 100%-passing test suite.
+This project proposes NEXUS-RE, an open-source, AI-Ready platform that bridges the gap between LLM agents and professional reverse engineering tools. NEXUS-RE implements 21 specialized binary analysis tools exposed through a Model Context Protocol (MCP) server, orchestrated by a working multi-agent layer (Static, Security, Crypto, Report agents), and grounded by a TF-IDF RAG service over NVD/CVE and MITRE ATT&CK knowledge. Every result is accompanied by evidence, confidence scores, and traceable artifacts. The system ships with a REST API, a Docker deployment, a CI/CD pipeline, and a 100%-passing test suite.
 
 We evaluate NEXUS-RE against existing benchmarks - Decompile-Bench, R3-Bench, and BinMetric - and compare its performance with LLM4Decompile and GPT-4o. The project targets publication at top-tier venues (NeurIPS, ICML, USENIX Security) and aims to democratize access to reverse engineering expertise for students, researchers, and security analysts in the Arab world and beyond.
 
@@ -101,7 +101,7 @@ Success Metric: 90% of generated claims traceable to a source.
 Goal: Ship a production-ready stack: REST API, Docker, CI/CD, tests, and packaging.
 
 Sub-goals:
-- Implement a pure-Python REST API exposing 21 tools + agents + RAG (24 endpoints).
+- Implement a pure-Python REST API exposing 31 tools + agents + RAG (24 endpoints).
 - Provide Dockerfile + docker-compose.yml.
 - Configure GitHub Actions CI across Python 3.11, 3.12, 3.13.
 - Write 27 unit tests covering all tools (100% pass).
@@ -151,7 +151,7 @@ Status: Complete - published in README + proposal.
 ### Phase 1 - MCP Server Core (Month 2) COMPLETE
 
 Activities:
-- Implemented 21 tools in pure Python 3.11+.
+- Implemented 31 tools in pure Python 3.11+.
 - Tools span: basic (hex dump, strings, hash, entropy, file info), format (ELF, PE, file-type), threat (IOC, API scanner, packer detector, YARA), crypto (XOR v1/v2), advanced (version diff, section analyzer, Base64, string similarity), composite (full analysis, analyze file).
 - Wrote 27 unit tests with 100% pass rate.
 
@@ -196,7 +196,7 @@ Status: Complete - verified in live demo (Session 20261016_122358).
 ### Phase 5 - RAG Grounding and Explainability (Month 6) COMPLETE
 
 Activities:
-- Built a knowledge base of 12 curated entries covering:
+- Built a knowledge base of 33 curated entries covering:
   - 3 NVD/CVE entries (Log4Shell, Spring4Shell, EternalBlue).
   - 5 MITRE ATT&CK techniques (T1055, T1056, T1486, T1071, T1496).
   - 2 packer signatures (UPX, Themida).
@@ -264,7 +264,7 @@ NEXUS-RE is organized as a five-layer architecture, designed for modularity and 
 | 1 | Client | Web Dashboard, CLI, REST API | CLI + API |
 | 2 | API Gateway | Pure-Python HTTP server (api.py) | Ready |
 | 3 | Orchestration | Multi-Agent (nexus_agents.py), RAG (nexus_rag.py) | Ready |
-| 4 | MCP + Tools | 21 tools, MCP server | Ready |
+| 4 | MCP + Tools | 31 tools, MCP server | Ready |
 | 5 | Infrastructure | Docker, GitHub Actions, MIT License | Ready |
 
 ### 4.2 Multi-Agent Architecture
@@ -331,7 +331,7 @@ nexus_rag.py provides a TF-IDF knowledge base grounded in:
 | Method | Endpoint | Purpose |
 |:------:|----------|---------|
 | GET | /health | Server status |
-| GET | /tools | List all 21 tools |
+| GET | /tools | List all 31 tools |
 | GET | /rag/search | RAG knowledge retrieval |
 | POST | /hex_dump | Convert text to hex |
 | POST | /calculate_hash | SHA256 + MD5 |
@@ -466,7 +466,7 @@ Continuous activities:
 
 | # | Artifact | Format | License |
 |---|----------|--------|---------|
-| 1 | nexus_re_v3.py (21 tools) | Python | MIT |
+| 1 | nexus_re_v3.py (31 tools) | Python | MIT |
 | 2 | nexus_re_server.py (MCP) | Python | MIT |
 | 3 | nexus_agents.py (multi-agent) | Python | MIT |
 | 4 | nexus_rag.py (RAG) | Python | MIT |
@@ -599,7 +599,7 @@ Reverse engineering tools can be misused. NEXUS-RE mitigates this through:
 
 ## 12. Conclusion
 
-NEXUS-RE addresses a critical gap in modern cybersecurity: the absence of an open, transparent, AI-powered platform that democratizes reverse engineering expertise. By combining 21 deterministic analysis tools, a working multi-agent orchestration layer, a RAG service grounded in CVE and MITRE ATT&CK, and a complete engineering stack (REST API, Docker, CI/CD, 27 tests), NEXUS-RE reduces analysis time while increasing trust through explainability.
+NEXUS-RE addresses a critical gap in modern cybersecurity: the absence of an open, transparent, AI-Ready platform that democratizes reverse engineering expertise. By combining 21 deterministic analysis tools, a working multi-agent orchestration layer, a RAG service grounded in CVE and MITRE ATT&CK, and a complete engineering stack (REST API, Docker, CI/CD, 27 tests), NEXUS-RE reduces analysis time while increasing trust through explainability.
 
 The project is designed for reproducibility, inclusivity (bilingual Arabic/English), and responsible AI (sandboxed execution, evidence-first claims, human-in-the-loop). Its expected outputs - a peer-reviewed paper, a public GitHub repository, and a live demo - will contribute to both the research community and real-world security practice.
 

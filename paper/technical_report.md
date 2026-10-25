@@ -1,4 +1,4 @@
-# NEXUS-RE: Building an AI-Powered Reverse Engineering Platform on a Mobile Phone
+# NEXUS-RE: Building an AI-Ready Reverse Engineering Platform on a Mobile Phone
 
 
 ---

@@ -108,7 +108,7 @@
 | **31 Analysis Tools** | ✅ Working | `nexus_re_v3.py` |
 | **16 Tools in MCP Server** | ✅ Working | `nexus_re_server.py` (legacy) |
 | **4 AI Agents** (Static, Security, Crypto, Report) | ✅ Working | `nexus_agents.py` |
-| **RAG Service (TF-IDF, 12 entries)** | ✅ Working | `nexus_rag.py` |
+| **RAG Service (TF-IDF, 33 entries)** | ✅ Working | `nexus_rag.py` |
 | **REST API (24 endpoints)** | ✅ Working | `api_render.py` |
 | **Interactive Web Dashboard** | ✅ Working | `index.html` (real JavaScript analysis engine) |
 | **27 Unit Tests (100% pass)** | ✅ Working | `tests/test_tools.py` |
@@ -391,7 +391,7 @@ Every piece of evidence carries: **tool name, result, confidence (HIGH/MEDIUM/LO
 | Feature | Status | Description |
 |---------|:------:|-------------|
 | **Multi-Agent Orchestration** | ✅ Ready | 4 agents (Static/Security/Crypto/Report) |
-| **RAG Grounding** | ✅ Ready | TF-IDF over 12 knowledge entries |
+| **RAG Grounding** | ✅ Ready | TF-IDF over 33 knowledge entries |
 | **REST API** | ✅ Ready | Pure-Python HTTP server |
 | **LangGraph Integration** | 📅 Planned | Replace custom orchestrator |
 | **Explainable AI (SHAP/LIME)** | 📅 Planned | Feature attribution |
@@ -629,7 +629,7 @@ Create `nexus-re.yaml` in your home directory:
 
 ### Unit Tests
 
-NEXUS-RE ships with a test suite covering all 16 tools.
+NEXUS-RE ships with a test suite covering all 31 tools.
 
     pytest tests/ -v
 
@@ -1233,7 +1233,7 @@ If you use NEXUS-RE in academic work, please cite it as:
 ### BibTeX
 
     @software{sobhy2026nexusre,
-      title  = {NEXUS-RE: An AI-Powered Multi-Agent Platform for 
+      title  = {NEXUS-RE: An AI-Ready Multi-Agent Platform for 
                 Automated Reverse Engineering and Security Analysis},
       author = {Sobhy, Qamar},
       year   = {2026},
@@ -1243,15 +1243,15 @@ If you use NEXUS-RE in academic work, please cite it as:
 
 ### APA
 
-Sobhy, Q. (2026). *NEXUS-RE: An AI-Powered Multi-Agent Platform for Automated Reverse Engineering and Security Analysis* [Computer software]. https://github.com/qamarsobhy7-source/nexus-re
+Sobhy, Q. (2026). *NEXUS-RE: An AI-Ready Multi-Agent Platform for Automated Reverse Engineering and Security Analysis* [Computer software]. https://github.com/qamarsobhy7-source/nexus-re
 
 ### IEEE
 
-Q. Sobhy, "NEXUS-RE: An AI-Powered Multi-Agent Platform for Automated Reverse Engineering and Security Analysis," 2026. [Online]. Available: https://github.com/qamarsobhy7-source/nexus-re
+Q. Sobhy, "NEXUS-RE: An AI-Ready Multi-Agent Platform for Automated Reverse Engineering and Security Analysis," 2026. [Online]. Available: https://github.com/qamarsobhy7-source/nexus-re
 
 ### Plain Text
 
-Sobhy, Qamar. "NEXUS-RE: An AI-Powered Multi-Agent Platform for Automated Reverse Engineering and Security Analysis." GitHub, 2026. https://github.com/qamarsobhy7-source/nexus-re.
+Sobhy, Qamar. "NEXUS-RE: An AI-Ready Multi-Agent Platform for Automated Reverse Engineering and Security Analysis." GitHub, 2026. https://github.com/qamarsobhy7-source/nexus-re.
 
 ---
 
