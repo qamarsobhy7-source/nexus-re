@@ -4,6 +4,7 @@
 
 **AI-Ready Binary Analysis Toolkit — Currently in Alpha**
 
+[![Tests](https://img.shields.io/badge/Tests-56%2F56-brightgreen)](#)
 [![CI/CD](https://github.com/qamarsobhy7-source/nexus-re/actions/workflows/ci.yml/badge.svg)](https://github.com/qamarsobhy7-source/nexus-re/actions)
 [![Security](https://img.shields.io/badge/Security-Passing-green)](#)
 [![License](https://img.shields.io/badge/License-MIT-blue)](#)
