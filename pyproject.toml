@@ -79,6 +79,8 @@ all = [
 nexus-re = "nexus_re_v3:main"
 nexus-agents = "nexus_agents:main"
 nexus-rag = "nexus_rag:main"
+nexus-api = "api_render:main"
+nexus-doctor = "doctor:main"
 
 [tool.black]
 line-length = 120
