@@ -1,5 +1,7 @@
 # Skill: Reverse Engineer Anything with NEXUS-RE
 
+> **ℹ️ Note:** This document is for AI agents and contributors. It is **not** part of the NEXUS-RE runtime. See `README.md` for actual capabilities.
+
 > Version: 1.0.0 | Last Updated: 2026-10-16
 
 This skill teaches AI agents how to use NEXUS-RE for reverse engineering and security analysis.
