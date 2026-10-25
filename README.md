@@ -108,7 +108,7 @@
 | **31 Analysis Tools** | ✅ Working | `nexus_re_v3.py` |
 | **16 Tools in MCP Server** | ✅ Working | `nexus_re_server.py` (legacy) |
 | **4 AI Agents** (Static, Security, Crypto, Report) | ✅ Working | `nexus_agents.py` |
-| **RAG Service (TF-IDF, 12 entries)** | ✅ Working | `nexus_rag.py` |
+| **RAG Service (TF-IDF, 33 entries)** | ✅ Working | `nexus_rag.py` |
 | **REST API (24 endpoints)** | ✅ Working | `api_render.py` |
 | **Interactive Web Dashboard** | ✅ Working | `index.html` (real JavaScript analysis engine) |
 | **27 Unit Tests (100% pass)** | ✅ Working | `tests/test_tools.py` |
@@ -391,7 +391,7 @@ Every piece of evidence carries: **tool name, result, confidence (HIGH/MEDIUM/LO
 | Feature | Status | Description |
 |---------|:------:|-------------|
 | **Multi-Agent Orchestration** | ✅ Ready | 4 agents (Static/Security/Crypto/Report) |
-| **RAG Grounding** | ✅ Ready | TF-IDF over 12 knowledge entries |
+| **RAG Grounding** | ✅ Ready | TF-IDF over 33 knowledge entries |
 | **REST API** | ✅ Ready | Pure-Python HTTP server |
 | **LangGraph Integration** | 📅 Planned | Replace custom orchestrator |
 | **Explainable AI (SHAP/LIME)** | 📅 Planned | Feature attribution |
