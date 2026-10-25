@@ -6,15 +6,15 @@ LABEL version="3.0"
 
 WORKDIR /app
 
-# Copy all Python files
+# NEXUS-RE has ZERO runtime dependencies (pure Python stdlib 3.11+).
+# No pip install needed.
 COPY nexus_re_v3.py .
 COPY nexus_agents.py .
 COPY nexus_rag.py .
 COPY api_render.py .
 COPY README.md .
-COPY proposal.md .
 
-# Non-root user
+# Non-root user for security
 RUN useradd -m -u 1000 nexus && chown -R nexus:nexus /app
 USER nexus
 
@@ -24,5 +24,4 @@ ENV PORT=8000
 
 EXPOSE 8000
 
-# Run the API (not the CLI)
 CMD ["python", "api_render.py"]
