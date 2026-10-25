@@ -35,7 +35,7 @@
 
 ### 5. No Real Benchmarking
 
-- **Current state:** 27 unit tests + 10-sample mini-benchmark (all synthetic).
+- **Current state:** 56 unit tests + 10-sample mini-benchmark (all synthetic).
 - **What is missing:** Evaluation on Decompile-Bench (2M samples), R3-Bench (~8K), BinMetric (~10K).
 - **Impact:** No comparison with LLM4Decompile, GPT-4o, or human analysts.
 - **Roadmap:** [Issue #22](https://github.com/qamarsobhy7-source/nexus-re/issues/22).
@@ -96,8 +96,8 @@ To be fair, these parts are solid:
 - ✅ **31 analysis tools** — all tested, all deterministic
 - ✅ **4 AI agents** — verified in live sessions
 - ✅ **REST API (24 endpoints)** — with API key auth
-- ✅ **27 unit tests** — 100% pass rate
-- ✅ **Zero external dependencies** — pure Python
+- ✅ **56 unit tests** — 100% pass rate
+- ✅ **Zero runtime dependencies for the 31 core tools** — pure Python
 - ✅ **Live demo** — works in any browser
 - ✅ **Docker + CI/CD** — automated testing and deployment
 
