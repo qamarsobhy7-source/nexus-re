@@ -139,9 +139,10 @@ class NexusAPIHandler(BaseHTTPRequestHandler):
         elif path == "/tools":
             # Dynamically pull tools from the loaded toolkit module
             tool_names = []
+            EXCLUDE = {"main"}  # CLI entry point, not a tool
             if toolkit:
                 for name in dir(toolkit):
-                    if name.startswith("_"):
+                    if name.startswith("_") or name in EXCLUDE:
                         continue
                     obj = getattr(toolkit, name, None)
                     if not callable(obj):
