@@ -3,7 +3,7 @@
 This document helps AI coding agents (Cursor, Copilot, Claude Code, Windsurf, etc.) understand how to work with the NEXUS-RE repository.
 
 ## Project Overview
-NEXUS-RE is an AI-powered reverse engineering platform. It exposes 31 pure-Python analysis tools via an MCP server, a REST API, and a static web dashboard.
+NEXUS-RE is an AI-ready reverse engineering platform. It exposes 31 pure-Python analysis tools via an MCP server, a REST API, and a static web dashboard.
 
 ## Key Commands
 - **Run CLI:** `python nexus_re_v3.py`
