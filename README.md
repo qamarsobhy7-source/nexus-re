@@ -1,6 +1,5 @@
 <div align="center">
 
-**🌍 Languages:**
 [English](README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · [Español](README.es.md) · [Deutsch](README.de.md) · [中文](README.zh.md) · [日本語](README.ja.md) · [Русский](README.ru.md) · [Português](README.pt.md) · [Italiano](README.it.md) · [한국어](README.ko.md) · [Türkçe](README.tr.md) · [Nederlands](README.nl.md) · [Polski](README.pl.md) · [हिन्दी](README.hi.md)
 
 </div>
