@@ -109,7 +109,7 @@ The infrastructure layer includes:
 
 ### 5.1 The First Attempt: Google Colab
 
-My first instinct was to use Google Colab. It offered a free Python environment with persistent storage on Google Drive. I spent two days building the initial 10 tools there. Then Colab banned my account. The reason: my code contained strings like `CreateRemoteThread` and `VirtualAllocEx`. These are legitimate API names used in malware analysis, but Colab's automated abuse detection flagged them as malicious. I lost access to the runtime. This was a painful lesson. I realized that any AI-assisted security tool must be careful about the platforms it runs on.
+My first instinct was to use Google Colab. It offered a free Python environment with persistent storage on Google Drive. I spent over two weeks building the initial 10 tools there. Then Colab banned my account. The reason: my code contained strings like `CreateRemoteThread` and `VirtualAllocEx`. These are legitimate API names used in malware analysis, but Colab's automated abuse detection flagged them as malicious. I lost access to the runtime. This was a painful lesson. I realized that any AI-assisted security tool must be careful about the platforms it runs on.
 
 ### 5.2 The Second Attempt: Termux
 
