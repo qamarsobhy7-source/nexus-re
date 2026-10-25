@@ -111,7 +111,7 @@
 | **RAG Service (TF-IDF, 33 entries)** | ✅ Working | `nexus_rag.py` |
 | **REST API (24 endpoints)** | ✅ Working | `api_render.py` |
 | **Web Dashboard (UI mockup)** | 🟡 Demo | `index.html` — static sample output only |
-| **27 Unit Tests (100% pass)** | ✅ Working | `tests/test_tools.py` |
+| **27 Tests in test_tools.py (100% pass)** | ✅ Working | `tests/test_tools.py` |
 | **Docker + CI/CD** | ✅ Working | `.github/workflows/` |
 | **Security (CodeQL + Semgrep)** | ✅ Active | `.github/workflows/` |
 | **Documentation** | ✅ Complete | `docs/` + `README.md` |
