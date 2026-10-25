@@ -42,7 +42,7 @@
 
 ### 6. Simple Web Dashboard
 
-- **Current state:** Single-file `index.html` UI mockup with static sample output. Zero analysis runs in the browser — all real analysis is via the Python CLI/API.
+- **Current state:** Single-file `index.html` with real browser-based analysis (8 JS tools). Full analysis is available via the Python CLI/API.
 - **What is missing:** Next.js + React Flow + Monaco Editor for full interactive experience.
 - **Roadmap:** [Issue #21](https://github.com/qamarsobhy7-source/nexus-re/issues/21).
 
