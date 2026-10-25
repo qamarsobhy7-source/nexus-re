@@ -1,10 +1,10 @@
-# NEXUS-RE: An AI-Powered Multi-Agent Platform for Automated Reverse Engineering and Security Analysis
+# NEXUS-RE: An AI-Ready Multi-Agent Platform for Automated Reverse Engineering and Security Analysis
 
 ## Abstract
 
 Reverse engineering (RE) is a critical discipline in cybersecurity, malware analysis, and software security assessment. However, traditional RE tools (Ghidra, IDA Pro, radare2) demand deep expertise, are time-consuming, and produce raw output that requires extensive manual interpretation. Meanwhile, modern AI techniques - Large Language Models (LLMs), multi-agent systems, and retrieval-augmented generation (RAG) - have demonstrated remarkable capabilities in code understanding and reasoning, yet their integration with professional RE toolchains remains limited and fragmented.
 
-This project proposes NEXUS-RE, an open-source, AI-powered platform that bridges the gap between LLM agents and professional reverse engineering tools. NEXUS-RE implements 21 specialized binary analysis tools exposed through a Model Context Protocol (MCP) server, orchestrated by a working multi-agent layer (Static, Security, Crypto, Report agents), and grounded by a TF-IDF RAG service over NVD/CVE and MITRE ATT&CK knowledge. Every result is accompanied by evidence, confidence scores, and traceable artifacts. The system ships with a REST API, a Docker deployment, a CI/CD pipeline, and a 100%-passing test suite.
+This project proposes NEXUS-RE, an open-source, AI-Ready platform that bridges the gap between LLM agents and professional reverse engineering tools. NEXUS-RE implements 21 specialized binary analysis tools exposed through a Model Context Protocol (MCP) server, orchestrated by a working multi-agent layer (Static, Security, Crypto, Report agents), and grounded by a TF-IDF RAG service over NVD/CVE and MITRE ATT&CK knowledge. Every result is accompanied by evidence, confidence scores, and traceable artifacts. The system ships with a REST API, a Docker deployment, a CI/CD pipeline, and a 100%-passing test suite.
 
 We evaluate NEXUS-RE against existing benchmarks - Decompile-Bench, R3-Bench, and BinMetric - and compare its performance with LLM4Decompile and GPT-4o. The project targets publication at top-tier venues (NeurIPS, ICML, USENIX Security) and aims to democratize access to reverse engineering expertise for students, researchers, and security analysts in the Arab world and beyond.
 
@@ -599,7 +599,7 @@ Reverse engineering tools can be misused. NEXUS-RE mitigates this through:
 
 ## 12. Conclusion
 
-NEXUS-RE addresses a critical gap in modern cybersecurity: the absence of an open, transparent, AI-powered platform that democratizes reverse engineering expertise. By combining 21 deterministic analysis tools, a working multi-agent orchestration layer, a RAG service grounded in CVE and MITRE ATT&CK, and a complete engineering stack (REST API, Docker, CI/CD, 27 tests), NEXUS-RE reduces analysis time while increasing trust through explainability.
+NEXUS-RE addresses a critical gap in modern cybersecurity: the absence of an open, transparent, AI-Ready platform that democratizes reverse engineering expertise. By combining 21 deterministic analysis tools, a working multi-agent orchestration layer, a RAG service grounded in CVE and MITRE ATT&CK, and a complete engineering stack (REST API, Docker, CI/CD, 27 tests), NEXUS-RE reduces analysis time while increasing trust through explainability.
 
 The project is designed for reproducibility, inclusivity (bilingual Arabic/English), and responsible AI (sandboxed execution, evidence-first claims, human-in-the-loop). Its expected outputs - a peer-reviewed paper, a public GitHub repository, and a live demo - will contribute to both the research community and real-world security practice.
 
