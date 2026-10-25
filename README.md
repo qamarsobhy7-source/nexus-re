@@ -1233,7 +1233,7 @@ If you use NEXUS-RE in academic work, please cite it as:
 ### BibTeX
 
     @software{sobhy2026nexusre,
-      title  = {NEXUS-RE: An AI-Powered Multi-Agent Platform for 
+      title  = {NEXUS-RE: An AI-Ready Multi-Agent Platform for 
                 Automated Reverse Engineering and Security Analysis},
       author = {Sobhy, Qamar},
       year   = {2026},
@@ -1243,15 +1243,15 @@ If you use NEXUS-RE in academic work, please cite it as:
 
 ### APA
 
-Sobhy, Q. (2026). *NEXUS-RE: An AI-Powered Multi-Agent Platform for Automated Reverse Engineering and Security Analysis* [Computer software]. https://github.com/qamarsobhy7-source/nexus-re
+Sobhy, Q. (2026). *NEXUS-RE: An AI-Ready Multi-Agent Platform for Automated Reverse Engineering and Security Analysis* [Computer software]. https://github.com/qamarsobhy7-source/nexus-re
 
 ### IEEE
 
-Q. Sobhy, "NEXUS-RE: An AI-Powered Multi-Agent Platform for Automated Reverse Engineering and Security Analysis," 2026. [Online]. Available: https://github.com/qamarsobhy7-source/nexus-re
+Q. Sobhy, "NEXUS-RE: An AI-Ready Multi-Agent Platform for Automated Reverse Engineering and Security Analysis," 2026. [Online]. Available: https://github.com/qamarsobhy7-source/nexus-re
 
 ### Plain Text
 
-Sobhy, Qamar. "NEXUS-RE: An AI-Powered Multi-Agent Platform for Automated Reverse Engineering and Security Analysis." GitHub, 2026. https://github.com/qamarsobhy7-source/nexus-re.
+Sobhy, Qamar. "NEXUS-RE: An AI-Ready Multi-Agent Platform for Automated Reverse Engineering and Security Analysis." GitHub, 2026. https://github.com/qamarsobhy7-source/nexus-re.
 
 ---
 
