@@ -1,3 +1,14 @@
+"""
+⚠️ LEGACY SERVER — DO NOT USE FOR NEW DEVELOPMENT
+
+This is the old MCP server (v1) containing only 16 of the 31 tools.
+It is kept for backward compatibility only.
+
+For the current server with all 31 tools, use: nexus_re_v3.py
+
+Status: DEPRECATED. No new features will be added.
+"""
+
 from mcp.server import MCPServer
 import hashlib
 import re
