@@ -84,17 +84,38 @@ class NexusAPIHandler(BaseHTTPRequestHandler):
 
 
     def _check_auth(self):
+        """
+        Enforce API key authentication.
+        - Development mode (NEXUS_DEV_MODE=true): auth optional
+        - Production mode (default): auth REQUIRED
+        - Public endpoints (/health, /tools) always allowed
+        """
         public_paths = ['/', '/health', '/tools']
         path_only = self.path.split('?')[0]
         if path_only in public_paths:
             return True
+        
         expected = os.environ.get('NEXUS_API_KEY', '')
-        if not expected:
+        dev_mode = os.environ.get('NEXUS_DEV_MODE', 'false').lower() == 'true'
+        
+        # If no key set AND dev mode: allow (development)
+        if not expected and dev_mode:
             return True
+        
+        # If no key set AND production: deny
+        if not expected:
+            self._send_json({
+                'error': 'Server misconfigured',
+                'message': 'NEXUS_API_KEY must be set. Set NEXUS_DEV_MODE=true for dev.'
+            }, 500)
+            return False
+        
+        # Check the provided key
         provided = self.headers.get('X-API-Key', '')
         if provided != expected:
-            self._send_json({'error': 'Unauthorized'}, 401)
+            self._send_json({'error': 'Unauthorized', 'message': 'Invalid or missing X-API-Key'}, 401)
             return False
+        
         return True
 
     def do_GET(self):
