@@ -49,7 +49,7 @@
 
 🚀 **Try NEXUS-RE Now:** [https://qamar-sobhy-nexus-re-api.static.hf.space](https://qamar-sobhy-nexus-re-api.static.hf.space)
 
-![NEXUS-RE Dashboard](docs/new_dashboard.png?v=2)
+![NEXUS-RE Dashboard](docs/dashboard_v2.png)
 
 ---
 
