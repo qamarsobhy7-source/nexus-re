@@ -10,7 +10,7 @@ This document describes the testing strategy, test coverage, and quality metrics
 
 NEXUS-RE follows three testing principles:
 
-1. Deterministic tools must be fully testable. Every one of the 21 tools has at least one unit test.
+1. Deterministic tools must be fully testable. Every one of the 31 tools has at least one unit test.
 
 2. Evidence must be verifiable. Tests assert not just pass/fail, but specific evidence content.
 
