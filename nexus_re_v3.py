@@ -2,6 +2,7 @@
 NEXUS-RE v3.0 - Complete Reverse Engineering Toolkit
 21 Tools + File Analysis + Version Diff
 """
+import sys
 import hashlib, re, math, struct, os
 
 # ==================== TOOLS ====================
@@ -542,9 +543,20 @@ def deep_packer_scanner(hex_string):
 
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] in ("-h", "--help"):
+        print("NEXUS-RE v3.0 — Reverse Engineering Toolkit")
+        print()
+        print("Usage:")
+        print("  python nexus_re_v3.py            # interactive menu")
+        print("  python nexus_re_v3.py --help     # this message")
+        print()
+        print("Or use as a library:")
+        print("  import nexus_re_v3 as t")
+        print("  t.hex_dump('hello')")
+        return
     print("=" * 55)
     print("  NEXUS-RE v3.0 - Reverse Engineering Toolkit")
-    print("  21 Tools | File Analysis | Version Diff")
+    print("  31 Tools | File Analysis | Version Diff")
     print("=" * 55)
     print()
     print("--- BASIC (text input) ---")
