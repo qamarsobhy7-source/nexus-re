@@ -110,7 +110,7 @@
 | **4 AI Agents** (Static, Security, Crypto, Report) | ✅ Working | `nexus_agents.py` |
 | **RAG Service (TF-IDF, 33 entries)** | ✅ Working | `nexus_rag.py` |
 | **REST API (24 endpoints)** | ✅ Working | `api_render.py` |
-| **Interactive Web Dashboard** | ✅ Working | `index.html` (real JavaScript analysis engine) |
+| **Web Dashboard (UI mockup)** | 🟡 Demo | `index.html` — static sample output only |
 | **27 Unit Tests (100% pass)** | ✅ Working | `tests/test_tools.py` |
 | **Docker + CI/CD** | ✅ Working | `.github/workflows/` |
 | **Security (CodeQL + Semgrep)** | ✅ Active | `.github/workflows/` |
@@ -133,7 +133,7 @@
 
 - **The project is a working prototype**, not a complete production platform.
 - The **core engine** (31 tools + 4 agents + RAG + REST API) **is real, tested, and works**.
-- The **interactive web dashboard** runs in any browser — try it at [qamar-sobhy-nexus-re-api.static.hf.space](https://qamar-sobhy-nexus-re-api.static.hf.space).
+- The **web dashboard UI mockup** opens in any browser — try it at [qamar-sobhy-nexus-re-api.static.hf.space](https://qamar-sobhy-nexus-re-api.static.hf.space).
 - **Professional RE tools** (Ghidra, Frida) are future work — clearly documented in `docs/roadmap.md`.
 
 
@@ -782,7 +782,7 @@ Recommended for production:
 - **nexus_agents.py** - Multi-agent orchestrator (4 agents)
 - **nexus_rag.py** - RAG service (32 knowledge entries)
 - **api_render.py** - REST API (24 endpoints + X-API-Key auth)
-- **index.html** - Live web dashboard (real JavaScript engine)
+- **index.html** - Web UI mockup (static sample output; real analysis via CLI/API)
 - **doctor.py** - Environment health check
 - **LICENSE** - MIT License
 - **README.md** - Main documentation
@@ -1092,7 +1092,7 @@ This project was built **entirely on an Android phone** using Pydroid 3 and Term
 1. **No Ghidra/Frida/IDA integration** — these professional RE tools require a desktop OS.
 2. **No real LLM** — Llama 3/Mistral require GPU or paid API. The agents use rule-based logic instead.
 3. **RAG uses TF-IDF, not neural embeddings** — weaker semantic retrieval than FAISS/Chroma.
-4. **No Next.js dashboard** — the current `index.html` is a single-file app with a real JavaScript analysis engine (9 tools implemented in JS, tested live).
+4. **No Next.js dashboard** — the current `index.html` is a single-file app that shows static sample output (no real JS analysis) (9 tools implemented in JS, tested live).
 5. **No call graph visualization** — requires React Flow.
 6. **No SHAP/LIME explainability** — requires GPU and additional libraries.
 7. **MCP server has 16 tools** while the main toolkit has 31 — the MCP server is a legacy version that needs updating.
@@ -1107,7 +1107,7 @@ This project was built **entirely on an Android phone** using Pydroid 3 and Term
 
 - **31 working analysis tools** — all tested.
 - **4 collaborating AI agents** — verified in live sessions.
-- **Real interactive web dashboard** — not mock data (verified with `Hello World` and `7f454c46`).
+- **Web dashboard UI mockup** — displays sample output to illustrate the report layout (real analysis runs in Python CLI/API).
 - **56 passing tests** — 100% success rate.
 - **Complete documentation** — 7 docs + README + Proposal + Model Cards.
 
@@ -1182,7 +1182,7 @@ Reverse engineering is hard. Malware analysts spend 8-40 hours per sample. I wan
 
 1. **Google Colab banned my account** because my code contained strings like `CreateRemoteThread` (legitimate malware-analysis APIs). Lesson: platform abuse detection is aggressive.
 2. **Rust dependency hell** — `mcp`, `fastapi`, and `huggingface_hub` required Rust, which Pydroid doesn't have. Solution: pin older versions or write pure-Python alternatives.
-3. **No Node.js** — Next.js was impossible. Solution: build a single-file HTML dashboard with a real JavaScript analysis engine.
+3. **No Node.js** — Next.js was impossible. Solution: build a single-file HTML UI mockup for report visualization (real analysis stays in Python).
 4. **Memory limits** — Pydroid crashes with large files. Solution: split code into modules, use `importlib`.
 5. **Cloud deployment friction** — Render asked for a credit card, Hugging Face needed `.static.hf.space` for static sites.
 
