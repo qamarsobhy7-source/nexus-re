@@ -19,16 +19,16 @@ jobs:
         run: python doctor.py
 
   test:
-    name: Run Tests
+    name: Run Tests (${{ matrix.python-version }})
     runs-on: ubuntu-latest
     needs: doctor
     strategy:
       matrix:
         python-version: ["3.11", "3.12", "3.13"]
+      fail-fast: false
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
@@ -40,8 +40,18 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Verify toolkit loads
-        run: python -c "import importlib.util; spec = importlib.util.spec_from_file_location('nexus', 'nexus_re_v3.py'); m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); print('OK:', len([x for x in dir(m) if callable(getattr(m, x)) and not x.startswith('_')]), 'tools loaded')"
+      - name: Run all tests (tools + edge + agents + api)
+        env:
+          NEXUS_DEV_MODE: "true"
+        run: |
+          echo "=== Tests: test_tools.py (27) ==="
+          python -m unittest tests.test_tools -v || exit 1
+          echo "=== Tests: test_edge_cases.py (16) ==="
+          python -m unittest tests.test_edge_cases -v || exit 1
+          echo "=== Tests: test_agents.py (6) ==="
+          python -m unittest tests.test_agents -v || exit 1
+          echo "=== Tests: test_api.py (8) ==="
+          python -m unittest tests.test_api -v || exit 1
 
       - name: Verify README exists
         run: test -f README.md && echo "README OK"
@@ -49,28 +59,35 @@ jobs:
       - name: Verify proposal exists
         run: test -f proposal.md && echo "Proposal OK"
 
+      - name: Verify core files
+        run: |
+          test -f nexus_re_v3.py && echo "nexus_re_v3.py OK"
+          test -f nexus_agents.py && echo "nexus_agents.py OK"
+          test -f nexus_rag.py && echo "nexus_rag.py OK"
+          test -f api_render.py && echo "api_render.py OK"
+
   lint:
     name: Lint Code
     runs-on: ubuntu-latest
     needs: doctor
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
 
       - name: Install linters
         run: pip install flake8 black
 
-      - name: Run flake8
-        run: flake8 nexus_re_v3.py doctor.py --max-line-length=120 --ignore=E501,W503,E203 || true
+      - name: Run flake8 (non-blocking)
+        run: |
+          flake8 nexus_re_v3.py nexus_agents.py nexus_rag.py api_render.py doctor.py \
+            --max-line-length=120 --ignore=E501,W503,E203 || true
 
-      - name: Check formatting
-        run: black --check nexus_re_v3.py doctor.py || true
+      - name: Check formatting with black (non-blocking)
+        run: |
+          black --check nexus_re_v3.py nexus_agents.py nexus_rag.py api_render.py doctor.py || true
 
   security:
     name: Security Scan
@@ -78,13 +95,17 @@ jobs:
     needs: doctor
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
 
-      - name: Run Bandit security scan
+      - name: Install bandit
+        run: pip install bandit
+
+      - name: Run bandit (non-blocking)
         run: |
-          pip install bandit
-          bandit -r nexus_re_v3.py doctor.py -ll || true
+          bandit -r . -ll --exclude ./tests,./.git || true
 
   build-docker:
     name: Build Docker Image
@@ -92,8 +113,7 @@ jobs:
     needs: test
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -102,4 +122,4 @@ jobs:
         run: docker build -t nexus-re:test .
 
       - name: Test Docker image
-        run: docker run --rm nexus-re:test python -c "print('Docker build OK')"
+        run: docker run --rm nexus-re:test python -c "print('Docker OK')"
