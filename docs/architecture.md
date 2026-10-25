@@ -2,7 +2,7 @@
 
 > Version: 3.0.0 | Last Updated: 2026-10-16
 
-This document describes the architecture of NEXUS-RE, an AI-powered reverse engineering and security analysis platform.
+This document describes the architecture of NEXUS-RE, an AI-ready reverse engineering and security analysis platform.
 
 ---
 
@@ -82,7 +82,7 @@ A single-file web application with embedded CSS and JavaScript:
 
 File: src/tools/nexus_re_v3.py
 
-Interactive menu-driven CLI with 21 tools divided into three categories:
+Interactive menu-driven CLI with 31 tools divided into three categories:
 
 - Basic (6): text-based analysis
 - Binary (9): hex-based analysis
@@ -101,7 +101,7 @@ Pure-Python HTTP server exposing 24 endpoints. Uses Python's standard http.serve
 ### Endpoints
 
 GET /health - Server status
-GET /tools - List all 21 tools
+GET /tools - List all 31 tools
 GET /rag/search - RAG knowledge retrieval
 POST /hex_dump - Convert text to hex
 POST /calculate_hash - SHA256 + MD5
@@ -185,7 +185,7 @@ class AnalysisState:
 
 File: src/rag/nexus_rag.py
 
-TF-IDF retrieval engine over 12 curated entries:
+TF-IDF retrieval engine over 33 curated entries:
 
 - 3 NVD/CVE entries: Log4Shell, Spring4Shell, EternalBlue
 - 5 MITRE ATT&CK techniques: T1055, T1056, T1486, T1071, T1496
