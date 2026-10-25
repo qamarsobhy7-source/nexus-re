@@ -19,16 +19,17 @@
 </a>
 
 <br><br>
+🔗 **Live Demo:** [https://qamar-sobhy-nexus-re-api.static.hf.space](https://qamar-sobhy-nexus-re-api.static.hf.space)
+<br><br>
 
 ![NEXUS-RE Dashboard](docs/dashboard_v2.png)
 
 </div>
 
 ---
-
 > ⚠️ **Project Status:** Alpha (v3.0.0). Early-stage prototype. See [Project Reality](#project-reality) and [Known Limitations](#limitations).
-
 ---
+
 
 
 ## Table of Contents
