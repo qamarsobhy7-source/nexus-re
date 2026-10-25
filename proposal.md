@@ -101,7 +101,7 @@ Success Metric: 90% of generated claims traceable to a source.
 Goal: Ship a production-ready stack: REST API, Docker, CI/CD, tests, and packaging.
 
 Sub-goals:
-- Implement a pure-Python REST API exposing 21 tools + agents + RAG (24 endpoints).
+- Implement a pure-Python REST API exposing 31 tools + agents + RAG (24 endpoints).
 - Provide Dockerfile + docker-compose.yml.
 - Configure GitHub Actions CI across Python 3.11, 3.12, 3.13.
 - Write 27 unit tests covering all tools (100% pass).
@@ -151,7 +151,7 @@ Status: Complete - published in README + proposal.
 ### Phase 1 - MCP Server Core (Month 2) COMPLETE
 
 Activities:
-- Implemented 21 tools in pure Python 3.11+.
+- Implemented 31 tools in pure Python 3.11+.
 - Tools span: basic (hex dump, strings, hash, entropy, file info), format (ELF, PE, file-type), threat (IOC, API scanner, packer detector, YARA), crypto (XOR v1/v2), advanced (version diff, section analyzer, Base64, string similarity), composite (full analysis, analyze file).
 - Wrote 27 unit tests with 100% pass rate.
 
@@ -264,7 +264,7 @@ NEXUS-RE is organized as a five-layer architecture, designed for modularity and 
 | 1 | Client | Web Dashboard, CLI, REST API | CLI + API |
 | 2 | API Gateway | Pure-Python HTTP server (api.py) | Ready |
 | 3 | Orchestration | Multi-Agent (nexus_agents.py), RAG (nexus_rag.py) | Ready |
-| 4 | MCP + Tools | 21 tools, MCP server | Ready |
+| 4 | MCP + Tools | 31 tools, MCP server | Ready |
 | 5 | Infrastructure | Docker, GitHub Actions, MIT License | Ready |
 
 ### 4.2 Multi-Agent Architecture
@@ -331,7 +331,7 @@ nexus_rag.py provides a TF-IDF knowledge base grounded in:
 | Method | Endpoint | Purpose |
 |:------:|----------|---------|
 | GET | /health | Server status |
-| GET | /tools | List all 21 tools |
+| GET | /tools | List all 31 tools |
 | GET | /rag/search | RAG knowledge retrieval |
 | POST | /hex_dump | Convert text to hex |
 | POST | /calculate_hash | SHA256 + MD5 |
@@ -466,7 +466,7 @@ Continuous activities:
 
 | # | Artifact | Format | License |
 |---|----------|--------|---------|
-| 1 | nexus_re_v3.py (21 tools) | Python | MIT |
+| 1 | nexus_re_v3.py (31 tools) | Python | MIT |
 | 2 | nexus_re_server.py (MCP) | Python | MIT |
 | 3 | nexus_agents.py (multi-agent) | Python | MIT |
 | 4 | nexus_rag.py (RAG) | Python | MIT |
