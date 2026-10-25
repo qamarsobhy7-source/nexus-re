@@ -1,6 +1,6 @@
 """
 NEXUS-RE RAG Service
-Phase 5 - Retrieval-Augmented Generation over CVE + docs
+Phase 5 - Retrieval-Augmented Generation (Pure-Python Fallback)
 Pure-Python fallback (no FAISS/Chroma dependency)
 """
 
