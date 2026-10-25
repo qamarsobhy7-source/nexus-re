@@ -196,7 +196,7 @@ Status: Complete - verified in live demo (Session 20261016_122358).
 ### Phase 5 - RAG Grounding and Explainability (Month 6) COMPLETE
 
 Activities:
-- Built a knowledge base of 12 curated entries covering:
+- Built a knowledge base of 33 curated entries covering:
   - 3 NVD/CVE entries (Log4Shell, Spring4Shell, EternalBlue).
   - 5 MITRE ATT&CK techniques (T1055, T1056, T1486, T1071, T1496).
   - 2 packer signatures (UPX, Themida).
