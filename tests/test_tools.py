@@ -1,6 +1,6 @@
 """
 NEXUS-RE Test Suite - Core Tools
-Tests all 21 tools in nexus_re_v3.py
+Tests all 31 tools in nexus_re_v3.py
 """
 
 import importlib.util
