@@ -8,6 +8,30 @@ NEXUS-RE is an open-source reverse engineering and security analysis platform. I
 
 ---
 
+## Table of Contents
+- [Live Demo & Screenshot](#live-demo--screenshot)
+- [Requirements & Installation](#requirements--installation)
+- [Quick Start](#quick-start)
+- [Features](#features)
+- [Usage](#usage)
+- [Supported Formats](#supported-formats)
+- [Documentation](#documentation)
+
+---
+
+## Requirements & Installation
+- **Python 3.11+** (3.13 recommended)
+- **Zero external runtime dependencies** (pure Python stdlib)
+- Optional: Docker (for containerized deployment)
+
+```bash
+git clone https://github.com/qamarsobhy7-source/nexus-re.git
+cd nexus-re
+# No pip install required
+```
+
+---
+
 ## Live Demo & Screenshot
 
 Experience the real-time web dashboard (8 tools run directly in your browser):
@@ -64,6 +88,16 @@ from nexus_re_v3 import full_analysis
 report = full_analysis('7f454c46...')
 print(report)
 ```
+
+---
+
+## Supported Formats
+| Category | Supported |
+| :--- | :--- |
+| **Executables** | ELF (Linux), PE (Windows) |
+| **Architectures** | x86, x86-64, ARM, AArch64 (via ELF/PE parsing) |
+| **Analysis Types** | Static analysis, Hex dump, Strings, Entropy, Hash, IOC extraction, YARA-like rules |
+| **AI Agents** | 4 agents (Custom ReAct orchestrator, RAG with TF-IDF) |
 
 ---
 
