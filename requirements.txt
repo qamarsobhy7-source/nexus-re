@@ -1,26 +1,25 @@
-# NEXUS-RE Core Dependencies
-# Note: Core tools (nexus_re_v3.py) have ZERO dependencies.
-# These are only needed for advanced features.
+# NEXUS-RE Runtime Dependencies
+#
+# IMPORTANT: NEXUS-RE has ZERO required runtime dependencies.
+# All 31 tools, 4 agents, and REST API use Python stdlib only (3.11+).
+#
+# pip install -r requirements.txt will install NOTHING (correct behavior).
+#
+# The commented lines below are OPTIONAL features:
 
-# AI Agent Integration (Phase 4)
-mcp>=2.3.0
-langgraph>=0.2.0
-langchain>=0.3.0
+# Legacy MCP server (deprecated - only for nexus_re_server.py)
+# mcp>=2.3.0
 
-# RAG Service (Phase 5)
-faiss-cpu>=1.8.0
-chromadb>=0.5.0
-sentence-transformers>=3.0.0
-
-# Explainable AI (Phase 5)
-shap>=0.46.0
-lime>=0.2.0
-
-# Web Backend (Phase 7)
-fastapi>=0.115.0
-uvicorn[standard]>=0.32.0
-pydantic>=2.9.0
-
-# Data & Utils
-numpy>=1.26.0
-requests>=2.32.0
+# Planned features (NOT implemented yet):
+# faiss-cpu>=1.8.0
+# chromadb>=0.5.0
+# sentence-transformers>=3.0.0
+# shap>=0.46.0
+# lime>=0.2.0
+# langgraph>=0.2.0
+# langchain>=0.3.0
+# fastapi>=0.115.0
+# uvicorn[standard]>=0.32.0
+# pydantic>=2.9.0
+# numpy>=1.26.0
+# requests>=2.32.0
