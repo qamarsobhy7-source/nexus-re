@@ -1,6 +1,6 @@
 """
 NEXUS-RE v3.0 - Complete Reverse Engineering Toolkit
-21 Tools + File Analysis + Version Diff
+31 Tools + File Analysis + Version Diff
 """
 import sys
 import hashlib, re, math, struct, os
