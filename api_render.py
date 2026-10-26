@@ -136,7 +136,14 @@ class NexusAPIHandler(BaseHTTPRequestHandler):
                 "timestamp": datetime.now().isoformat(),
             })
 
-        elif path == "/tools":
+        elif path == "/openapi.json":
+                try:
+                    with open("docs/openapi.yaml", "r", encoding="utf-8") as f:
+                        self._send_json({"openapi_yaml": f.read()})
+                except Exception:
+                    self._send_json({"error": "openapi.yaml not found"}, 404)
+
+            elif path == "/tools":
             # Dynamically pull tools from the loaded toolkit module
             tool_names = []
             EXCLUDE = {"main"}  # CLI entry point, not a tool
