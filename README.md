@@ -49,7 +49,7 @@
 - [Supported Formats](#supported-formats)
 - [Setup & Configuration](#setup--configuration)
 - [Testing](#testing)
-- [Benchmarks](#benchmarks)
+- [Benchmarks & Real Results](#benchmarks)
 - [Docker Deployment](#docker-deployment)
 - [Project Structure](#project-structure)
 - [Architecture](#architecture)
@@ -878,7 +878,7 @@ The RAG service grounds every multi-agent claim in retrieved evidence.
 
 ---
 
-## Benchmarks (Planned)
+### Benchmarks (Planned)
 
 | Benchmark | Size | Metric |
 |-----------|------|--------|
@@ -1093,7 +1093,7 @@ This project was built **entirely on an Android phone** using Pydroid 3 and Term
 
 ---
 
-## 🧪 Mini-Benchmark (Real Results)
+### 🧪 Mini-Benchmark (Real Results)
 
 We tested NEXUS-RE on **10 synthetic samples** (5 clean + 5 malicious-like) to demonstrate real-world performance.
 
