@@ -282,3 +282,9 @@ def run_server():
 
 if __name__ == "__main__":
     run_server()
+
+def main():
+    import os
+    port = int(os.environ.get("PORT", 8000))
+    print(f"Starting NEXUS-RE API server on port {port}...")
+    run_server(host="0.0.0.0", port=port)
