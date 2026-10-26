@@ -2934,30 +2934,7 @@ The authors are not responsible for any damage caused by the use or misuse of th
 
 ---
 
-## Star History
 
-If NEXUS-RE helped you, please give it a star. It helps more people discover the project.
-
-[![Star History Chart](https://api.star-history.com/svg?repos=qamarsobhy7-source/nexus-re&type=Date)](https://star-history.com/#qamarsobhy7-source/nexus-re&Date)
-
----
-
-## Translations
-
-NEXUS-RE aims to be accessible to security analysts worldwide. We currently support:
-
-- English (this file)
-- Arabic - in progress
-- French - planned
-- Spanish - planned
-- German - planned
-- Chinese - planned
-- Japanese - planned
-- Russian - planned
-
-If you would like to contribute a translation, please open an issue.
-
----
 
 ## Contact
 
